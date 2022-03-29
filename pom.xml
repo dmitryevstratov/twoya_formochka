@@ -21,6 +21,8 @@
 
 	<dependencies>
 
+		<!-- Spring Boot -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -31,10 +33,14 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+		<!-- View template -->
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+
+		<!-- Data base -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -46,6 +52,8 @@
 			<artifactId>postgresql</artifactId>
 			<version>42.2.10</version>
 		</dependency>
+
+		<!-- Test -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

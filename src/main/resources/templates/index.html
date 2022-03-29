@@ -1,14 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Twoya formochka</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
 </head>
 <header>
+    <div>
+        <nav class="header-menu clearfix">
+            <ul>
+                <li>
+                    <a th:href="index.htm">Главная</a>
+                </li>
+                <li>
+                    <a th:href="clients.html">Клиенты</a>
+                </li>
+                <li>
+                    <a th:href="service_1.html">Сервис 2</a>
+                </li>
+                <li>
+                    <a th:href="service_1.html">Сервис 3</a>
+                </li>
+                <li>
+                    <a th:href="service_1.html">Сервис 4</a>
+                </li>
+                <li>
+                    <a th:href="service_1.html">Сервис 5</a>
+                </li>
+                <li>
+                    <a th:href="service_1.html">Сервис 6</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
 </header>
 <body>
-<h1>Добро пожаловать в бизнес-приложение </br> <b>Twoya formochka</b></h1>
-<img src="" alt="logotype">
+<div>
+    <h1>Добро пожаловать в бизнес-приложение </br> <b>Twoya formochka</b></h1>
+    <div>
+        <img th:src="@{/images/logo.png}" alt="logotype">
+    </div>
+</div>
 </body>
-<footer></footer>
+<footer>
+    <div>
+        <i>Created by Evstratov Dmitry</i>
+    </div>
+</footer>
 </html>
