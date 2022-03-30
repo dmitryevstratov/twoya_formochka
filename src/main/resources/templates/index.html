@@ -6,14 +6,14 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}"/>
 </head>
 <header>
-    <div>
-        <nav class="header-menu clearfix">
+    <section>
+        <nav>
             <ul>
                 <li>
-                    <a th:href="index.html">Главная</a>
+                    <a th:href="@{/index.html}">Главная</a>
                 </li>
                 <li>
-                    <a th:href="clients.html">Клиенты</a>
+                    <a th:href="@{/clients.html}">Клиенты</a>
                 </li>
                 <li>
                     <a th:href="service_1.html">Сервис 2</a>
@@ -32,19 +32,19 @@
                 </li>
             </ul>
         </nav>
-    </div>
+    </section>
 </header>
 <body>
-<div>
+<section>
     <h1>Добро пожаловать в бизнес-приложение </br> <b>Twoya formochka</b></h1>
     <div>
         <img th:src="@{/images/logo.png}" alt="logotype">
     </div>
-</div>
+</section>
 </body>
 <footer>
-    <div>
+    <section>
         <i>Created by Evstratov Dmitry</i>
-    </div>
+    </section>
 </footer>
 </html>
