@@ -13,44 +13,68 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 
 @RestController
 public class ClientControllerImpl implements ModelAndViewController, ClientController {
 
-    //ToDo убрать, когда будет реализован слой сервиса и репо
-    private static final List<ClientPl> clientPlList = new ArrayList<>();
-
-    static {
-        clientPlList.add(ClientPl.builder()
-                .id(1L)
-                .firstName("Vadim")
-                .lastName("Ivanov")
-                .secondName("Petrovich")
-                .address(AddressPl.builder().build())
-                .birthday(new Date())
-                .discounts(new HashSet<>())
-                .email("")
-                .orders(new ArrayList<>())
-                .build()
-        );
-    }
+    private static List<ClientPl> clientPlList = new ArrayList<>();
 
     @Override
     @GetMapping("/clients.html")
     public ModelAndView getView(Model model) {
-        //ToDo вместо clientPlList должно быть обращению к сервису
-        model.addAttribute("clientsPl", clientPlList);
         return new ModelAndView("clients");
     }
 
     @Override
-    @PostMapping("/createClient")
+    @GetMapping("/clients")
+    public List<ClientPl> getClients() {
+        ///ToDo вместо clientPlList должно быть обращению к сервису
+        clientPlList.add(ClientPl.builder()
+                .id(1L)
+                .firstName("Ivan")
+                .lastName("Baturov")
+                .secondName("Ivanovich")
+                .birthday(new Date())
+                .email("www.iiqw.ru")
+                .telephone("213124")
+                .address(AddressPl.builder()
+                        .id(1L)
+                        .country("Беларусь")
+                        .region("Гродненская")
+                        .locality("Гродно")
+                        .street("Ле")
+                        .room(8)
+                        .index(20)
+                        .build())
+                .build());
+        clientPlList.add(ClientPl.builder()
+                .id(2L)
+                .firstName("Grigory")
+                .lastName("Shedulov")
+                .secondName("Sidorovich")
+                .birthday(new Date())
+                .email("www.w222dff1.ru")
+                .telephone("9007772")
+                .address(AddressPl.builder()
+                        .id(1L)
+                        .country("Россия")
+                        .region("Московская")
+                        .locality("Москва")
+                        .street("Ле")
+                        .room(18)
+                        .index(2220)
+                        .build())
+                .build());
+        return clientPlList;
+    }
+
+    @Override
+    @PostMapping("/create/client")
     public ClientPl addClient(@RequestBody ClientPl clientPl) {
         ///ToDo вместо clientPlList должно быть обращению к сервису
         clientPlList.add(clientPl);
-        System.out.println(clientPl);
+        System.out.println(clientPlList.size());
         return clientPl;
     }
 }
