@@ -86,6 +86,15 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
     }
 
     @Override
+    @DeleteMapping("/clients/{id}")
+    public void deleteClientById(@PathVariable Long id) {
+        //ToDo вместо clientPlList должно быть обращению к сервису
+        System.out.println("Было " + clientPlList.size());
+        clientPlList.remove(Integer.parseInt(id.toString()) -1);
+        System.out.println("Стало " + clientPlList.size());
+    }
+
+    @Override
     @PostMapping("/clients/create")
     public ClientPl addClient(@RequestBody ClientPl clientPl) {
         ///ToDo вместо clientPlList должно быть обращению к сервису

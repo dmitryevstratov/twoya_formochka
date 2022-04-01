@@ -14,4 +14,6 @@ public interface ClientController {
 
     ClientPl getClientById(Long id);
 
+    void deleteClientById(Long id);
+
 }
