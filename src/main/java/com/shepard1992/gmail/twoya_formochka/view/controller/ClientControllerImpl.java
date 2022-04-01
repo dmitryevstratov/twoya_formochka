@@ -5,10 +5,7 @@ import com.shepard1992.gmail.twoya_formochka.view.controller.api.ModelAndViewCon
 import com.shepard1992.gmail.twoya_formochka.view.model.AddressPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -70,11 +67,30 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
     }
 
     @Override
-    @PostMapping("/create/client")
+    @PutMapping("/clients/edit")
+    public ClientPl editClient(@RequestBody ClientPl clientPl) {
+        //ToDo вместо clientPlList должно быть обращению к сервису
+        ClientPl updateClient = clientPlList.get(Integer.parseInt(clientPl.getId().toString()) - 1);
+        updateClient.setFirstName(clientPl.getFirstName());
+        updateClient.setLastName(clientPl.getLastName());
+        updateClient.setSecondName(clientPl.getSecondName());
+        System.out.println(updateClient);
+        return updateClient;
+    }
+
+    @Override
+    @GetMapping("/clients/{id}")
+    public ClientPl getClientById(@PathVariable Long id) {
+        //ToDo вместо clientPlList должно быть обращению к сервису
+        return clientPlList.get(Integer.parseInt(id.toString()) - 1);
+    }
+
+    @Override
+    @PostMapping("/clients/create")
     public ClientPl addClient(@RequestBody ClientPl clientPl) {
         ///ToDo вместо clientPlList должно быть обращению к сервису
+        System.out.println(clientPl);
         clientPlList.add(clientPl);
-        System.out.println(clientPlList.size());
         return clientPl;
     }
 }
