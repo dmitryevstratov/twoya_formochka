@@ -4,10 +4,7 @@ const URL_CLIENTS = "/clients";
 const DATA_CLIENTS = "data-clients"
 const URL_EDIT = "/clients/edit";
 
-//Method name and headers
-const POST = "POST";
-const DELETE = "DELETE";
-const PUT = "PUT";
+//Headers
 const CONTENT_TYPE_JSON = "application/json";
 
 //Create client field
@@ -139,6 +136,25 @@ function addClientInTable(client) {
     document.getElementById(DATA_CLIENTS).innerHTML += tmp;
 }
 
+//Utils
+
+function parsingDate(date) {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+
+    return year + "-" + month + "-" + day;
+}
+
+//Functions for form
+
 function clearForm(suffix) {
     document.querySelector(FIRST_NAME_ID + suffix).value = EMPTY_VALUE;
     document.querySelector(LAST_NAME_ID + suffix).value = EMPTY_VALUE;
@@ -179,21 +195,6 @@ function openForm(id) {
         document.querySelector("." + MODAL_BACKDROP).style.display = DISPLAY_BLOCK;
     }
 
-}
-
-function parsingDate(date) {
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-
-    if (month < 10) {
-        month = "0" + month;
-    }
-    if (day < 10) {
-        day = "0" + day;
-    }
-
-    return year + "-" + month + "-" + day;
 }
 
 function fillFormClientById(id, numSuffix, numModal) {
@@ -304,7 +305,7 @@ function fetchClientThen(data, suffix, modal) {
 
 function createClient() {
     if (checkValidityForm(EMPTY_VALUE)) {
-        fetchClient(URL_CREATE, getDataClient(""), POST)
+        fetchClient(URL_CREATE, getDataClient(""), "POST")
             .then((data) => {
                 fetchClientThen(data, EMPTY_VALUE, MODAL_CREATE);
             });
@@ -315,7 +316,7 @@ function createClient() {
 
 function editClient() {
     if (checkValidityForm(SUFFIX_EDIT_FIELD)) {
-        fetchClient(URL_EDIT, getDataClient(SUFFIX_EDIT_FIELD), PUT)
+        fetchClient(URL_EDIT, getDataClient(SUFFIX_EDIT_FIELD), "PUT")
             .then((data) => {
                 fetchClientThen(data, SUFFIX_EDIT_FIELD, MODAL_EDIT);
             })
@@ -327,7 +328,7 @@ function editClient() {
 function deleteClient() {
     let id = document.querySelector(ID_ID + SUFFIX_DELETE_FIELD).value;
     fetch(URL_CLIENTS + "/" + id, {
-        method: DELETE
+        method: "DELETE"
     }).then(
         result => {
             console.log(result);
