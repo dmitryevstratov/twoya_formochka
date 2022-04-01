@@ -36,6 +36,7 @@ const MODAL_OPEN = "modal-open";
 //Suffix
 const SUFFIX_EDIT_FIELD = "-edit";
 const SUFFIX_DELETE_FIELD = "-delete";
+const SUFFIX_SEARCH_FIELD = "-search";
 
 //ID modal window
 const MODAL_CREATE = "addClient";
@@ -107,7 +108,7 @@ function contentClient(client) {
     tmp += "<td>" + client.firstName + "</td>";
     tmp += "<td>" + client.lastName + "</td>";
     tmp += "<td>" + client.secondName + "</td>";
-    tmp += "<td>" + client.birthday + "</td>";
+    tmp += "<td>" + parsingDateForBirthday(new Date(client.birthday)) + "</td>";
     tmp += "<td>" + client.email + "</td>";
     tmp += "<td>" + client.telephone + "</td>";
     tmp += "<td>" + address + "</td>";
@@ -151,6 +152,21 @@ function parsingDate(date) {
     }
 
     return year + "-" + month + "-" + day;
+}
+
+function parsingDateForBirthday(date) {
+    let year = date.getFullYear();
+    let month = date.getMonth() + 1;
+    let day = date.getDate();
+
+    if (month < 10) {
+        month = "0" + month;
+    }
+    if (day < 10) {
+        day = "0" + day;
+    }
+
+    return day + "-" + month + "-" + year;
 }
 
 //Functions for form
@@ -282,7 +298,7 @@ function checkValidityForm(suffix) {
 
 //Fetch functions
 
-async function fetchClient(url = '', data = {}, method){
+async function fetchClient(url = '', data = {}, method) {
     const response = await fetch(url, {
         method: method,
         headers: {
@@ -339,4 +355,23 @@ function deleteClient() {
     ).catch(function (error) {
         console.log(error);
     });
+}
+
+//Method SEARCH
+
+function searchClient() {
+    let id = document.querySelector(ID_ID + SUFFIX_SEARCH_FIELD);
+    let firstName = document.querySelector(FIRST_NAME_ID + SUFFIX_SEARCH_FIELD);
+    let lastName = document.querySelector(LAST_NAME_ID + SUFFIX_SEARCH_FIELD);
+    let secondName = document.querySelector(SECOND_NAME_ID + SUFFIX_SEARCH_FIELD);
+    let birthday = document.querySelector(BIRTHDAY_ID + SUFFIX_SEARCH_FIELD);
+    let email = document.querySelector(EMAIL_ID + SUFFIX_SEARCH_FIELD);
+    let telephone = document.querySelector(TELEPHONE_ID + SUFFIX_SEARCH_FIELD);
+
+    fetch(URL_CLIENTS + "/search" + `?id=${id.value}&firstName=${firstName.value}&lastName=${lastName.value}&secondName=${secondName.value}&birthday=${birthday.value}&email=${email.value}&telephone=${telephone.value}`)
+        .then((
+            resp => resp.json()
+        )).catch(function (e) {
+        console.log(e);
+    })
 }

@@ -45,6 +45,46 @@
         <h1>Клиенты</h1>
     </div>
     <div>
+        <div>
+            <form>
+                <ul>
+                    <li>
+                        <h5>Поиск</h5>
+                    </li>
+                    <li>
+                        <label for="id-search"></label>
+                        <input type="number" id="id-search" placeholder="№">
+                    </li>
+                    <li>
+                        <label for="firstname-search"></label>
+                        <input type="text" id="firstname-search" placeholder="Имя">
+                    </li>
+                    <li>
+                        <label for="lastname-search"></label>
+                        <input type="text" id="lastname-search" placeholder="Фамилия">
+                    </li>
+                    <li>
+                        <label for="secondname-search"></label>
+                        <input type="text" id="secondname-search" placeholder="Отчество">
+                    </li>
+                    <li>
+                        <label for="birthday-search"></label>
+                        <input type="date" id="birthday-search" placeholder="Дата рождения">
+                    </li>
+                    <li>
+                        <label for="email-search"></label>
+                        <input type="email" id="email-search" placeholder="Email">
+                    </li>
+                    <li>
+                        <label for="telephone-search"></label>
+                        <input type="tel" id="telephone-search" placeholder="Контактный телефон">
+                    </li>
+                    <li>
+                        <button onclick="searchClient()" type="button">Найти</button>
+                    </li>
+                </ul>
+            </form>
+        </div>
         <table>
             <thead>
             <tr>
@@ -58,7 +98,7 @@
                 <th>Адрес</th>
             </tr>
             </thead>
-            <tbody th:id="data-clients">
+            <tbody id="data-clients">
             </tbody>
         </table>
         <!-- Button trigger modal create client -->
@@ -75,7 +115,8 @@
             <form class="row g-3 needs-validation" novalidate>
                 <div class="modal-header">
                     <h5 class="modal-title" id="addClientLabel">Добавить клиента</h5>
-                    <button type="button" onclick="hiddenForm('addClient')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" onclick="hiddenForm('addClient')" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12">
@@ -178,7 +219,8 @@
                 </div>
             </form>
         </div>
-    </div>(
+    </div>
+    (
 </div>
 <!-- Modal update client -->
 <div class="modal fade" id="editClient" tabindex="-1" aria-labelledby="editClientLabel" aria-hidden="true">
@@ -187,7 +229,8 @@
             <form class="row g-3 needs-validation" novalidate>
                 <div class="modal-header">
                     <h5 class="modal-title" id="editClientLabel">Редактировать клиента</h5>
-                    <button type="button" onclick="hiddenForm('editClient')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" onclick="hiddenForm('editClient')" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12">
@@ -298,7 +341,8 @@
                 </div>
             </form>
         </div>
-    </div>(
+    </div>
+    (
 </div>
 <!-- Modal delete client -->
 <div class="modal fade" id="deleteClient" tabindex="-1" aria-labelledby="deleteClientLabel" aria-hidden="true">
@@ -307,7 +351,8 @@
             <form class="row g-3 needs-validation" novalidate>
                 <div class="modal-header">
                     <h5 class="modal-title" id="deleteClientLabel">Удалить клиента</h5>
-                    <button type="button" onclick="hiddenForm('deleteClient')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" onclick="hiddenForm('deleteClient')" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12">
@@ -343,21 +388,24 @@
                     </div>
                     <div class="col-md-12">
                         <label for="birthday-delete" class="form-label">Дата рождения</label>
-                        <input type="date" class="form-control" id="birthday-delete" placeholder="10.02.1990" required readonly>
+                        <input type="date" class="form-control" id="birthday-delete" placeholder="10.02.1990" required
+                               readonly>
                         <div class="valid-feedback">
                             Все хорошо!
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="email-delete" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email-delete" placeholder="www.example@mail.ru" readonly>
+                        <input type="email" class="form-control" id="email-delete" placeholder="www.example@mail.ru"
+                               readonly>
                         <div class="valid-feedback">
                             Все хорошо!
                         </div>
                     </div>
                     <div class="col-md-12">
                         <label for="telephone-delete" class="form-label">Контактный телефон</label>
-                        <input type="tel" class="form-control" id="telephone-delete" placeholder="+375337639036" readonly>
+                        <input type="tel" class="form-control" id="telephone-delete" placeholder="+375337639036"
+                               readonly>
                         <div class="valid-feedback">
                             Все хорошо!
                         </div>
@@ -410,7 +458,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('deleteClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <button onclick="hiddenForm('deleteClient')" type="button" data-bs-dismiss="modal"
+                            aria-label="Close">
                         Закрыть
                     </button>
                     <button onclick="deleteClient()" type="button">Удалить
@@ -418,7 +467,8 @@
                 </div>
             </form>
         </div>
-    </div>(
+    </div>
+    (
 </div>
 <script>
     (function () {
