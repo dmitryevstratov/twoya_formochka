@@ -1,4 +1,4 @@
-package com.shepard1992.gmail.twoya_formochka.view;
+package com.shepard1992.gmail.twoya_formochka;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

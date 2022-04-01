@@ -2,7 +2,6 @@ package com.shepard1992.gmail.twoya_formochka.view.controller.api;
 
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
 
-import java.util.Date;
 import java.util.List;
 
 public interface ClientController {
