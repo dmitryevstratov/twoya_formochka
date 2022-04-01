@@ -62,7 +62,7 @@
             </tbody>
         </table>
         <!-- Button trigger modal create client -->
-        <button data-bs-toggle="modal" data-bs-target="#addClient">
+        <button data-bs-toggle="modal" data-bs-target="#addClient" onmousedown="openForm('addClient')">
             Добавить клиента
         </button>
     </div>
@@ -75,7 +75,7 @@
             <form class="row g-3 needs-validation" novalidate>
                 <div class="modal-header">
                     <h5 class="modal-title" id="addClientLabel">Добавить клиента</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" onclick="hiddenForm('addClient')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="col-md-12">
@@ -170,16 +170,135 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <button onclick="hiddenForm('addClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
                         Закрыть
                     </button>
-                    <button onclick="createClient()" type="button"
-                            class="btn btn-success btn-lg">Добавить
+                    <button onclick="createClient()" type="button">Добавить
                     </button>
                 </div>
             </form>
         </div>
-    </div>
+    </div>(
+</div>
+<!-- Modal update client -->
+<div class="modal fade" id="editClient" tabindex="-1" aria-labelledby="editClientLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="row g-3 needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editClientLabel">Добавить клиента</h5>
+                    <button type="button" onclick="hiddenForm('editClient')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <label for="id-edit" class="form-label">№</label>
+                        <input type="number" class="form-control" id="id-edit"
+                               required readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="firstname-edit" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="firstname-edit" placeholder="Иван"
+                               required>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="lastname-edit" class="form-label">Фамилия</label>
+                        <input type="text" class="form-control" id="lastname-edit" placeholder="Иванов"
+                               required>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="secondname-edit" class="form-label">Отчество</label>
+                        <input type="text" class="form-control" id="secondname-edit" placeholder="Иванович">
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="birthday-edit" class="form-label">Дата рождения</label>
+                        <input type="date" class="form-control" id="birthday-edit" placeholder="10.02.1990" required>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="email-edit" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email-edit" placeholder="www.example@mail.ru">
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="telephone-edit" class="form-label">Контактный телефон</label>
+                        <input type="tel" class="form-control" id="telephone-edit" placeholder="+375337639036">
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="country-edit" class="form-label">Страна</label>
+                        <input type="text" class="form-control" id="country-edit" placeholder="Беларусь"
+                               required>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="region-edit" class="form-label">Область</label>
+                        <input type="text" class="form-control" id="region-edit"
+                               placeholder="Гродненская" required>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="locality-edit" class="form-label">Населенный пункт</label>
+                        <input type="text" class="form-control" id="locality-edit" placeholder="Гродно"
+                               required>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="street-edit" class="form-label">Улица</label>
+                        <input type="text" class="form-control" id="street-edit" placeholder="Ленина 40"
+                               required>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="room-edit" class="form-label">Квартира</label>
+                        <input type="number" class="form-control" id="room-edit" placeholder="10">
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="index-edit" class="form-label">Индекс</label>
+                        <input type="number" class="form-control" id="index-edit" placeholder="230005">
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="hiddenForm('editClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        Закрыть
+                    </button>
+                    <button onclick="editClient()" type="button">Изменить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>(
 </div>
 <script>
     (function () {

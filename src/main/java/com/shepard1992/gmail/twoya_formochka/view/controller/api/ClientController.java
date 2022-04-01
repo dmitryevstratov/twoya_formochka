@@ -10,4 +10,8 @@ public interface ClientController {
 
     List<ClientPl> getClients();
 
+    ClientPl editClient(ClientPl clientPl);
+
+    ClientPl getClientById(Long id);
+
 }

@@ -11,24 +11,24 @@ import java.util.Set;
 @Builder
 public class ClientPl {
 
-    private final Long id;
+    private Long id;
 
-    private final String firstName;
+    private String firstName;
 
-    private final String lastName;
+    private String lastName;
 
-    private final String secondName;
+    private String secondName;
 
-    private final Date birthday;
+    private Date birthday;
 
-    private final AddressPl address;
+    private AddressPl address;
 
-    private final String email;
+    private String email;
 
-    private final String telephone;
+    private String telephone;
 
-    private final Set<DiscountPl> discounts;
+    private Set<DiscountPl> discounts;
 
-    private final List<OrderPl> orders;
+    private List<OrderPl> orders;
 
 }
