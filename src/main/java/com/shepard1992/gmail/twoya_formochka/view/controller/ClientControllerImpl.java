@@ -4,6 +4,7 @@ import com.shepard1992.gmail.twoya_formochka.view.controller.api.ClientControlle
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.ModelAndViewController;
 import com.shepard1992.gmail.twoya_formochka.view.model.AddressPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.FilterPl;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,6 +68,22 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
     }
 
     @Override
+    @GetMapping("/clients/{id}")
+    public ClientPl getClientById(@PathVariable Long id) {
+        //ToDo вместо clientPlList должно быть обращению к сервису
+        return clientPlList.get(Integer.parseInt(id.toString()) - 1);
+    }
+
+    @Override
+    @PostMapping("/clients/create")
+    public ClientPl addClient(@RequestBody ClientPl clientPl) {
+        //ToDo вместо clientPlList должно быть обращению к сервису
+        System.out.println(clientPl);
+        clientPlList.add(clientPl);
+        return clientPl;
+    }
+
+    @Override
     @PutMapping("/clients/edit")
     public ClientPl editClient(@RequestBody ClientPl clientPl) {
         //ToDo вместо clientPlList должно быть обращению к сервису
@@ -79,27 +96,36 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
     }
 
     @Override
-    @GetMapping("/clients/{id}")
-    public ClientPl getClientById(@PathVariable Long id) {
-        //ToDo вместо clientPlList должно быть обращению к сервису
-        return clientPlList.get(Integer.parseInt(id.toString()) - 1);
-    }
-
-    @Override
     @DeleteMapping("/clients/{id}")
     public void deleteClientById(@PathVariable Long id) {
         //ToDo вместо clientPlList должно быть обращению к сервису
         System.out.println("Было " + clientPlList.size());
-        clientPlList.remove(Integer.parseInt(id.toString()) -1);
+        clientPlList.remove(Integer.parseInt(id.toString()) - 1);
         System.out.println("Стало " + clientPlList.size());
     }
 
     @Override
-    @PostMapping("/clients/create")
-    public ClientPl addClient(@RequestBody ClientPl clientPl) {
-        ///ToDo вместо clientPlList должно быть обращению к сервису
-        System.out.println(clientPl);
-        clientPlList.add(clientPl);
-        return clientPl;
+    @GetMapping("/clients/search")
+    public List<ClientPl> searchByParams(
+            @RequestParam(value = "id", required = false) Long id,
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName,
+            @RequestParam(value = "secondName", required = false) String secondName,
+            @RequestParam(value = "birthday", required = false) String birthday,
+            @RequestParam(value = "email", required = false) String email,
+            @RequestParam(value = "telephone", required = false) String telephone
+    ) {
+        //ToDo вместо clientPlList должно быть обращению к сервису
+        System.out.println(FilterPl.builder()
+                .id(id)
+                .firstName(firstName)
+                .lastName(lastName)
+                .secondName(secondName)
+                .birthday(birthday)
+                .email(email)
+                .telephone(telephone)
+                .build());
+        return new ArrayList<>();
     }
+
 }
