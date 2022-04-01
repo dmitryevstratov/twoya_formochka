@@ -36,12 +36,13 @@ const CLASSNAME_SHOW = "show";
 const MODAL_BACKDROP = "modal-backdrop";
 const MODAL_OPEN = "modal-open";
 
-//Edit user field
+//Suffix
 const SUFFIX_EDIT_FIELD = "-edit";
+const SUFFIX_DELETE_FIELD = "-delete";
 
 //ID modal window
 const MODAL_CREATE = "addClient";
-const MODAL_DELETE = "delete";
+const MODAL_DELETE = "deleteClient";
 const MODAL_EDIT = "editClient";
 
 //Load clients on client page
@@ -113,10 +114,20 @@ function contentClient(client) {
     tmp += "<td>" + client.email + "</td>";
     tmp += "<td>" + client.telephone + "</td>";
     tmp += "<td>" + address + "</td>";
-    tmp += "<td><button onmousedown= \"fillFormEditClientById(" + client.id + ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editClient\">\n" +
+    tmp += "<td><button onmousedown= \"fillFormClientById("
+        + client.id + ', ' +
+        +0 + ', ' +
+        +0 +
+        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editClient\">\n" +
         " Редактировать" +
         "</button></td>";
-    tmp += "<td><button>Удалить</button></td>";
+    tmp += "<td><button onmousedown= \"fillFormClientById("
+        + client.id + ', ' +
+        +1 + ', ' +
+        +1 +
+        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteClient\">\n" +
+        " Удалить" +
+        "</button></td>";
     return tmp;
 }
 
@@ -185,34 +196,41 @@ function parsingDate(date) {
     return year + "-" + month + "-" + day;
 }
 
-//Method POST
+function fillFormClientById(id, numSuffix, numModal) {
 
-function createClient() {
-    if (checkValidityForm(EMPTY_VALUE)) {
-        fetchCreateClient(URL_CREATE, getDataClient(""))
-            .then((data) => {
-                console.log(data);
-                document.getElementById(DATA_CLIENTS).innerHTML = EMPTY_VALUE;
-                loadClients();
-                clearForm(EMPTY_VALUE);
-                hiddenForm(MODAL_CREATE);
-            });
-    }
-}
+    let suffix;
+    let modal;
 
-async function fetchCreateClient(url = '', data = {}) {
-    try {
-        const response = await fetch(url, {
-            method: POST,
-            headers: {
-                'Content-Type': CONTENT_TYPE_JSON
-            },
-            body: JSON.stringify(data)
-        });
-        return await response.json();
-    } catch (e) {
-        console.log(e)
+    if (numSuffix === 0 && numModal === 0) {
+        suffix = SUFFIX_EDIT_FIELD
+        modal = MODAL_EDIT
+    } else if (numSuffix === 1 && numModal === 1) {
+        suffix = SUFFIX_DELETE_FIELD
+        modal = MODAL_DELETE
     }
+
+    fetch(URL_CLIENTS + "/" + id).then((
+        resp => resp.json()
+    )).then(
+        function (client) {
+            document.querySelector(ID_ID + suffix).value = id;
+            document.querySelector(FIRST_NAME_ID + suffix).value = client.firstName;
+            document.querySelector(LAST_NAME_ID + suffix).value = client.lastName;
+            document.querySelector(SECOND_NAME_ID + suffix).value = client.secondName;
+            document.querySelector(BIRTHDAY_ID + suffix).value = parsingDate(new Date(client.birthday));
+            document.querySelector(EMAIL_ID + suffix).value = client.email;
+            document.querySelector(TELEPHONE_ID + suffix).value = client.telephone;
+            document.querySelector(COUNTRY_ID + suffix).value = client.address.country;
+            document.querySelector(REGION_ID + suffix).value = client.address.region;
+            document.querySelector(LOCALITY_ID + suffix).value = client.address.locality;
+            document.querySelector(STREET_ID + suffix).value = client.address.street;
+            document.querySelector(ROOM_ID + suffix).value = client.address.room;
+            document.querySelector(INDEX_ID + suffix).value = client.address.index;
+            openForm(modal);
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
 }
 
 function checkValidityForm(suffix) {
@@ -261,36 +279,11 @@ function checkValidityForm(suffix) {
     return true;
 }
 
-//Method PUT
+//Fetch functions
 
-function fillFormEditClientById(id) {
-    fetch(URL_CLIENTS + "/" + id).then((
-        resp => resp.json()
-    )).then(
-        function (client) {
-            document.querySelector(ID_ID + SUFFIX_EDIT_FIELD).value = id;
-            document.querySelector(FIRST_NAME_ID + SUFFIX_EDIT_FIELD).value = client.firstName;
-            document.querySelector(LAST_NAME_ID + SUFFIX_EDIT_FIELD).value = client.lastName;
-            document.querySelector(SECOND_NAME_ID + SUFFIX_EDIT_FIELD).value = client.secondName;
-            document.querySelector(BIRTHDAY_ID + SUFFIX_EDIT_FIELD).value = parsingDate(new Date(client.birthday));
-            document.querySelector(EMAIL_ID + SUFFIX_EDIT_FIELD).value = client.email;
-            document.querySelector(TELEPHONE_ID + SUFFIX_EDIT_FIELD).value = client.telephone;
-            document.querySelector(COUNTRY_ID + SUFFIX_EDIT_FIELD).value = client.address.country;
-            document.querySelector(REGION_ID + SUFFIX_EDIT_FIELD).value = client.address.region;
-            document.querySelector(LOCALITY_ID + SUFFIX_EDIT_FIELD).value = client.address.locality;
-            document.querySelector(STREET_ID + SUFFIX_EDIT_FIELD).value = client.address.street;
-            document.querySelector(ROOM_ID + SUFFIX_EDIT_FIELD).value = client.address.room;
-            document.querySelector(INDEX_ID + SUFFIX_EDIT_FIELD).value = client.address.index;
-            openForm(MODAL_EDIT);
-        }
-    ).catch(function (error) {
-        console.log(error);
-    });
-}
-
-async function fetchEditClient(url = '', data = {}) {
+async function fetchClient(url = '', data = {}, method){
     const response = await fetch(url, {
-        method: PUT,
+        method: method,
         headers: {
             'Content-Type': CONTENT_TYPE_JSON
         },
@@ -299,15 +292,50 @@ async function fetchEditClient(url = '', data = {}) {
     return await response.json();
 }
 
+function fetchClientThen(data, suffix, modal) {
+    console.log(data);
+    document.getElementById(DATA_CLIENTS).innerHTML = EMPTY_VALUE;
+    loadClients();
+    clearForm(suffix);
+    hiddenForm(modal);
+}
+
+//Method POST
+
+function createClient() {
+    if (checkValidityForm(EMPTY_VALUE)) {
+        fetchClient(URL_CREATE, getDataClient(""), POST)
+            .then((data) => {
+                fetchClientThen(data, EMPTY_VALUE, MODAL_CREATE);
+            });
+    }
+}
+
+//Method PUT
+
 function editClient() {
     if (checkValidityForm(SUFFIX_EDIT_FIELD)) {
-        fetchEditClient(URL_EDIT, getDataClient(SUFFIX_EDIT_FIELD))
-            .then((obj) => {
-                console.log(obj);
-                document.getElementById(DATA_CLIENTS).innerHTML = EMPTY_VALUE;
-                loadClients();
-                clearForm(SUFFIX_EDIT_FIELD);
-                hiddenForm(MODAL_EDIT);
+        fetchClient(URL_EDIT, getDataClient(SUFFIX_EDIT_FIELD), PUT)
+            .then((data) => {
+                fetchClientThen(data, SUFFIX_EDIT_FIELD, MODAL_EDIT);
             })
     }
+}
+
+//Method DELETE
+
+function deleteClient() {
+    let id = document.querySelector(ID_ID + SUFFIX_DELETE_FIELD).value;
+    fetch(URL_CLIENTS + "/" + id, {
+        method: DELETE
+    }).then(
+        result => {
+            console.log(result);
+            document.getElementById(DATA_CLIENTS).innerHTML = EMPTY_VALUE;
+            loadClients();
+            hiddenForm(MODAL_DELETE);
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
 }

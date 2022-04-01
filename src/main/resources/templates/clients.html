@@ -186,7 +186,7 @@
         <div class="modal-content">
             <form class="row g-3 needs-validation" novalidate>
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editClientLabel">Добавить клиента</h5>
+                    <h5 class="modal-title" id="editClientLabel">Редактировать клиента</h5>
                     <button type="button" onclick="hiddenForm('editClient')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -294,6 +294,126 @@
                         Закрыть
                     </button>
                     <button onclick="editClient()" type="button">Изменить
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>(
+</div>
+<!-- Modal delete client -->
+<div class="modal fade" id="deleteClient" tabindex="-1" aria-labelledby="deleteClientLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="row g-3 needs-validation" novalidate>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteClientLabel">Удалить клиента</h5>
+                    <button type="button" onclick="hiddenForm('deleteClient')" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <label for="id-delete" class="form-label">№</label>
+                        <input type="number" class="form-control" id="id-delete"
+                               required readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="firstname-delete" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="firstname-delete" placeholder="Иван"
+                               required readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="lastname-delete" class="form-label">Фамилия</label>
+                        <input type="text" class="form-control" id="lastname-delete" placeholder="Иванов"
+                               required readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="secondname-delete" class="form-label">Отчество</label>
+                        <input type="text" class="form-control" id="secondname-delete" placeholder="Иванович" readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="birthday-delete" class="form-label">Дата рождения</label>
+                        <input type="date" class="form-control" id="birthday-delete" placeholder="10.02.1990" required readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="email-delete" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email-delete" placeholder="www.example@mail.ru" readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="telephone-delete" class="form-label">Контактный телефон</label>
+                        <input type="tel" class="form-control" id="telephone-delete" placeholder="+375337639036" readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="country-delete" class="form-label">Страна</label>
+                        <input type="text" class="form-control" id="country-delete" placeholder="Беларусь"
+                               required readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="region-delete" class="form-label">Область</label>
+                        <input type="text" class="form-control" id="region-delete"
+                               placeholder="Гродненская" required readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="locality-delete" class="form-label">Населенный пункт</label>
+                        <input type="text" class="form-control" id="locality-delete" placeholder="Гродно"
+                               required readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="street-delete" class="form-label">Улица</label>
+                        <input type="text" class="form-control" id="street-delete" placeholder="Ленина 40"
+                               required readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="room-delete" class="form-label">Квартира</label>
+                        <input type="number" class="form-control" id="room-delete" placeholder="10" readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="index-delete" class="form-label">Индекс</label>
+                        <input type="number" class="form-control" id="index-delete" placeholder="230005" readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="hiddenForm('deleteClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        Закрыть
+                    </button>
+                    <button onclick="deleteClient()" type="button">Удалить
                     </button>
                 </div>
             </form>
