@@ -1,5 +1,6 @@
 package com.shepard1992.gmail.twoya_formochka.repository.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "addresses")
 public class Address {
@@ -32,5 +36,8 @@ public class Address {
 
     @Column
     private Integer index;
+
+    @OneToOne(mappedBy = "address")
+    private Client client;
 
 }

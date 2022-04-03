@@ -1,26 +1,43 @@
 package com.shepard1992.gmail.twoya_formochka.service.api;
 
+import com.shepard1992.gmail.twoya_formochka.repository.api.ClientRepository;
+import com.shepard1992.gmail.twoya_formochka.repository.model.Client;
+import com.shepard1992.gmail.twoya_formochka.service.mapping.ClientMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.FilterPl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ClientServiceImpl implements ClientService {
+
+    private final ClientRepository clientRepository;
+    private final ClientMapper mapper;
+
+    @Autowired
+    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper mapper) {
+        this.clientRepository = clientRepository;
+        this.mapper = mapper;
+    }
 
     @Override
     public ClientPl addClient(ClientPl clientPl) {
-        //ToDo обращаться в репозиторий
-        System.out.println("addClient");
-        return null;
+        Client client = clientRepository.save(mapper.mapperToClient(clientPl));
+        return mapper.mapperToClient(client);
     }
 
     @Override
     public List<ClientPl> getClients() {
-        System.out.println("getClients");
-        //ToDo обращаться в репозиторий
-        return null;
+        return clientRepository
+                .findAll()
+                .stream()
+                .map(mapper::mapperToClient)
+                .collect(Collectors.toList());
     }
 
     @Override

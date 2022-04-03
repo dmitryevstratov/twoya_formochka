@@ -13,9 +13,15 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //private DiscountType type;
+    @ManyToOne
+    @JoinColumn(name = "discount_type_id")
+    private DiscountType type;
 
     @Column
     private Integer value;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
 }
