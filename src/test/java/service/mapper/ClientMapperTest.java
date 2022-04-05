@@ -12,7 +12,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import service.config.MapperConfig;
+import service.config.MapperTestConfig;
 import view.stubs.AddressPlStub;
 import view.stubs.AddressStub;
 import view.stubs.ClientPlStub;
@@ -26,7 +26,7 @@ import java.util.Set;
 import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
-@Import(MapperConfig.class)
+@Import(MapperTestConfig.class)
 public class ClientMapperTest {
 
     @Autowired

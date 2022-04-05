@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import static org.mockito.Mockito.mock;
 
 @Configuration
-public class ClientServiceConfig {
+public class ClientServiceTestConfig {
 
     @Bean
     public ClientRepository getClientRepositoryBean() {

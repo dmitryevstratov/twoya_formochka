@@ -14,8 +14,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import service.config.ClientServiceConfig;
-import service.config.MapperConfig;
+import service.config.ClientServiceTestConfig;
+import service.config.MapperTestConfig;
 import view.stubs.*;
 
 import java.util.*;
@@ -27,8 +27,8 @@ import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @Import({
-        MapperConfig.class,
-        ClientServiceConfig.class
+        MapperTestConfig.class,
+        ClientServiceTestConfig.class
 })
 public class ClientServiceTest {
 

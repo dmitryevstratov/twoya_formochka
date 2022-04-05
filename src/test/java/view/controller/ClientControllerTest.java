@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
-import view.config.ViewConfig;
+import view.config.ViewTestConfig;
 import view.stubs.AddressPlStub;
 import view.stubs.ClientPlStub;
 import view.stubs.DiscountPlStub;
@@ -22,7 +22,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
-@Import(ViewConfig.class)
+@Import(ViewTestConfig.class)
 public class ClientControllerTest {
 
     @Autowired
