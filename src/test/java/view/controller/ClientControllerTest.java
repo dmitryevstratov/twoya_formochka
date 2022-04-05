@@ -4,15 +4,12 @@ import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.ClientController;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.ModelAndViewController;
 import com.shepard1992.gmail.twoya_formochka.view.model.*;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
-import org.springframework.web.servlet.ModelAndView;
 import view.config.ViewConfig;
 import view.stubs.AddressPlStub;
 import view.stubs.ClientPlStub;
@@ -65,7 +62,7 @@ public class ClientControllerTest {
         assertEquals("Ivanov", clientPl.getLastName());
         assertEquals("email", clientPl.getEmail());
         assertEquals("13145", clientPl.getTelephone());
-        assertEquals(new Date().toString(), clientPl.getBirthday().toString());
+        assertEquals("01.02.1990", clientPl.getBirthday());
 
         assertEquals(1, Integer.parseInt(address.getId().toString()));
         assertEquals("Беларусь", address.getCountry());
@@ -114,7 +111,7 @@ public class ClientControllerTest {
         assertEquals("Ivanov", clientPl.getLastName());
         assertEquals("email", clientPl.getEmail());
         assertEquals("13145", clientPl.getTelephone());
-        assertEquals(new Date().toString(), clientPl.getBirthday().toString());
+        assertEquals("01.02.1990", clientPl.getBirthday());
 
         assertEquals(1, Integer.parseInt(address.getId().toString()));
         assertEquals("Беларусь", address.getCountry());
@@ -168,7 +165,7 @@ public class ClientControllerTest {
         assertEquals("Ivanov", clientPl.getLastName());
         assertEquals("email", clientPl.getEmail());
         assertEquals("13145", clientPl.getTelephone());
-        assertEquals(new Date().toString(), clientPl.getBirthday().toString());
+        assertEquals("01.02.1990", clientPl.getBirthday());
 
         assertEquals(1, Integer.parseInt(address.getId().toString()));
         assertEquals("Беларусь", address.getCountry());
@@ -222,7 +219,7 @@ public class ClientControllerTest {
         assertEquals("Ivanov", clientPl.getLastName());
         assertEquals("email", clientPl.getEmail());
         assertEquals("13145", clientPl.getTelephone());
-        assertEquals(new Date().toString(), clientPl.getBirthday().toString());
+        assertEquals("01.02.1990", clientPl.getBirthday());
 
         assertEquals(1, Integer.parseInt(address.getId().toString()));
         assertEquals("Беларусь", address.getCountry());
@@ -293,7 +290,7 @@ public class ClientControllerTest {
         assertEquals("Ivanov", clientPl.getLastName());
         assertEquals("email", clientPl.getEmail());
         assertEquals("13145", clientPl.getTelephone());
-        assertEquals(new Date().toString(), clientPl.getBirthday().toString());
+        assertEquals("01.02.1990", clientPl.getBirthday());
 
         assertEquals(1, Integer.parseInt(address.getId().toString()));
         assertEquals("Беларусь", address.getCountry());

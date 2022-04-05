@@ -1,5 +1,6 @@
 package com.shepard1992.gmail.twoya_formochka.repository.model;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "client_id")
+    @NotNull
     private Client client;
 
 }

@@ -1,8 +1,11 @@
-package com.shepard1992.gmail.twoya_formochka.service.api;
+package com.shepard1992.gmail.twoya_formochka.service;
 
 import com.shepard1992.gmail.twoya_formochka.repository.api.ClientRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.model.Client;
-import com.shepard1992.gmail.twoya_formochka.service.mapping.ClientMapper;
+import com.shepard1992.gmail.twoya_formochka.repository.specification.ClientSpecification;
+import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
+import com.shepard1992.gmail.twoya_formochka.service.mapper.ClientMapper;
+import com.shepard1992.gmail.twoya_formochka.service.mapper.FilterMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.FilterPl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,17 +22,19 @@ public class ClientServiceImpl implements ClientService {
 
     private final ClientRepository clientRepository;
     private final ClientMapper mapper;
+    private final FilterMapper filterMapper;
 
     @Autowired
-    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper mapper) {
+    public ClientServiceImpl(ClientRepository clientRepository, ClientMapper mapper, FilterMapper filterMapper) {
         this.clientRepository = clientRepository;
         this.mapper = mapper;
+        this.filterMapper = filterMapper;
     }
 
     @Override
     public ClientPl addClient(ClientPl clientPl) {
         Client client = clientRepository.save(mapper.mapperToClient(clientPl));
-        return mapper.mapperToClient(client);
+        return mapper.mapperToClientPl(client);
     }
 
     @Override
@@ -36,35 +42,33 @@ public class ClientServiceImpl implements ClientService {
         return clientRepository
                 .findAll()
                 .stream()
-                .map(mapper::mapperToClient)
+                .map(mapper::mapperToClientPl)
+                .sorted((c, c1) -> Integer.parseInt((c.getId() - c1.getId()) + ""))
                 .collect(Collectors.toList());
     }
 
     @Override
     public ClientPl editClient(ClientPl clientPl) {
-        System.out.println("editClient");
-        //ToDo обращаться в репозиторий
-        return null;
+        Client client = clientRepository.save(mapper.mapperToClient(clientPl));
+        return mapper.mapperToClientPl(client);
     }
 
     @Override
     public ClientPl getClientById(Long id) {
-        System.out.println("getClientById");
-        //ToDo обращаться в репозиторий
-        return null;
+        return mapper.mapperToClientPl(Objects.requireNonNull(clientRepository.findById(id).orElse(null)));
     }
 
     @Override
     public void deleteClientById(Long id) {
-        System.out.println("deleteClientById");
-        //ToDo обращаться в репозиторий
+        clientRepository.deleteById(id);
     }
 
     @Override
     public List<ClientPl> searchByParams(FilterPl filterPl) {
-        System.out.println("searchByParams");
-        //ToDo обращаться в репозиторий
-        return null;
+        return clientRepository.findAll(new ClientSpecification(filterMapper.mapperToFilter(filterPl))).stream()
+                .map(mapper::mapperToClientPl)
+                .sorted((c, c1) -> Integer.parseInt((c.getId() - c1.getId()) + ""))
+                .collect(Collectors.toList());
     }
 
 }

@@ -1,5 +1,6 @@
 package com.shepard1992.gmail.twoya_formochka.repository.model;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,9 +16,11 @@ public class Discount {
 
     @ManyToOne
     @JoinColumn(name = "discount_type_id")
+    @NotNull
     private DiscountType type;
 
     @Column
+    @NotNull
     private Integer value;
 
     @ManyToOne

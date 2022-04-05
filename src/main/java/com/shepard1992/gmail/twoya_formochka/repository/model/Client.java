@@ -1,12 +1,12 @@
 package com.shepard1992.gmail.twoya_formochka.repository.model;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -19,23 +19,27 @@ import java.util.Set;
 public class Client {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
+    @NotNull
     private String firstName;
 
     @Column
+    @NotNull
     private String lastName;
 
     @Column
     private String secondName;
 
     @Column
-    private Date birthday;
+    @NotNull
+    private String birthday;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn (name="address_id")
+    @JoinColumn(name = "address_id")
+    @NotNull
     private Address address;
 
     @Column
