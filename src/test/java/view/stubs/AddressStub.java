@@ -1,14 +1,14 @@
 package view.stubs;
 
-import com.shepard1992.gmail.twoya_formochka.view.model.AddressPl;
+import com.shepard1992.gmail.twoya_formochka.repository.model.Address;
 
-public class AddressPlStub {
+public class AddressStub {
 
-    private AddressPlStub() {
+    private AddressStub() {
     }
 
-    public static AddressPl getStub() {
-        return AddressPl.builder()
+    public static Address getStub() {
+        return Address.builder()
                 .id(1L)
                 .country("Беларусь")
                 .region("Гродненская")

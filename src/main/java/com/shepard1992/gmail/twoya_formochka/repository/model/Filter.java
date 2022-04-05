@@ -1,15 +1,11 @@
-package com.shepard1992.gmail.twoya_formochka.view.model;
+package com.shepard1992.gmail.twoya_formochka.repository.model;
 
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
 @Data
 @Builder
-public class ClientPl {
+public class Filter {
 
     private Long id;
 
@@ -21,14 +17,8 @@ public class ClientPl {
 
     private String birthday;
 
-    private AddressPl address;
-
     private String email;
 
     private String telephone;
-
-    private Set<DiscountPl> discounts;
-
-    private List<OrderPl> orders;
 
 }

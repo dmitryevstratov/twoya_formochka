@@ -1,5 +1,6 @@
 package com.shepard1992.gmail.twoya_formochka.repository.model;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -13,9 +14,17 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    //private DiscountType type;
+    @ManyToOne
+    @JoinColumn(name = "discount_type_id")
+    @NotNull
+    private DiscountType type;
 
     @Column
+    @NotNull
     private Integer value;
+
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private Client client;
 
 }

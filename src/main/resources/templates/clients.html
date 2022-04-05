@@ -69,7 +69,7 @@
                     </li>
                     <li>
                         <label for="birthday-search"></label>
-                        <input type="date" id="birthday-search" placeholder="Дата рождения">
+                        <input type="text" id="birthday-search" placeholder="Дата рождения" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[1-9]{1}[0-9]{3}">
                     </li>
                     <li>
                         <label for="email-search"></label>
@@ -144,7 +144,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="birthday" class="form-label">Дата рождения</label>
-                        <input type="date" class="form-control" id="birthday" placeholder="10.02.1990" required>
+                        <input type="text" class="form-control" id="birthday" placeholder="10.02.1990" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[1-9]{1}[0-9]{3}" required>
                         <div class="valid-feedback">
                             Все хорошо!
                         </div>
@@ -209,6 +209,13 @@
                             Все хорошо!
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <label for="additionalInfo" class="form-label">Дополнительная информация</label>
+                        <textarea type="text" class="form-control" id="additionalInfo" placeholder="Адрес европочты или др."></textarea>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button onclick="hiddenForm('addClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
@@ -266,7 +273,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="birthday-edit" class="form-label">Дата рождения</label>
-                        <input type="date" class="form-control" id="birthday-edit" placeholder="10.02.1990" required>
+                        <input type="text" class="form-control" id="birthday-edit" placeholder="10.02.1990" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[1-9]{1}[0-9]{3}" required>
                         <div class="valid-feedback">
                             Все хорошо!
                         </div>
@@ -331,6 +338,13 @@
                             Все хорошо!
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <label for="additionalInfo-edit" class="form-label">Дополнительная информация</label>
+                        <textarea type="text" class="form-control" id="additionalInfo-edit" placeholder="Адрес европочты или др."></textarea>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button onclick="hiddenForm('editClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
@@ -388,7 +402,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="birthday-delete" class="form-label">Дата рождения</label>
-                        <input type="date" class="form-control" id="birthday-delete" placeholder="10.02.1990" required
+                        <input type="text" class="form-control" id="birthday-delete" placeholder="10.02.1990" pattern="(0[1-9]|1[0-9]|2[0-9]|3[01]).(0[1-9]|1[012]).[1-9]{1}[0-9]{3}" required
                                readonly>
                         <div class="valid-feedback">
                             Все хорошо!
@@ -452,6 +466,13 @@
                     <div class="col-md-12">
                         <label for="index-delete" class="form-label">Индекс</label>
                         <input type="number" class="form-control" id="index-delete" placeholder="230005" readonly>
+                        <div class="valid-feedback">
+                            Все хорошо!
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="additionalInfo-delete" class="form-label">Дополнительная информация</label>
+                        <textarea type="text" class="form-control" id="additionalInfo-delete" placeholder="Адрес европочты или др." readonly></textarea>
                         <div class="valid-feedback">
                             Все хорошо!
                         </div>

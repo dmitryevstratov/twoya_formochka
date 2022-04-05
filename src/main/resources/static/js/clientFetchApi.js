@@ -21,6 +21,7 @@ const LOCALITY_ID = "#locality";
 const STREET_ID = "#street";
 const ROOM_ID = "#room";
 const INDEX_ID = "#index";
+const ADD_INFO_ID = "#additionalInfo";
 
 //Empty value
 const EMPTY_VALUE = "";
@@ -85,7 +86,8 @@ function getDataClient(suffix) {
             locality: document.querySelector(LOCALITY_ID + suffix).value,
             street: document.querySelector(STREET_ID + suffix).value,
             room: document.querySelector(ROOM_ID + suffix).value,
-            index: document.querySelector(INDEX_ID + suffix).value
+            index: document.querySelector(INDEX_ID + suffix).value,
+            additionalInfo: document.querySelector(ADD_INFO_ID + suffix).value
         }
     };
 }
@@ -100,15 +102,16 @@ function contentClient(client) {
             "Регион: " + client.address.region + "<br>" +
             "Населенный пункт: " + client.address.locality + "<br>" +
             "Улица: " + client.address.street + "<br>" +
-            "Квартира: " + client.address.room + "<br>" +
-            "Индекс: " + client.address.index;
+            "Квартира: " + checkEmptyField(client.address.room) + "<br>" +
+            "Индекс: " + checkEmptyField(client.address.index) + "<br>" +
+            "Дополнительная инфо: " + client.address.additionalInfo;
     }
 
     tmp += "<td>" + client.id + "</td>";
     tmp += "<td>" + client.firstName + "</td>";
     tmp += "<td>" + client.lastName + "</td>";
     tmp += "<td>" + client.secondName + "</td>";
-    tmp += "<td>" + parsingDateForBirthday(new Date(client.birthday)) + "</td>";
+    tmp += "<td>" + client.birthday + "</td>";
     tmp += "<td>" + client.email + "</td>";
     tmp += "<td>" + client.telephone + "</td>";
     tmp += "<td>" + address + "</td>";
@@ -139,34 +142,10 @@ function addClientInTable(client) {
 
 //Utils
 
-function parsingDate(date) {
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-
-    if (month < 10) {
-        month = "0" + month;
+function checkEmptyField(field) {
+    if (field == null || field === "") {
+        return "";
     }
-    if (day < 10) {
-        day = "0" + day;
-    }
-
-    return year + "-" + month + "-" + day;
-}
-
-function parsingDateForBirthday(date) {
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let day = date.getDate();
-
-    if (month < 10) {
-        month = "0" + month;
-    }
-    if (day < 10) {
-        day = "0" + day;
-    }
-
-    return day + "-" + month + "-" + year;
 }
 
 //Functions for form
@@ -184,6 +163,7 @@ function clearForm(suffix) {
     document.querySelector(STREET_ID + suffix).value = EMPTY_VALUE;
     document.querySelector(ROOM_ID + suffix).value = EMPTY_VALUE;
     document.querySelector(INDEX_ID + suffix).value = EMPTY_VALUE;
+    document.querySelector(ADD_INFO_ID + suffix).value = EMPTY_VALUE;
 }
 
 function hiddenForm(id) {
@@ -234,7 +214,7 @@ function fillFormClientById(id, numSuffix, numModal) {
             document.querySelector(FIRST_NAME_ID + suffix).value = client.firstName;
             document.querySelector(LAST_NAME_ID + suffix).value = client.lastName;
             document.querySelector(SECOND_NAME_ID + suffix).value = client.secondName;
-            document.querySelector(BIRTHDAY_ID + suffix).value = parsingDate(new Date(client.birthday));
+            document.querySelector(BIRTHDAY_ID + suffix).value = client.birthday;
             document.querySelector(EMAIL_ID + suffix).value = client.email;
             document.querySelector(TELEPHONE_ID + suffix).value = client.telephone;
             document.querySelector(COUNTRY_ID + suffix).value = client.address.country;
@@ -243,6 +223,7 @@ function fillFormClientById(id, numSuffix, numModal) {
             document.querySelector(STREET_ID + suffix).value = client.address.street;
             document.querySelector(ROOM_ID + suffix).value = client.address.room;
             document.querySelector(INDEX_ID + suffix).value = client.address.index;
+            document.querySelector(ADD_INFO_ID + suffix).value = client.address.additionalInfo;
             openForm(modal);
         }
     ).catch(function (error) {
@@ -369,9 +350,17 @@ function searchClient() {
     let telephone = document.querySelector(TELEPHONE_ID + SUFFIX_SEARCH_FIELD);
 
     fetch(URL_CLIENTS + "/search" + `?id=${id.value}&firstName=${firstName.value}&lastName=${lastName.value}&secondName=${secondName.value}&birthday=${birthday.value}&email=${email.value}&telephone=${telephone.value}`)
-        .then((
-            resp => resp.json()
-        )).catch(function (e) {
-        console.log(e);
-    })
+        .then((resp) => resp.json())
+        .then(function (data) {
+            console.log(data);
+            document.getElementById(DATA_CLIENTS).innerHTML = EMPTY_VALUE;
+            if (data.length > 0) {
+                data.forEach((client => {
+                    addClientInTable(client);
+                }))
+            }
+        })
+        .catch(function (e) {
+            console.log(e);
+        })
 }

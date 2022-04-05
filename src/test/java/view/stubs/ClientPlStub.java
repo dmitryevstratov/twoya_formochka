@@ -20,7 +20,7 @@ public class ClientPlStub {
                 .firstName("Ivan")
                 .secondName("Ivanovich")
                 .lastName("Ivanov")
-                .birthday(new Date())
+                .birthday("01.02.1990")
                 .email("email")
                 .telephone("13145")
                 .address(addressPl)

@@ -21,4 +21,6 @@ public class AddressPl {
 
     private Integer index;
 
+    private String additionalInfo;
+
 }
