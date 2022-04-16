@@ -28,7 +28,6 @@ import static org.junit.Assert.assertNotNull;
         TwoyaFormochkaApplication.class,
         ClientRepositoryTestConfig.class
 })
-@DirtiesContext
 public class ClientRepositoryIntegrationTest {
 
     @Autowired
