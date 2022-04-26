@@ -46,3 +46,16 @@ function openForm(id) {
     }
 
 }
+
+//Fetch
+
+async function fetchSendData(url = '', data = {}, method) {
+    const response = await fetch(url, {
+        method: method,
+        headers: {
+            'Content-Type': CONTENT_TYPE_JSON
+        },
+        body: JSON.stringify(data)
+    });
+    return await response.json();
+}

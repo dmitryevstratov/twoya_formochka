@@ -1,6 +1,6 @@
 package view.stubs;
 
-import com.shepard1992.gmail.twoya_formochka.repository.model.Address;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Address;
 
 public class AddressStub {
 

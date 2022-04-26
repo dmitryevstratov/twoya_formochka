@@ -1,4 +1,4 @@
-package com.shepard1992.gmail.twoya_formochka.repository.model;
+package com.shepard1992.gmail.twoya_formochka.repository.dto;
 
 import lombok.Builder;
 import lombok.Data;

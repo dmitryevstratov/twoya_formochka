@@ -1,4 +1,4 @@
-package com.shepard1992.gmail.twoya_formochka.repository.model;
+package com.shepard1992.gmail.twoya_formochka.repository.entity;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -48,8 +47,12 @@ public class Client {
     @Column
     private String telephone;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
-    private Set<Discount> discounts;
+    @ManyToMany
+    @JoinTable(
+            joinColumns = {@JoinColumn(name = "client_id")},
+            inverseJoinColumns = {@JoinColumn(name = "discount_id")}
+    )
+    private List<Discount> discounts;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<Order> orders;

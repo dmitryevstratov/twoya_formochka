@@ -1,9 +1,9 @@
 package service;
 
 import com.shepard1992.gmail.twoya_formochka.repository.api.ClientRepository;
-import com.shepard1992.gmail.twoya_formochka.repository.model.Client;
-import com.shepard1992.gmail.twoya_formochka.repository.model.Discount;
-import com.shepard1992.gmail.twoya_formochka.repository.model.Order;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.repository.specification.ClientSpecification;
 import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
@@ -18,7 +18,10 @@ import service.config.ClientServiceTestConfig;
 import service.config.MapperTestConfig;
 import view.stubs.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -40,12 +43,12 @@ public class ClientServiceTest {
 
     private final List<Order> orderList = new ArrayList<>();
     private final List<OrderPl> orderPlList = new ArrayList<>();
-    private final Set<Discount> discountSet = new HashSet<>();
-    private final Set<DiscountPl> discountPlSet = new HashSet<>();
+    private final List<Discount> discountList = new ArrayList<>();
+    private final List<DiscountPl> discountPlSet = new ArrayList<>();
     private final Client stub = ClientStub.getStub(
             AddressStub.getStub(),
             orderList,
-            discountSet
+            discountList
     );
     private final ClientPl stubPl = ClientPlStub.getStub(
             AddressPlStub.getStub(),

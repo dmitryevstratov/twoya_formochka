@@ -1,6 +1,6 @@
 package com.shepard1992.gmail.twoya_formochka.service.mapper;
 
-import com.shepard1992.gmail.twoya_formochka.repository.model.Filter;
+import com.shepard1992.gmail.twoya_formochka.repository.dto.Filter;
 import com.shepard1992.gmail.twoya_formochka.view.model.FilterPl;
 import org.springframework.stereotype.Component;
 

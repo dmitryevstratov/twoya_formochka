@@ -7,6 +7,7 @@ import com.shepard1992.gmail.twoya_formochka.view.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
@@ -15,7 +16,10 @@ import view.stubs.AddressPlStub;
 import view.stubs.ClientPlStub;
 import view.stubs.DiscountPlStub;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -28,6 +32,7 @@ public class ClientControllerTest {
     @Autowired
     public ClientController clientController;
 
+    @Qualifier("getClientControllerBean")
     @Autowired
     public ModelAndViewController modelAndViewController;
 
@@ -37,9 +42,15 @@ public class ClientControllerTest {
     @Test
     public void test_when_call_getClients_then_return_result() {
         List<ClientPl> clientPlList = new ArrayList<>();
-        Set<DiscountPl> discountPlList = new HashSet<>();
+        List<DiscountPl> discountPlList = new ArrayList<>();
         List<OrderPl> orderPlList = new ArrayList<>();
 
+        orderPlList.add(OrderPl.builder()
+                .idClient(1L)
+                .price(10.2)
+                .idDiscount(1L)
+                .items(List.of(ItemsOrderPl.builder().id(7L).count(2).build()))
+                .build());
         discountPlList.add(DiscountPlStub.getStub(DiscountTypePl.builder()
                 .id(1L)
                 .name("Новый Год")
@@ -55,6 +66,7 @@ public class ClientControllerTest {
 
         ClientPl clientPl = clients.get(0);
         AddressPl address = clientPl.getAddress();
+        OrderPl orderPl = clientPl.getOrders().get(0);
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
         assertEquals("Ivan", clientPl.getFirstName());
@@ -81,15 +93,25 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        //ToDo write test for orders
+        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), orderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
+        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
 
     }
 
     @Test
     public void test_when_call_getClientById_then_return_result() {
-        Set<DiscountPl> discountPlList = new HashSet<>();
+        List<DiscountPl> discountPlList = new ArrayList<>();
         List<OrderPl> orderPlList = new ArrayList<>();
 
+        orderPlList.add(OrderPl.builder()
+                .idClient(1L)
+                .price(10.2)
+                .idDiscount(1L)
+                .items(List.of(ItemsOrderPl.builder().id(7L).count(2).build()))
+                .build());
         discountPlList.add(DiscountPlStub.getStub(DiscountTypePl.builder()
                 .id(1L)
                 .name("Новый Год")
@@ -102,7 +124,7 @@ public class ClientControllerTest {
         ));
 
         ClientPl clientPl = clientController.getClientById(1L);
-
+        OrderPl orderPl = clientPl.getOrders().get(0);
         AddressPl address = clientPl.getAddress();
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
@@ -130,16 +152,26 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        //ToDo write test for orders
+        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), orderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
+        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
 
     }
 
     @Test
     public void test_when_call_addClient_then_return_result() {
 
-        Set<DiscountPl> discountPlList = new HashSet<>();
+        List<DiscountPl> discountPlList = new ArrayList<>();
         List<OrderPl> orderPlList = new ArrayList<>();
 
+        orderPlList.add(OrderPl.builder()
+                .idClient(1L)
+                .price(10.2)
+                .idDiscount(1L)
+                .items(List.of(ItemsOrderPl.builder().id(7L).count(2).build()))
+                .build());
         discountPlList.add(DiscountPlStub.getStub(DiscountTypePl.builder()
                 .id(1L)
                 .name("Новый Год")
@@ -157,6 +189,7 @@ public class ClientControllerTest {
                 discountPlList
         ));
 
+        OrderPl orderPl = clientPl.getOrders().get(0);
         AddressPl address = clientPl.getAddress();
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
@@ -184,16 +217,26 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        //ToDo write test for orders
+        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), orderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
+        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
 
     }
 
     @Test
     public void test_when_call_editClient_then_return_result() {
 
-        Set<DiscountPl> discountPlList = new HashSet<>();
+        List<DiscountPl> discountPlList = new ArrayList<>();
         List<OrderPl> orderPlList = new ArrayList<>();
 
+        orderPlList.add(OrderPl.builder()
+                .idClient(1L)
+                .price(10.2)
+                .idDiscount(1L)
+                .items(List.of(ItemsOrderPl.builder().id(7L).count(2).build()))
+                .build());
         discountPlList.add(DiscountPlStub.getStub(DiscountTypePl.builder()
                 .id(1L)
                 .name("Новый Год")
@@ -212,6 +255,7 @@ public class ClientControllerTest {
         ));
 
         AddressPl address = clientPl.getAddress();
+        OrderPl orderPl = clientPl.getOrders().get(0);
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
         assertEquals("Ivan", clientPl.getFirstName());
@@ -238,7 +282,11 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        //ToDo write test for orders
+        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), orderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
+        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
 
     }
 
@@ -257,9 +305,15 @@ public class ClientControllerTest {
     public void test_when_call_searchByParams_then_return_result() {
 
         List<ClientPl> clientPlList = new ArrayList<>();
-        Set<DiscountPl> discountPlList = new HashSet<>();
+        List<DiscountPl> discountPlList = new ArrayList<>();
         List<OrderPl> orderPlList = new ArrayList<>();
 
+        orderPlList.add(OrderPl.builder()
+                .idClient(1L)
+                .price(10.2)
+                .idDiscount(1L)
+                .items(List.of(ItemsOrderPl.builder().id(7L).count(2).build()))
+                .build());
         discountPlList.add(DiscountPlStub.getStub(DiscountTypePl.builder()
                 .id(1L)
                 .name("Новый Год")
@@ -283,6 +337,7 @@ public class ClientControllerTest {
 
         ClientPl clientPl = clients.get(0);
         AddressPl address = clientPl.getAddress();
+        OrderPl orderPl = clientPl.getOrders().get(0);
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
         assertEquals("Ivan", clientPl.getFirstName());
@@ -309,7 +364,11 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        //ToDo write test for orders
+        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), orderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
+        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
 
     }
 
@@ -317,6 +376,7 @@ public class ClientControllerTest {
     public void test_when_call_getView_then_return_result() {
 
         assertNotNull(modelAndViewController.getView(new Model() {
+
             @Override
             public Model addAttribute(String attributeName, Object attributeValue) {
                 return null;
@@ -356,6 +416,7 @@ public class ClientControllerTest {
             public Map<String, Object> asMap() {
                 return null;
             }
+
         }));
 
     }

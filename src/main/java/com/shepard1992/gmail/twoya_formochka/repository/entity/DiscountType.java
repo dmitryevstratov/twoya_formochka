@@ -1,4 +1,4 @@
-package com.shepard1992.gmail.twoya_formochka.repository.model;
+package com.shepard1992.gmail.twoya_formochka.repository.entity;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
@@ -7,22 +7,25 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "discountType")
+public class DiscountType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
+    @Column
     @NotNull
-    private Client client;
+    private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+    private List<Discount> discounts;
 
 }

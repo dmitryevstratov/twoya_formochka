@@ -1,4 +1,4 @@
-package com.shepard1992.gmail.twoya_formochka.repository.model;
+package com.shepard1992.gmail.twoya_formochka.repository.entity;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;

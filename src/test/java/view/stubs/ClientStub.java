@@ -1,19 +1,18 @@
 package view.stubs;
 
-import com.shepard1992.gmail.twoya_formochka.repository.model.Address;
-import com.shepard1992.gmail.twoya_formochka.repository.model.Client;
-import com.shepard1992.gmail.twoya_formochka.repository.model.Discount;
-import com.shepard1992.gmail.twoya_formochka.repository.model.Order;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Address;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 
 import java.util.List;
-import java.util.Set;
 
 public class ClientStub {
 
     private ClientStub() {
     }
 
-    public static Client getStub(Address address, List<Order> orderList, Set<Discount> discountSet) {
+    public static Client getStub(Address address, List<Order> orderList, List<Discount> discountSet) {
         return Client.builder()
                 .id(1L)
                 .firstName("Ivan")

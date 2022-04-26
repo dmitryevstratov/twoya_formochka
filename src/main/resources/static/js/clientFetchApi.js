@@ -206,17 +206,6 @@ function checkValidityForm(suffix) {
 
 //Fetch functions
 
-async function fetchClient(url = '', data = {}, method) {
-    const response = await fetch(url, {
-        method: method,
-        headers: {
-            'Content-Type': CONTENT_TYPE_JSON
-        },
-        body: JSON.stringify(data)
-    });
-    return await response.json();
-}
-
 function fetchClientThen(data, idForm, modal) {
     console.log(data);
     document.getElementById(DATA_CLIENTS).innerHTML = EMPTY_VALUE;
@@ -229,7 +218,7 @@ function fetchClientThen(data, idForm, modal) {
 
 function createClient() {
     if (checkValidityForm(EMPTY_VALUE)) {
-        fetchClient(URL_CREATE, getDataClient(""), "POST")
+        fetchSendData(URL_CREATE, getDataClient(""), POST)
             .then((data) => {
                 fetchClientThen(data, "addClientForm", MODAL_CREATE);
             });
@@ -240,7 +229,7 @@ function createClient() {
 
 function editClient() {
     if (checkValidityForm(SUFFIX_EDIT_FIELD)) {
-        fetchClient(URL_EDIT, getDataClient(SUFFIX_EDIT_FIELD), "PUT")
+        fetchSendData(URL_EDIT, getDataClient(SUFFIX_EDIT_FIELD), PUT)
             .then((data) => {
                 fetchClientThen(data, null, MODAL_EDIT);
             })
@@ -252,7 +241,7 @@ function editClient() {
 function deleteClient() {
     let id = document.querySelector(ID_ID + SUFFIX_DELETE_FIELD).value;
     fetch(URL_CLIENTS + "/" + id, {
-        method: "DELETE"
+        method: DELETE
     }).then(
         result => {
             console.log(result);

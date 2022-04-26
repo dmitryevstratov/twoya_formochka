@@ -53,6 +53,12 @@
 			<version>42.2.10</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+			<version>8.5.8</version>
+		</dependency>
+
 		<!-- Lombok -->
 
 		<dependency>
@@ -113,6 +119,9 @@
 					<excludes>
 						<exclude>**/api/**</exclude>
 						<exclude>**/model/**</exclude>
+						<exclude>**/dto/**</exclude>
+						<exclude>**/entity/**</exclude>
+						<exclude>**/enums/**</exclude>
 						<exclude>**/specification/**</exclude>
 					</excludes>
 				</configuration>
