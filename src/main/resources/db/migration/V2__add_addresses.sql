@@ -1,0 +1,10 @@
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (1, '', 'Беларусь', 230005, 'Гродненская область', 'Гродно', 8, 'Дзержинского 149');
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (2, '', 'Беларусь', 25444, 'Брестская область', 'Брест', 123, 'Ленина 24');
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (3, 'Европочта', 'Беларусь', 230002, 'Минская область', 'Минск', 201, 'Независимости 2');
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (4, 'СДЕК', 'Россия', 252223, 'Московская облсать', 'Москва', 12, 'Сталина 11');
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (5, 'СДЕК', 'Россия', 330035, 'Московская область', 'Коломна', null, 'Ворошилова 4');
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (6, '', 'Беларусь', 215444, 'Минская область', 'Молодечно', null, 'Урюпина 89');
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (7, '', 'Беларусь', 110025, 'Гродненская область', 'Гродно', 10, 'Лиможа 29');
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (8, '', 'Беларусь', 123333, 'Гомельская область', 'Гомель', 3, 'Болдина 94');
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (9, '', 'Беларусь', 110025, 'Гродненская область', 'Мосты', 1, 'Сельская 29');
+insert into addresses (id, additional_info, country, index, locality, region, room, street) values (10, '', 'Беларусь', 123333, 'Гомельская область', 'Гомель', 3, 'Родичева 4');

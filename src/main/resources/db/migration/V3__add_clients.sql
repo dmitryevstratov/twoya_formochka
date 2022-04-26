@@ -1,0 +1,10 @@
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (1, 1, '21.12.1962', 'www.torti@gmail.com', 'Полина', 'Земелькина', 'Ивановна', '+375336211818');
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (2, 2, '11.06.1994', null, 'Наталья', 'Простых', 'Сидиривна', '+375294358739');
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (3, 3, '20.02.1976', null, 'Ирина', 'Валькирьевич', 'Игоревна', '+375332231123');
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (4, 4, '11.01.1987', null, 'Галина', 'Байдак', 'Олеговна', '+375292312739');
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (5, 5, '02.07.1978', 'www.ponchik@gmail.com', 'Светлана', 'Жиромир', 'Николаевна', '+375338763434');
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (6, 6, '11.06.1994', 'www.pirogi@gmail.com', 'Анна', 'Полосова', 'Дмитриевна', '+375299086543');
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (7, 7, '17.10.1970', 'www.vipichka@gmail.com', 'Инга', 'Петрович', 'Николаевна', '+375337653490');
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (8, 8, '27.01.1972', 'www.korzi@gmail.com', 'Александра', 'Чигак', 'Сергеевна', '+375449873567');
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (9, 9, '10.01.1992', 'www.pechenie@gmail.com', 'Анастасия', 'Зебестова', 'Петрововна', '+375235432728');
+insert into clients (id, address_id, birthday, email, first_name, last_name, second_name, telephone) values (10, 10, '19.03.1994', 'www.vatrushka@gmail.com', 'Галина', 'Деревенских', 'Ивановна', '+375339087628');

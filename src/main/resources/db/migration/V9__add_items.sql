@@ -1,0 +1,10 @@
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (1, 'Елочка-1', 4.0, 10.0, 1, 1);
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (2, 'Кот-1', 4.0, 10.0, 2, 2);
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (3, 'Собачка-1', 5.0, 12.0, 2, 2);
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (4, 'Круг-1', 4.5, 11.0, 4, 1);
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (5, 'Круг-2', 4.3, 9.0, 4, 1);
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (6, 'Квадрат-1', 5.0, 10.0, 4, 1);
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (7, 'Машинка-1', 6.2, 10.0, 3, 2);
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (8, 'Цветок роза-1', 4.3, 8.0, 1, 2);
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (9, 'Цветок тюльпан-1', 3.0, 7.0, 1, 2);
+insert into items (id, name, price, size, item_category_id, item_type_id) VALUES (10, 'Снежинка-1', 3.5, 9.0, 1, 2);
