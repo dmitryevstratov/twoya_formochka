@@ -1,6 +1,5 @@
 package view.stubs;
 
-import com.shepard1992.gmail.twoya_formochka.repository.model.Filter;
 import com.shepard1992.gmail.twoya_formochka.view.model.FilterPl;
 
 public class FilterPlStub {

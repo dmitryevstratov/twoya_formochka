@@ -1,11 +1,18 @@
-package com.shepard1992.gmail.twoya_formochka.repository.model;
+package com.shepard1992.gmail.twoya_formochka.repository.entity;
 
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "discounts")
 public class Discount {
@@ -23,8 +30,10 @@ public class Discount {
     @NotNull
     private Integer value;
 
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
+    @OneToMany(mappedBy = "discount")
+    private List<Order> orders;
+
+    @ManyToMany(mappedBy = "discounts")
+    private List<Client> clients;
 
 }

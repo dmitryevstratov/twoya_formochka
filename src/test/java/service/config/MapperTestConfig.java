@@ -1,8 +1,6 @@
 package service.config;
 
-import com.shepard1992.gmail.twoya_formochka.service.mapper.AddressMapper;
-import com.shepard1992.gmail.twoya_formochka.service.mapper.ClientMapper;
-import com.shepard1992.gmail.twoya_formochka.service.mapper.FilterMapper;
+import com.shepard1992.gmail.twoya_formochka.service.mapper.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,13 +8,33 @@ import org.springframework.context.annotation.Configuration;
 public class MapperTestConfig {
 
     @Bean
+    public OrderMapper getOrderMapperBean() {
+        return new OrderMapper();
+    }
+
+    @Bean
+    public ItemMapper getItemMapperBean() {
+        return new ItemMapper();
+    }
+
+    @Bean
+    public ItemFilterMapper getItemFilterMapperBean() {
+        return new ItemFilterMapper();
+    }
+
+    @Bean
+    public DiscountMapper getDiscountMapperBean() {
+        return new DiscountMapper();
+    }
+
+    @Bean
     public AddressMapper getAddressMapperBean() {
         return new AddressMapper();
     }
 
     @Bean
-    public ClientMapper getClientMapperBean() {
-        return new ClientMapper(getAddressMapperBean());
+    public ClientMapper getClientMapperBean(DiscountMapper discountMapper) {
+        return new ClientMapper(getAddressMapperBean(), discountMapper);
     }
 
     @Bean

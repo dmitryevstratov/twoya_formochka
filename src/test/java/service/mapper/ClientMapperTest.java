@@ -1,8 +1,8 @@
 package service.mapper;
 
-import com.shepard1992.gmail.twoya_formochka.repository.model.Client;
-import com.shepard1992.gmail.twoya_formochka.repository.model.Discount;
-import com.shepard1992.gmail.twoya_formochka.repository.model.Order;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.ClientMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
@@ -19,9 +19,7 @@ import view.stubs.ClientPlStub;
 import view.stubs.ClientStub;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 
@@ -33,9 +31,9 @@ public class ClientMapperTest {
     private ClientMapper clientMapper;
 
     @Test
-    public void test_mapperToClient(){
+    public void test_mapperToClient() {
         List<OrderPl> orderPlList = new ArrayList<>();
-        Set<DiscountPl> discountPlSet = new HashSet<>();
+        List<DiscountPl> discountPlSet = new ArrayList<>();
         ClientPl stub = ClientPlStub.getStub(
                 AddressPlStub.getStub(),
                 orderPlList,
@@ -54,13 +52,13 @@ public class ClientMapperTest {
     }
 
     @Test
-    public void test_mapperToClientPl(){
+    public void test_mapperToClientPl() {
         List<Order> orderList = new ArrayList<>();
-        Set<Discount> discountSet = new HashSet<>();
+        List<Discount> discountList = new ArrayList<>();
         Client stub = ClientStub.getStub(
                 AddressStub.getStub(),
                 orderList,
-                discountSet
+                discountList
         );
 
         ClientPl clientPl = clientMapper.mapperToClientPl(stub);

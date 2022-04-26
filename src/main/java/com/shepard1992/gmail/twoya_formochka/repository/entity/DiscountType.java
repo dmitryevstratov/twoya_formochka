@@ -1,12 +1,18 @@
-package com.shepard1992.gmail.twoya_formochka.repository.model;
+package com.shepard1992.gmail.twoya_formochka.repository.entity;
 
 import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "discountType")
 public class DiscountType {
@@ -20,6 +26,6 @@ public class DiscountType {
     private String name;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
-    private List<Discount> discount;
+    private List<Discount> discounts;
 
 }

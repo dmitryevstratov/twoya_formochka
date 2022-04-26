@@ -1,6 +1,6 @@
 package service.mapper;
 
-import com.shepard1992.gmail.twoya_formochka.repository.model.Filter;
+import com.shepard1992.gmail.twoya_formochka.repository.dto.Filter;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.FilterMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,6 +1,6 @@
 package service.mapper;
 
-import com.shepard1992.gmail.twoya_formochka.repository.model.Address;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Address;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.AddressMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.AddressPl;
 import org.junit.Test;

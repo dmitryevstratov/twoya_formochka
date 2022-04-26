@@ -1,20 +1,12 @@
 //URL
 const URL_CREATE = "/clients/create";
-const URL_CLIENTS = "/clients";
 const DATA_CLIENTS = "data-clients"
 const URL_EDIT = "/clients/edit";
 
-//Headers
-const CONTENT_TYPE_JSON = "application/json";
-
 //Create client field
-const ID_ID = "#id";
-const FIRST_NAME_ID = "#firstname";
-const LAST_NAME_ID = "#lastname";
 const SECOND_NAME_ID = "#secondname";
 const BIRTHDAY_ID = "#birthday";
 const EMAIL_ID = "#email";
-const TELEPHONE_ID = "#telephone";
 const COUNTRY_ID = "#country";
 const REGION_ID = "#region";
 const LOCALITY_ID = "#locality";
@@ -23,21 +15,9 @@ const ROOM_ID = "#room";
 const INDEX_ID = "#index";
 const ADD_INFO_ID = "#additionalInfo";
 
-//Empty value
-const EMPTY_VALUE = "";
-const DISPLAY_NONE = "none";
-const DISPLAY_BLOCK = "block";
-
-//Class names
-const CLASSNAME_FADE = "fade";
-const CLASSNAME_SHOW = "show";
-const MODAL_BACKDROP = "modal-backdrop";
-const MODAL_OPEN = "modal-open";
-
 //Suffix
 const SUFFIX_EDIT_FIELD = "-edit";
 const SUFFIX_DELETE_FIELD = "-delete";
-const SUFFIX_SEARCH_FIELD = "-search";
 
 //ID modal window
 const MODAL_CREATE = "addClient";
@@ -140,59 +120,6 @@ function addClientInTable(client) {
     document.getElementById(DATA_CLIENTS).innerHTML += tmp;
 }
 
-//Utils
-
-function checkEmptyField(field) {
-    if (field == null || field === "") {
-        return "";
-    }
-}
-
-//Functions for form
-
-function clearForm(suffix) {
-    document.querySelector(FIRST_NAME_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(LAST_NAME_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(SECOND_NAME_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(BIRTHDAY_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(EMAIL_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(TELEPHONE_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(COUNTRY_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(REGION_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(LOCALITY_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(STREET_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(ROOM_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(INDEX_ID + suffix).value = EMPTY_VALUE;
-    document.querySelector(ADD_INFO_ID + suffix).value = EMPTY_VALUE;
-}
-
-function hiddenForm(id) {
-    document.body.classList.remove(MODAL_OPEN);
-    document.querySelector("#" + id).style.display = DISPLAY_NONE;
-    document.querySelector("#" + id).classList.remove(CLASSNAME_SHOW);
-    document.body.style.overflow = "visible";
-
-    document.querySelectorAll("." + MODAL_BACKDROP)
-        .forEach(element => element.style.display = DISPLAY_NONE);
-}
-
-function openForm(id) {
-    document.querySelector("#" + id).classList.add(CLASSNAME_SHOW);
-    document.querySelector("#" + id).style.display = DISPLAY_BLOCK;
-
-    if (document.querySelector("." + MODAL_BACKDROP) == null) {
-        let div = document.createElement('div');
-        div.style.display = DISPLAY_BLOCK;
-        div.className = MODAL_BACKDROP;
-        div.classList.add(CLASSNAME_SHOW);
-        div.classList.add(CLASSNAME_FADE);
-        document.body.append(div);
-    } else {
-        document.querySelector("." + MODAL_BACKDROP).style.display = DISPLAY_BLOCK;
-    }
-
-}
-
 function fillFormClientById(id, numSuffix, numModal) {
 
     let suffix;
@@ -279,22 +206,11 @@ function checkValidityForm(suffix) {
 
 //Fetch functions
 
-async function fetchClient(url = '', data = {}, method) {
-    const response = await fetch(url, {
-        method: method,
-        headers: {
-            'Content-Type': CONTENT_TYPE_JSON
-        },
-        body: JSON.stringify(data)
-    });
-    return await response.json();
-}
-
-function fetchClientThen(data, suffix, modal) {
+function fetchClientThen(data, idForm, modal) {
     console.log(data);
     document.getElementById(DATA_CLIENTS).innerHTML = EMPTY_VALUE;
     loadClients();
-    clearForm(suffix);
+    clearForm(idForm);
     hiddenForm(modal);
 }
 
@@ -302,9 +218,9 @@ function fetchClientThen(data, suffix, modal) {
 
 function createClient() {
     if (checkValidityForm(EMPTY_VALUE)) {
-        fetchClient(URL_CREATE, getDataClient(""), "POST")
+        fetchSendData(URL_CREATE, getDataClient(""), POST)
             .then((data) => {
-                fetchClientThen(data, EMPTY_VALUE, MODAL_CREATE);
+                fetchClientThen(data, "addClientForm", MODAL_CREATE);
             });
     }
 }
@@ -313,9 +229,9 @@ function createClient() {
 
 function editClient() {
     if (checkValidityForm(SUFFIX_EDIT_FIELD)) {
-        fetchClient(URL_EDIT, getDataClient(SUFFIX_EDIT_FIELD), "PUT")
+        fetchSendData(URL_EDIT, getDataClient(SUFFIX_EDIT_FIELD), PUT)
             .then((data) => {
-                fetchClientThen(data, SUFFIX_EDIT_FIELD, MODAL_EDIT);
+                fetchClientThen(data, null, MODAL_EDIT);
             })
     }
 }
@@ -325,7 +241,7 @@ function editClient() {
 function deleteClient() {
     let id = document.querySelector(ID_ID + SUFFIX_DELETE_FIELD).value;
     fetch(URL_CLIENTS + "/" + id, {
-        method: "DELETE"
+        method: DELETE
     }).then(
         result => {
             console.log(result);
