@@ -1,6 +1,6 @@
 package service.mapper;
 
-import com.shepard1992.gmail.twoya_formochka.repository.dto.ItemFilter;
+import com.shepard1992.gmail.twoya_formochka.repository.dto.FilterItem;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.ItemFilterMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.ItemFilterPl;
 import org.junit.Test;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @Import(MapperTestConfig.class)
-public class ItemFilterMapperTest {
+public class FilterItemMapperTest {
 
     @Autowired
     private ItemFilterMapper itemFilterMapper;
@@ -29,13 +29,13 @@ public class ItemFilterMapperTest {
                 .size(20.1)
                 .build();
 
-        ItemFilter itemFilter = itemFilterMapper.mapperToFilter(itemFilterPl);
+        FilterItem filterItem = itemFilterMapper.mapperToFilter(itemFilterPl);
 
-        assertEquals(itemFilterPl.getId(), itemFilter.getId());
-        assertEquals(itemFilterPl.getName(), itemFilter.getName());
-        assertEquals(itemFilterPl.getSize(), itemFilter.getSize());
-        assertEquals(itemFilterPl.getType(), itemFilter.getType());
-        assertEquals(itemFilterPl.getCategory(), itemFilter.getCategory());
+        assertEquals(itemFilterPl.getId(), filterItem.getId());
+        assertEquals(itemFilterPl.getName(), filterItem.getName());
+        assertEquals(itemFilterPl.getSize(), filterItem.getSize());
+        assertEquals(itemFilterPl.getType(), filterItem.getType());
+        assertEquals(itemFilterPl.getCategory(), filterItem.getCategory());
     }
 
 }

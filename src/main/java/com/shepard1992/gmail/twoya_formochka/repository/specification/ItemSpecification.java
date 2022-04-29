@@ -1,6 +1,6 @@
 package com.shepard1992.gmail.twoya_formochka.repository.specification;
 
-import com.shepard1992.gmail.twoya_formochka.repository.dto.ItemFilter;
+import com.shepard1992.gmail.twoya_formochka.repository.dto.FilterItem;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Item;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -13,9 +13,9 @@ import java.util.List;
 
 public class ItemSpecification implements Specification<Item> {
 
-    private final ItemFilter filter;
+    private final FilterItem filter;
 
-    public ItemSpecification(ItemFilter filter) {
+    public ItemSpecification(FilterItem filter) {
         this.filter = filter;
     }
 

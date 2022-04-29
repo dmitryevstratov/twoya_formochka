@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class FilterPl {
+public class FilterClientPl {
 
     private Long id;
 

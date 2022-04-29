@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @Builder
-public class OrderPl {
+public class CreateOrderPl {
 
     private Long idClient;
 

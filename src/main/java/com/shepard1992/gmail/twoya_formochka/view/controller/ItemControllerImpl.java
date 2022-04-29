@@ -15,17 +15,17 @@ import java.util.List;
 @RestController
 public class ItemControllerImpl implements ItemController {
 
-    private final ItemService itemService;
+    private final ItemService service;
 
     @Autowired
-    public ItemControllerImpl(ItemService itemService) {
-        this.itemService = itemService;
+    public ItemControllerImpl(ItemService service) {
+        this.service = service;
     }
 
     @Override
     @GetMapping("/items/{id}")
     public ItemPl getItemById(@PathVariable Long id) {
-        return itemService.getItemById(id);
+        return service.getItemById(id);
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ItemControllerImpl implements ItemController {
             @RequestParam(value = "type", required = false) String type,
             @RequestParam(value = "category", required = false) String category,
             @RequestParam(value = "size", required = false) Double size) {
-        return itemService.searchByParams(ItemFilterPl.builder()
+        return service.searchByParams(ItemFilterPl.builder()
                 .id(id)
                 .name(name)
                 .size(size)

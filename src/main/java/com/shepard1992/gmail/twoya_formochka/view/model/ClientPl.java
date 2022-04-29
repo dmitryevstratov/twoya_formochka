@@ -27,6 +27,6 @@ public class ClientPl {
 
     private List<DiscountPl> discounts;
 
-    private List<OrderPl> orders;
+    private List<CreateOrderPl> orders;
 
 }

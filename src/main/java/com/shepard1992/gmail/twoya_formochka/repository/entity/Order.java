@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -52,5 +53,8 @@ public class Order {
             joinColumns = {@JoinColumn(name = "order_id")},
             inverseJoinColumns = {@JoinColumn(name = "item_id")}
     )
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
+
+    @Column
+    private Integer count = items.size();
 }

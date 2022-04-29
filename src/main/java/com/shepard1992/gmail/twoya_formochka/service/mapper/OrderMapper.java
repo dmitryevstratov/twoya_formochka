@@ -5,19 +5,22 @@ import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Item;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder;
-import com.shepard1992.gmail.twoya_formochka.view.model.ItemsOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.OrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.*;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+
+import static com.shepard1992.gmail.twoya_formochka.service.utils.DateUtil.converterDate;
 
 @Component
 public class OrderMapper {
 
-    public Order mapperToOrder(OrderPl orderPl) {
+    public Order mapperToOrder(CreateOrderPl createOrderPl) {
         List<Item> items = new ArrayList<>();
-        orderPl.getItems().forEach(itemsOrderPl -> {
+
+        createOrderPl.getItems().forEach(itemsOrderPl -> {
             if (itemsOrderPl != null) {
                 for (int i = 0; i < itemsOrderPl.getCount(); i++) {
                     items.add(Item.builder()
@@ -28,23 +31,24 @@ public class OrderMapper {
         });
 
         Order order = Order.builder()
-                .dateCreate(ZonedDateTime.now())
+                .dateCreate(converterDate(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))))
                 .client(Client.builder()
-                        .id(orderPl.getIdClient())
+                        .id(createOrderPl.getIdClient())
                         .build())
                 .status(StatusOrder.CREATED)
                 .items(items)
-                .totalPrice(orderPl.getPrice())
+                .totalPrice(createOrderPl.getPrice())
+                .count(items.size())
                 .build();
 
-        if (orderPl.getIdDiscount() != null) {
-            order.setDiscount(Discount.builder().id(orderPl.getIdDiscount()).build());
+        if (createOrderPl.getIdDiscount() != null) {
+            order.setDiscount(Discount.builder().id(createOrderPl.getIdDiscount()).build());
         }
 
         return order;
     }
 
-    public OrderPl mapperToOrderPl(Order order) {
+    public CreateOrderPl mapperToOrderPl(Order order) {
         Optional<Discount> discount = Optional.ofNullable(order.getDiscount());
         List<ItemsOrderPl> itemsOrderList = new ArrayList<>();
         Map<Long, Integer> itemsOrdersMap = new HashMap<>();
@@ -63,14 +67,45 @@ public class OrderMapper {
                 .count(value)
                 .build()));
 
-        OrderPl orderPl = OrderPl.builder()
+        CreateOrderPl createOrderPl = CreateOrderPl.builder()
                 .idClient(order.getClient().getId())
                 .price(order.getTotalPrice())
                 .items(itemsOrderList)
                 .build();
 
-        discount.ifPresent(value -> orderPl.setIdDiscount(value.getId()));
+        discount.ifPresent(value -> createOrderPl.setIdDiscount(value.getId()));
 
-        return orderPl;
+        return createOrderPl;
+    }
+
+    public GetOrderPl mapperToGetOrderPl(Order order) {
+        DiscountPl discountPl = null;
+        String dateClosed = (order.getDateClosed() != null) ? order.getDateClosed().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")) : "";
+
+        if (order.getDiscount() != null) {
+            discountPl = DiscountPl.builder()
+                    .id(order.getDiscount().getId())
+                    .type(DiscountTypePl.builder()
+                            .id(order.getDiscount().getType().getId())
+                            .name(order.getDiscount().getType().getName())
+                            .build())
+                    .value(order.getDiscount().getValue())
+                    .build();
+        }
+
+        return GetOrderPl.builder()
+                .id(order.getId())
+                .client(ClientPl.builder()
+                        .id(order.getClient().getId())
+                        .firstName(order.getClient().getFirstName())
+                        .lastName(order.getClient().getLastName())
+                        .build())
+                .dateCreate(order.getDateCreate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")))
+                .dateClosed(dateClosed)
+                .discount(discountPl)
+                .totalPrice(order.getTotalPrice())
+                .countItems(order.getItems().size())
+                .status(order.getStatus())
+                .build();
     }
 }

@@ -8,7 +8,7 @@ import com.shepard1992.gmail.twoya_formochka.repository.specification.ClientSpec
 import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.OrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,7 @@ public class ClientServiceTest {
     private ClientRepository repository;
 
     private final List<Order> orderList = new ArrayList<>();
-    private final List<OrderPl> orderPlList = new ArrayList<>();
+    private final List<CreateOrderPl> createOrderPlList = new ArrayList<>();
     private final List<Discount> discountList = new ArrayList<>();
     private final List<DiscountPl> discountPlSet = new ArrayList<>();
     private final Client stub = ClientStub.getStub(
@@ -52,7 +52,7 @@ public class ClientServiceTest {
     );
     private final ClientPl stubPl = ClientPlStub.getStub(
             AddressPlStub.getStub(),
-            orderPlList,
+            createOrderPlList,
             discountPlSet
     );
 

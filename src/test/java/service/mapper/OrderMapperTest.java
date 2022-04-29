@@ -1,18 +1,19 @@
 package service.mapper;
 
-import com.shepard1992.gmail.twoya_formochka.repository.entity.*;
-import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.OrderMapper;
+import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ItemsOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.OrderPl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
+import view.stubs.OrderStub;
 
-import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -26,7 +27,7 @@ public class OrderMapperTest {
 
     @Test
     public void test_mapperToOrder() {
-        OrderPl orderPl = OrderPl.builder()
+        CreateOrderPl createOrderPl = CreateOrderPl.builder()
                 .idClient(1L)
                 .idDiscount(1L)
                 .price(200.1)
@@ -44,41 +45,34 @@ public class OrderMapperTest {
                                 .build()))
                 .build();
 
-        Order order = orderMapper.mapperToOrder(orderPl);
+        Order order = orderMapper.mapperToOrder(createOrderPl);
 
-        assertEquals(orderPl.getIdClient(), order.getClient().getId());
-        assertEquals(orderPl.getIdDiscount(), order.getDiscount().getId());
-        assertEquals(orderPl.getPrice(), order.getTotalPrice());
-        assertEquals(orderPl.getItems().get(0).getId(), order.getItems().get(0).getId());
+        assertEquals(createOrderPl.getIdClient(), order.getClient().getId());
+        assertEquals(createOrderPl.getIdDiscount(), order.getDiscount().getId());
+        assertEquals(createOrderPl.getPrice(), order.getTotalPrice());
+        assertEquals(createOrderPl.getItems().get(0).getId(), order.getItems().get(0).getId());
     }
 
     @Test
     public void test_mapperToOrderPl() {
-        Order order = Order.builder()
-                .id(1L)
-                .discount(Discount.builder()
-                        .id(3L)
-                        .value(200)
-                        .type(DiscountType.builder()
-                                .id(1L)
-                                .name("Оттиск")
-                                .build())
-                        .build())
-                .totalPrice(200.0)
-                .items(List.of(Item.builder()
-                        .id(12L)
-                        .build()))
-                .dateCreate(ZonedDateTime.now())
-                .client(Client.builder().id(100L).build())
-                .status(StatusOrder.CREATED)
-                .build();
+        CreateOrderPl createOrderPl = orderMapper.mapperToOrderPl(OrderStub.getStub());
 
-        OrderPl orderPl = orderMapper.mapperToOrderPl(order);
+        assertEquals(createOrderPl.getIdClient(), OrderStub.getStub().getClient().getId());
+        assertEquals(createOrderPl.getIdDiscount(), OrderStub.getStub().getDiscount().getId());
+        assertEquals(createOrderPl.getPrice(), OrderStub.getStub().getTotalPrice());
+        assertEquals(createOrderPl.getItems().get(0).getId(), OrderStub.getStub().getItems().get(0).getId());
+    }
 
-        assertEquals(orderPl.getIdClient(), order.getClient().getId());
-        assertEquals(orderPl.getIdDiscount(), order.getDiscount().getId());
-        assertEquals(orderPl.getPrice(), order.getTotalPrice());
-        assertEquals(orderPl.getItems().get(0).getId(), order.getItems().get(0).getId());
+    @Test
+    public void test_mapperToGetOrderPl() {
+        GetOrderPl orderPl = orderMapper.mapperToGetOrderPl(OrderStub.getStub());
+
+        assertEquals(OrderStub.getStub().getId(), orderPl.getId());
+        assertEquals(OrderStub.getStub().getClient().getId(), orderPl.getClient().getId());
+        assertEquals(OrderStub.getStub().getDateCreate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), orderPl.getDateCreate());
+        assertEquals(OrderStub.getStub().getDateClosed().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), orderPl.getDateClosed());
+        assertEquals(OrderStub.getStub().getStatus(), orderPl.getStatus());
+        assertEquals(OrderStub.getStub().getTotalPrice(), orderPl.getTotalPrice());
     }
 
 }

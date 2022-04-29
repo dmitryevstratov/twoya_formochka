@@ -1,14 +1,14 @@
 package view.stubs;
 
-import com.shepard1992.gmail.twoya_formochka.view.model.FilterPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.FilterClientPl;
 
 public class FilterPlStub {
 
     private FilterPlStub() {
     }
 
-    public static FilterPl getStub() {
-        return FilterPl.builder()
+    public static FilterClientPl getStub() {
+        return FilterClientPl.builder()
                 .id(1L)
                 .firstName("Ivan")
                 .secondName("Ivanovich")

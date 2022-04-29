@@ -257,15 +257,15 @@ function deleteClient() {
 //Method SEARCH
 
 function searchClient() {
-    let id = document.querySelector(ID_ID + SUFFIX_SEARCH_FIELD);
-    let firstName = document.querySelector(FIRST_NAME_ID + SUFFIX_SEARCH_FIELD);
-    let lastName = document.querySelector(LAST_NAME_ID + SUFFIX_SEARCH_FIELD);
-    let secondName = document.querySelector(SECOND_NAME_ID + SUFFIX_SEARCH_FIELD);
-    let birthday = document.querySelector(BIRTHDAY_ID + SUFFIX_SEARCH_FIELD);
-    let email = document.querySelector(EMAIL_ID + SUFFIX_SEARCH_FIELD);
-    let telephone = document.querySelector(TELEPHONE_ID + SUFFIX_SEARCH_FIELD);
+    let id = document.querySelector(ID_ID + SUFFIX_SEARCH_FIELD).value;
+    let firstName = capitalizeFirstLetter(document.querySelector(FIRST_NAME_ID + SUFFIX_SEARCH_FIELD).value.toLowerCase());
+    let lastName = capitalizeFirstLetter(document.querySelector(LAST_NAME_ID + SUFFIX_SEARCH_FIELD).value.toLowerCase());
+    let secondName = capitalizeFirstLetter(document.querySelector(SECOND_NAME_ID + SUFFIX_SEARCH_FIELD).value.toLowerCase());
+    let birthday = document.querySelector(BIRTHDAY_ID + SUFFIX_SEARCH_FIELD).value;
+    let email = document.querySelector(EMAIL_ID + SUFFIX_SEARCH_FIELD).value;
+    let telephone = document.querySelector(TELEPHONE_ID + SUFFIX_SEARCH_FIELD).value;
 
-    fetch(URL_CLIENTS + "/search" + `?id=${id.value}&firstName=${firstName.value}&lastName=${lastName.value}&secondName=${secondName.value}&birthday=${birthday.value}&email=${email.value}&telephone=${telephone.value}`)
+    fetch(URL_CLIENTS + "/search" + `?id=${id}&firstName=${firstName}&lastName=${lastName}&secondName=${secondName}&birthday=${birthday}&email=${email}&telephone=${telephone}`)
         .then((resp) => resp.json())
         .then(function (data) {
             console.log(data);

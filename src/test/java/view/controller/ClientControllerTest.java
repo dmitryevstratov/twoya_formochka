@@ -43,9 +43,9 @@ public class ClientControllerTest {
     public void test_when_call_getClients_then_return_result() {
         List<ClientPl> clientPlList = new ArrayList<>();
         List<DiscountPl> discountPlList = new ArrayList<>();
-        List<OrderPl> orderPlList = new ArrayList<>();
+        List<CreateOrderPl> createOrderPlList = new ArrayList<>();
 
-        orderPlList.add(OrderPl.builder()
+        createOrderPlList.add(CreateOrderPl.builder()
                 .idClient(1L)
                 .price(10.2)
                 .idDiscount(1L)
@@ -57,7 +57,7 @@ public class ClientControllerTest {
                 .build()));
         clientPlList.add(ClientPlStub.getStub(
                 AddressPlStub.getStub(),
-                orderPlList,
+                createOrderPlList,
                 discountPlList
         ));
 
@@ -66,7 +66,7 @@ public class ClientControllerTest {
 
         ClientPl clientPl = clients.get(0);
         AddressPl address = clientPl.getAddress();
-        OrderPl orderPl = clientPl.getOrders().get(0);
+        CreateOrderPl createOrderPl = clientPl.getOrders().get(0);
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
         assertEquals("Ivan", clientPl.getFirstName());
@@ -93,20 +93,20 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
-        assertEquals(Long.valueOf(1), orderPl.getIdClient());
-        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
-        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
-        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), createOrderPl.getPrice());
+        assertEquals(Long.valueOf(7), createOrderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), createOrderPl.getItems().get(0).getCount());
 
     }
 
     @Test
     public void test_when_call_getClientById_then_return_result() {
         List<DiscountPl> discountPlList = new ArrayList<>();
-        List<OrderPl> orderPlList = new ArrayList<>();
+        List<CreateOrderPl> createOrderPlList = new ArrayList<>();
 
-        orderPlList.add(OrderPl.builder()
+        createOrderPlList.add(CreateOrderPl.builder()
                 .idClient(1L)
                 .price(10.2)
                 .idDiscount(1L)
@@ -119,12 +119,12 @@ public class ClientControllerTest {
 
         when(clientService.getClientById(any())).thenReturn(ClientPlStub.getStub(
                 AddressPlStub.getStub(),
-                orderPlList,
+                createOrderPlList,
                 discountPlList
         ));
 
         ClientPl clientPl = clientController.getClientById(1L);
-        OrderPl orderPl = clientPl.getOrders().get(0);
+        CreateOrderPl createOrderPl = clientPl.getOrders().get(0);
         AddressPl address = clientPl.getAddress();
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
@@ -152,11 +152,11 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
-        assertEquals(Long.valueOf(1), orderPl.getIdClient());
-        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
-        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
-        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), createOrderPl.getPrice());
+        assertEquals(Long.valueOf(7), createOrderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), createOrderPl.getItems().get(0).getCount());
 
     }
 
@@ -164,9 +164,9 @@ public class ClientControllerTest {
     public void test_when_call_addClient_then_return_result() {
 
         List<DiscountPl> discountPlList = new ArrayList<>();
-        List<OrderPl> orderPlList = new ArrayList<>();
+        List<CreateOrderPl> createOrderPlList = new ArrayList<>();
 
-        orderPlList.add(OrderPl.builder()
+        createOrderPlList.add(CreateOrderPl.builder()
                 .idClient(1L)
                 .price(10.2)
                 .idDiscount(1L)
@@ -179,17 +179,17 @@ public class ClientControllerTest {
 
         when(clientService.addClient(any())).thenReturn(ClientPlStub.getStub(
                 AddressPlStub.getStub(),
-                orderPlList,
+                createOrderPlList,
                 discountPlList
         ));
 
         ClientPl clientPl = clientController.addClient(ClientPlStub.getStub(
                 AddressPlStub.getStub(),
-                orderPlList,
+                createOrderPlList,
                 discountPlList
         ));
 
-        OrderPl orderPl = clientPl.getOrders().get(0);
+        CreateOrderPl createOrderPl = clientPl.getOrders().get(0);
         AddressPl address = clientPl.getAddress();
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
@@ -217,11 +217,11 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
-        assertEquals(Long.valueOf(1), orderPl.getIdClient());
-        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
-        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
-        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), createOrderPl.getPrice());
+        assertEquals(Long.valueOf(7), createOrderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), createOrderPl.getItems().get(0).getCount());
 
     }
 
@@ -229,9 +229,9 @@ public class ClientControllerTest {
     public void test_when_call_editClient_then_return_result() {
 
         List<DiscountPl> discountPlList = new ArrayList<>();
-        List<OrderPl> orderPlList = new ArrayList<>();
+        List<CreateOrderPl> createOrderPlList = new ArrayList<>();
 
-        orderPlList.add(OrderPl.builder()
+        createOrderPlList.add(CreateOrderPl.builder()
                 .idClient(1L)
                 .price(10.2)
                 .idDiscount(1L)
@@ -244,18 +244,18 @@ public class ClientControllerTest {
 
         when(clientService.editClient(any())).thenReturn(ClientPlStub.getStub(
                 AddressPlStub.getStub(),
-                orderPlList,
+                createOrderPlList,
                 discountPlList
         ));
 
         ClientPl clientPl = clientController.editClient(ClientPlStub.getStub(
                 AddressPlStub.getStub(),
-                orderPlList,
+                createOrderPlList,
                 discountPlList
         ));
 
         AddressPl address = clientPl.getAddress();
-        OrderPl orderPl = clientPl.getOrders().get(0);
+        CreateOrderPl createOrderPl = clientPl.getOrders().get(0);
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
         assertEquals("Ivan", clientPl.getFirstName());
@@ -282,11 +282,11 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
-        assertEquals(Long.valueOf(1), orderPl.getIdClient());
-        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
-        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
-        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), createOrderPl.getPrice());
+        assertEquals(Long.valueOf(7), createOrderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), createOrderPl.getItems().get(0).getCount());
 
     }
 
@@ -306,9 +306,9 @@ public class ClientControllerTest {
 
         List<ClientPl> clientPlList = new ArrayList<>();
         List<DiscountPl> discountPlList = new ArrayList<>();
-        List<OrderPl> orderPlList = new ArrayList<>();
+        List<CreateOrderPl> createOrderPlList = new ArrayList<>();
 
-        orderPlList.add(OrderPl.builder()
+        createOrderPlList.add(CreateOrderPl.builder()
                 .idClient(1L)
                 .price(10.2)
                 .idDiscount(1L)
@@ -320,7 +320,7 @@ public class ClientControllerTest {
                 .build()));
         clientPlList.add(ClientPlStub.getStub(
                 AddressPlStub.getStub(),
-                orderPlList,
+                createOrderPlList,
                 discountPlList
         ));
 
@@ -337,7 +337,7 @@ public class ClientControllerTest {
 
         ClientPl clientPl = clients.get(0);
         AddressPl address = clientPl.getAddress();
-        OrderPl orderPl = clientPl.getOrders().get(0);
+        CreateOrderPl createOrderPl = clientPl.getOrders().get(0);
 
         assertEquals(1, Integer.parseInt(clientPl.getId().toString()));
         assertEquals("Ivan", clientPl.getFirstName());
@@ -364,11 +364,11 @@ public class ClientControllerTest {
                         .build())
                 .build()));
 
-        assertEquals(Long.valueOf(1), orderPl.getIdDiscount());
-        assertEquals(Long.valueOf(1), orderPl.getIdClient());
-        assertEquals(Double.valueOf(10.2), orderPl.getPrice());
-        assertEquals(Long.valueOf(7), orderPl.getItems().get(0).getId());
-        assertEquals(Integer.valueOf(2), orderPl.getItems().get(0).getCount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdDiscount());
+        assertEquals(Long.valueOf(1), createOrderPl.getIdClient());
+        assertEquals(Double.valueOf(10.2), createOrderPl.getPrice());
+        assertEquals(Long.valueOf(7), createOrderPl.getItems().get(0).getId());
+        assertEquals(Integer.valueOf(2), createOrderPl.getItems().get(0).getCount());
 
     }
 
