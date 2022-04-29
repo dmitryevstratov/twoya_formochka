@@ -18,6 +18,10 @@ const ITEMS_ID_COUNT_ORDER = "#items-id-count-order";
 const DISCOUNT_ID_ORDER = "#discount-id-order";
 const TOTAL_PRICE_ORDER = "#total-price-order";
 const ORDER_RESULT = "order-result";
+const ORDER = "order";
+const ORDER_ID = "order-id";
+const ORDER_COUNT = "order-count";
+const ORDER_TOTAL_PRICE = "order-total-price";
 
 //ID modal window
 const MODAL_CREATE = "addOrder";
@@ -44,7 +48,35 @@ function loadOrders() {
 loadOrders();
 
 function addOrderInTable(order) {
+    let table = document.getElementById(DATA_ORDERS);
+    let tmp = EMPTY_VALUE;
+    let discount = (order.discount != null) ? order.discount.type.name + " - " + order.discount.value + "%" : "";
 
+    tmp += "<td id=" + ORDER_ID + ">" + order.id + "</td>";
+    tmp += "<td>" + order.client.firstName + "</td>";
+    tmp += "<td>" + order.client.lastName + "</td>";
+    tmp += "<td>" + order.dateCreate + "</td>";
+    tmp += "<td>" + order.dateClosed + "</td>";
+    tmp += "<td>" + discount + "</td>";
+    tmp += "<td id=" + ORDER_TOTAL_PRICE + ">" + order.totalPrice + "</td>";
+    tmp += "<td id=" + ORDER_COUNT + ">" + order.countItems + "</td>";
+    tmp += "<td>" + order.status + "</td>";
+    tmp += "<td><button onmousedown= \"fillFormOrderById("
+        + order.id + ', ' +
+        +0 + ', ' +
+        +0 +
+        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editClient\">\n" +
+        " Редактировать" +
+        "</button></td>";
+    tmp += "<td><button onmousedown= \"fillFormOrderById("
+        + order.id + ', ' +
+        +1 + ', ' +
+        +1 +
+        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteClient\">\n" +
+        " Удалить" +
+        "</button></td>";
+
+    table.innerHTML += tmp;
 }
 
 //Fetch functions
@@ -76,6 +108,36 @@ function searchClientToSelect() {
         .catch(function (e) {
             console.log(e);
         })
+}
+
+function searchOrder() {
+    let id = document.getElementById("id-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let firstName = capitalizeFirstLetter(document.getElementById("firstname-" + ORDER + SUFFIX_SEARCH_FIELD).value.toLowerCase());
+    let lastName = capitalizeFirstLetter(document.getElementById("lastname-" + ORDER + SUFFIX_SEARCH_FIELD).value.toLowerCase());
+    let dateCreate = document.getElementById("dateCreate-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let dateClosed = document.getElementById("dateClosed-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let status = document.getElementById("status-" + ORDER + SUFFIX_SEARCH_FIELD);
+    let selectedStatus = status.options[status.selectedIndex].value;
+    let priceMin = document.getElementById("price-min-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let priceMax = document.getElementById("price-max-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let count = document.getElementById("count-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+
+    fetch(URL_ORDERS + "/search" + `?id=${id}&firstName=${firstName}&lastName=${lastName}&dateCreate=${dateCreate}&dateClosed=${dateClosed}&selectedStatus=${selectedStatus}&priceMin=${priceMin}&priceMax=${priceMax}&count=${count}`)
+        .then((resp) => resp.json())
+        .then(function (data) {
+            console.log(data);
+            document.getElementById(DATA_ORDERS).innerHTML = EMPTY_VALUE;
+            if (data.length > 0) {
+                data.forEach((client => {
+                    addOrderInTable(client);
+                }))
+            }
+        })
+        .catch(function (e) {
+            console.log(e);
+        })
+
+
 }
 
 //Method fill fields
@@ -274,21 +336,10 @@ function createOrder() {
 
 function fetchOrderThen(data, modal) {
     console.log(data);
+    loadOrders();
+    document.getElementById(DATA_ORDERS).innerHTML = EMPTY_VALUE;
     clearOrderForm();
     hiddenForm(modal);
-}
-
-//Classes
-
-class Item {
-    constructor(id, count) {
-        this.id = id;
-        this.count = count;
-    }
-
-    returnString() {
-        return this.id + ":" + this.count + ";";
-    }
 }
 
 //Get data
@@ -350,5 +401,56 @@ function clearOrderForm() {
     clientsCount.innerHTML = 0;
     discountCount.innerHTML = 0;
     itemsCount.innerHTML = 0;
+
+}
+
+//Sorted
+
+function sortOrderBy(direction, field) {
+    let ordersRow = document.getElementById(DATA_ORDERS).querySelectorAll(TAG_TR);
+    let ordersArray = new Array(ordersRow.length);
+    let tmp = EMPTY_VALUE;
+
+    ordersRow.forEach(tr => ordersArray.push(tr));
+
+    ordersArray.sort(function (a, b) {
+        let firstEl;
+        let secondEl;
+
+        try {
+            firstEl = Number(a.querySelector("#" + field).innerHTML);
+            secondEl = Number(b.querySelector("#" + field).innerHTML);
+        } catch (e) {
+            console.log(e);
+        }
+
+        if (direction == 1) {
+            if (firstEl > secondEl) {
+                return 1;
+            }
+            if (firstEl < secondEl) {
+                return -1;
+            }
+            return 0;
+        }
+
+        if (direction == 2) {
+            if (firstEl > secondEl) {
+                return -1;
+            }
+            if (firstEl < secondEl) {
+                return 1;
+            }
+            return 0;
+        }
+    })
+
+    ordersArray.forEach(tr => {
+        if (tr != undefined && tr != null) {
+            tmp += tr.innerHTML + "</tr>";
+        }
+    })
+
+    document.getElementById(DATA_ORDERS).innerHTML = tmp;
 
 }
