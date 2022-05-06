@@ -9,7 +9,7 @@ public class FilterPlStub {
 
     public static FilterClientPl getStub() {
         return FilterClientPl.builder()
-                .id(1L)
+                .id(1)
                 .firstName("Ivan")
                 .secondName("Ivanovich")
                 .lastName("Ivanov")

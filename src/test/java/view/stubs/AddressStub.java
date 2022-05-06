@@ -9,7 +9,7 @@ public class AddressStub {
 
     public static Address getStub() {
         return Address.builder()
-                .id(1L)
+                .id(1)
                 .country("Беларусь")
                 .region("Гродненская")
                 .locality("Гродно")

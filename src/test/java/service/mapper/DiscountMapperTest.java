@@ -25,7 +25,7 @@ public class DiscountMapperTest {
     @Test
     public void test_mapperToDiscount(){
         DiscountPl discountPl = DiscountPlStub.getStub(DiscountTypePl.builder()
-                .id(10L)
+                .id(10)
                 .name("Новый год")
                 .build());
 
@@ -40,9 +40,9 @@ public class DiscountMapperTest {
     @Test
     public void test_mapperToDiscountPl(){
         Discount discount = Discount.builder()
-                .id(1L)
+                .id(1)
                 .value(20)
-                .type(DiscountType.builder().id(2L).name("ДР").build())
+                .type(DiscountType.builder().id(2).name("ДР").build())
                 .build();
 
         DiscountPl discountPl = discountMapper.mapperToDiscountPl(discount);

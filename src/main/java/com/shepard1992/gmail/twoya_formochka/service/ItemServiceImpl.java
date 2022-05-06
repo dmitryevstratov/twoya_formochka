@@ -31,7 +31,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public ItemPl getItemById(Long id) {
+    public ItemPl getItemById(Integer id) {
         return itemMapper.mapperToItemPl(Objects.requireNonNull(repository.findById(id).orElse(null)));
     }
 

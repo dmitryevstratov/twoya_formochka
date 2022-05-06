@@ -36,7 +36,7 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
 
     @Override
     @GetMapping("/clients/{id}")
-    public ClientPl getClientById(@PathVariable Long id) {
+    public ClientPl getClientById(@PathVariable Integer id) {
         return service.getClientById(id);
     }
 
@@ -54,14 +54,14 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
 
     @Override
     @DeleteMapping("/clients/{id}")
-    public void deleteClientById(@PathVariable Long id) {
+    public void deleteClientById(@PathVariable Integer id) {
         service.deleteClientById(id);
     }
 
     @Override
     @GetMapping("/clients/search")
     public List<ClientPl> searchByParams(
-            @RequestParam(value = "id", required = false) Long id,
+            @RequestParam(value = "id", required = false) Integer id,
             @RequestParam(value = "firstName", required = false) String firstName,
             @RequestParam(value = "lastName", required = false) String lastName,
             @RequestParam(value = "secondName", required = false) String secondName,

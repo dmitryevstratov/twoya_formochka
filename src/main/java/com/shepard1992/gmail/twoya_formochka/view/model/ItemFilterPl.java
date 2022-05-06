@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class ItemFilterPl {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 

@@ -2,6 +2,7 @@ package com.shepard1992.gmail.twoya_formochka.view.controller.api;
 
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
 
 import java.util.List;
 
@@ -12,7 +13,7 @@ public interface OrderController {
     List<GetOrderPl> getOrders();
 
     List<GetOrderPl> searchByParams(
-            Long id,
+            Integer id,
             String firstName,
             String lastName,
             String dateCreate,
@@ -25,8 +26,8 @@ public interface OrderController {
 
     CreateOrderPl editOrders(CreateOrderPl createOrderPl);
 
-    CreateOrderPl getOrderById(Long id);
+    GetOrderToUpdatePl getOrderById(Integer id);
 
-    void deleteOrderById(Long id);
+    void deleteOrderById(Integer id);
 
 }

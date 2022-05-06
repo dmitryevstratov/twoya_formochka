@@ -13,9 +13,9 @@ public interface ClientService {
 
     ClientPl editClient(ClientPl clientPl);
 
-    ClientPl getClientById(Long id);
+    ClientPl getClientById(Integer id);
 
-    void deleteClientById(Long id);
+    void deleteClientById(Integer id);
 
     List<ClientPl> searchByParams(FilterClientPl filterClientPl);
 

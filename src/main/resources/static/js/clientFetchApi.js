@@ -15,10 +15,6 @@ const ROOM_ID = "#room";
 const INDEX_ID = "#index";
 const ADD_INFO_ID = "#additionalInfo";
 
-//Suffix
-const SUFFIX_EDIT_FIELD = "-edit";
-const SUFFIX_DELETE_FIELD = "-delete";
-
 //ID modal window
 const MODAL_CREATE = "addClient";
 const MODAL_DELETE = "deleteClient";
@@ -210,7 +206,6 @@ function fetchClientThen(data, idForm, modal) {
     console.log(data);
     document.getElementById(DATA_CLIENTS).innerHTML = EMPTY_VALUE;
     loadClients();
-    clearForm(idForm);
     hiddenForm(modal);
 }
 

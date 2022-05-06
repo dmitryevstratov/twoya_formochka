@@ -9,6 +9,7 @@ import com.shepard1992.gmail.twoya_formochka.service.mapper.OrderMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.FilterOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public CreateOrderPl addOrder(CreateOrderPl createOrderPl) {
+        System.out.println(createOrderPl);
         Order order = repository.save(orderMapper.mapperToOrder(createOrderPl));
         return orderMapper.mapperToOrderPl(order);
     }
@@ -55,16 +57,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public CreateOrderPl editOrders(CreateOrderPl createOrderPl) {
-        return null;
+        Order order = repository.save(orderMapper.mapperToOrder(createOrderPl));
+        return orderMapper.mapperToOrderPl(order);
     }
 
     @Override
-    public CreateOrderPl getOrderById(Long id) {
-        return null;
+    public GetOrderToUpdatePl getOrderById(Integer id) {
+        return orderMapper.mapperToUpdateOrderPl(repository.findById(id).get());
     }
 
     @Override
-    public void deleteOrderById(Long id) {
+    public void deleteOrderById(Integer id) {
 
     }
 

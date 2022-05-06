@@ -21,8 +21,9 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @SequenceGenerator(name = "ordersSeqGen", sequenceName = "orders_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ordersSeqGen")
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "client_id")

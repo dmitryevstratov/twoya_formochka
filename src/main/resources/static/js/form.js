@@ -28,6 +28,20 @@ function hiddenForm(id) {
 
     document.querySelectorAll("." + MODAL_BACKDROP)
         .forEach(element => element.style.display = DISPLAY_NONE);
+
+    switch (id) {
+        case 'addOrder':
+            clearOrderForm("");
+            break;
+        case 'editOrder':
+            clearOrderForm(SUFFIX_EDIT_FIELD);
+            break;
+        case 'deleteOrder':
+            clearOrderForm(SUFFIX_DELETE_FIELD);
+            break;
+        default:
+            clearForm(id);
+    }
 }
 
 function openForm(id) {
