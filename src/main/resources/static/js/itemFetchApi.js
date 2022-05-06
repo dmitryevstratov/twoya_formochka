@@ -16,19 +16,19 @@ const URL_ITEMS = "/items";
 
 //Method SEARCH
 
-function searchItemToSelect() {
-    let id = document.querySelector(ITEM_ARTICLE + SUFFIX_SEARCH_FIELD);
-    let name = document.querySelector(ITEM_NAME + SUFFIX_SEARCH_FIELD);
-    let type = document.querySelector(ITEM_TYPE + SUFFIX_SEARCH_FIELD);
-    let category = document.querySelector(ITEM_CATEGORY + SUFFIX_SEARCH_FIELD);
-    let size = document.querySelector(ITEM_SIZE + SUFFIX_SEARCH_FIELD);
+function searchItemToSelect(suffix) {
+    let id = document.querySelector(ITEM_ARTICLE + SUFFIX_SEARCH_FIELD + suffix);
+    let name = document.querySelector(ITEM_NAME + SUFFIX_SEARCH_FIELD + suffix);
+    let type = document.querySelector(ITEM_TYPE + SUFFIX_SEARCH_FIELD + suffix);
+    let category = document.querySelector(ITEM_CATEGORY + SUFFIX_SEARCH_FIELD + suffix);
+    let size = document.querySelector(ITEM_SIZE + SUFFIX_SEARCH_FIELD + suffix);
 
     fetch(URL_ITEMS + "/search" + `?id=${id.value}&name=${name.value}&type=${type.value}&category=${category.value}&size=${size.value}`)
         .then((resp) => resp.json())
         .then(function (data) {
             console.log(data);
-            document.getElementById(ITEMS_COUNT).innerText = data.length;
-            let select = document.getElementById(ITEMS_FOUND);
+            document.getElementById(ITEMS_COUNT + suffix).innerText = data.length;
+            let select = document.getElementById(ITEMS_FOUND + suffix);
             let tmp = EMPTY_VALUE;
             if (data.length > 0) {
                 tmp += "<option value='-1'>" + "Нет" + "</option>";
@@ -59,9 +59,9 @@ function getMaxIndex(items) {
     return maxIndex;
 }
 
-function fillSelectItems() {
-    let clientItems = document.getElementById(CLIENT_ITEMS);
-    let selectedItem = document.getElementById(ITEMS_FOUND);
+function fillSelectItems(suffix) {
+    let clientItems = document.getElementById(CLIENT_ITEMS + suffix);
+    let selectedItem = document.getElementById(ITEMS_FOUND + suffix);
     let id = selectedItem.options[selectedItem.selectedIndex].value;
     let tmp = clientItems.innerHTML;
 
@@ -69,26 +69,7 @@ function fillSelectItems() {
         fetch(URL_ITEMS + "/" + id)
             .then(resp => resp.json())
             .then(function (item) {
-                let index = getMaxIndex(clientItems.querySelectorAll(TAG_TR));
-                index = Number(index) + Number(1);
-                tmp += "<tr id=" + ITEM + index + ">" + "<td class=" + ITEM_ARTICLE_CL + ">" + item.id + "</td>";
-                tmp += "<td>" + item.name + "</td>";
-                tmp += "<td>" + item.category.name + "</td>";
-                tmp += "<td>" + item.type.name + "</td>";
-                tmp += "<td>" + item.size + "</td>";
-                tmp += "<td>" + "<button type='button' onclick=incrementItem(" +
-                    index + ',' + item.price +
-                    ")>+</button><span class= " + ITEM_COUNT_CL + " id=" + ITEM_COUNT + index + ">1</span><button type='button' onclick=decrementItem(" +
-                    index + ',' + item.price
-                    + ")>-</button>" + "</td>";
-                tmp += "<td class=" + ITEM_PRICE_CL + " id=" + ITEM_PRICE + index + ">" + item.price + "</td>";
-                tmp += "<td>" + "<button onclick= \"deleteItemFromTable("
-                    + index +
-                    ")\" type=\"button\">\n" +
-                    " Удалить" +
-                    "</button>" + "</td></tr>";
-                clientItems.innerHTML = tmp;
-                setTotalForItems();
+                addItemToTable(item, clientItems, tmp, suffix);
             })
         selectedItem.selectedIndex = 0;
     }

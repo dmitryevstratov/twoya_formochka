@@ -18,8 +18,9 @@ import java.util.List;
 public class ItemType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @SequenceGenerator(name = "itemTypesSeqGen", sequenceName = "item_types_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "itemTypesSeqGen")
+    private Integer id;
 
     @Column
     @NotNull

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.shepard1992.gmail.twoya_formochka.service.utils.DateUtil.converterDate;
 
@@ -31,6 +32,7 @@ public class OrderMapper {
         });
 
         Order order = Order.builder()
+                .id(createOrderPl.getIdOrder())
                 .dateCreate(converterDate(ZonedDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))))
                 .client(Client.builder()
                         .id(createOrderPl.getIdClient())
@@ -51,7 +53,7 @@ public class OrderMapper {
     public CreateOrderPl mapperToOrderPl(Order order) {
         Optional<Discount> discount = Optional.ofNullable(order.getDiscount());
         List<ItemsOrderPl> itemsOrderList = new ArrayList<>();
-        Map<Long, Integer> itemsOrdersMap = new HashMap<>();
+        Map<Integer, Integer> itemsOrdersMap = new HashMap<>();
 
         order.getItems().forEach(item -> {
             Integer count = itemsOrdersMap.get(item.getId());
@@ -107,5 +109,47 @@ public class OrderMapper {
                 .countItems(order.getItems().size())
                 .status(order.getStatus())
                 .build();
+    }
+
+    public GetOrderToUpdatePl mapperToUpdateOrderPl(Order order) {
+        Client client = order.getClient();
+        Discount discount = order.getDiscount();
+
+        List<ItemPl> itemPlList = order.getItems().stream().map(item -> ItemPl.builder()
+                .id(item.getId())
+                .type(ItemTypePl.builder()
+                        .id(item.getType().getId())
+                        .name(item.getType().getName())
+                        .build())
+                .name(item.getName())
+                .price(item.getPrice())
+                .category(ItemCategoryPl.builder()
+                        .id(item.getCategory().getId())
+                        .name(item.getCategory().getName())
+                        .build())
+                .size(item.getSize())
+                .build()).collect(Collectors.toList());
+
+        GetOrderToUpdatePl orderPl = GetOrderToUpdatePl.builder()
+                .clientPl(ClientPl.builder()
+                        .id(client.getId())
+                        .firstName(client.getFirstName())
+                        .lastName(client.getLastName())
+                        .build())
+                .itemPlList(itemPlList)
+                .build();
+
+        if (discount != null) {
+            orderPl.setDiscountPl(DiscountPl.builder()
+                    .id(discount.getId())
+                    .type(DiscountTypePl.builder()
+                            .id(discount.getType().getId())
+                            .name(discount.getType().getName())
+                            .build())
+                    .value(discount.getValue())
+                    .build());
+        }
+
+        return orderPl;
     }
 }

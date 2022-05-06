@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ItemService {
 
-    ItemPl getItemById(Long id);
+    ItemPl getItemById(Integer id);
 
     List<ItemPl> searchByParams(ItemFilterPl filterPl);
 

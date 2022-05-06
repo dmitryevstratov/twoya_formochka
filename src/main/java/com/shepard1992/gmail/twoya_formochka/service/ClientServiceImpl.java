@@ -54,12 +54,12 @@ public class ClientServiceImpl implements ClientService {
     }
 
     @Override
-    public ClientPl getClientById(Long id) {
+    public ClientPl getClientById(Integer id) {
         return mapper.mapperToClientPl(Objects.requireNonNull(repository.findById(id).orElse(null)));
     }
 
     @Override
-    public void deleteClientById(Long id) {
+    public void deleteClientById(Integer id) {
         repository.deleteById(id);
     }
 

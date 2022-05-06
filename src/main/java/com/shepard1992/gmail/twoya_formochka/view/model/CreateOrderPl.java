@@ -9,11 +9,13 @@ import java.util.List;
 @Builder
 public class CreateOrderPl {
 
-    private Long idClient;
+    private Integer idOrder;
+
+    private Integer idClient;
 
     private List<ItemsOrderPl> items;
 
-    private Long idDiscount;
+    private Integer idDiscount;
 
     private Double price;
 

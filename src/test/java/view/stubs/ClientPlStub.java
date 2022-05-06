@@ -14,7 +14,7 @@ public class ClientPlStub {
 
     public static ClientPl getStub(AddressPl addressPl, List<CreateOrderPl> createOrderPlList, List<DiscountPl> discountPlSet) {
         return ClientPl.builder()
-                .id(1L)
+                .id(1)
                 .firstName("Ivan")
                 .secondName("Ivanovich")
                 .lastName("Ivanov")

@@ -8,6 +8,7 @@ import com.shepard1992.gmail.twoya_formochka.repository.specification.OrderSpeci
 import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ItemsOrderPl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +22,7 @@ import view.stubs.OrderStub;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -44,16 +46,16 @@ public class OrderServiceTest {
     public void when_call_addOrder_then_return_result() {
         when(repository.save(any())).thenReturn(Order.builder()
                 .client(Client.builder()
-                        .id(1L)
+                        .id(1)
                         .build())
                 .items(List.of(Item.builder().build()))
                 .build());
 
         CreateOrderPl createOrderPl = service.addOrder(CreateOrderPl.builder()
-                .idClient(1L)
+                .idClient(1)
                 .items(List.of(ItemsOrderPl.builder()
                         .count(1)
-                        .id(1L)
+                        .id(1)
                         .build()))
                 .price(100.0)
                 .build());
@@ -78,6 +80,36 @@ public class OrderServiceTest {
 
         assertNotNull(orderPlList);
         assertEquals(1, orderPlList.size());
+    }
+
+    @Test
+    public void test_when_call_getOrderById_then_return_result(){
+        when(repository.findById(any())).thenReturn(Optional.of(OrderStub.getStub()));
+
+        GetOrderToUpdatePl order = service.getOrderById(1);
+
+        assertNotNull(order);
+    }
+
+    @Test
+    public void when_call_editOrder_then_return_result() {
+        when(repository.save(any())).thenReturn(Order.builder()
+                .client(Client.builder()
+                        .id(1)
+                        .build())
+                .items(List.of(Item.builder().build()))
+                .build());
+
+        CreateOrderPl createOrderPl = service.editOrders(CreateOrderPl.builder()
+                .idClient(1)
+                .items(List.of(ItemsOrderPl.builder()
+                        .count(1)
+                        .id(1)
+                        .build()))
+                .price(100.0)
+                .build());
+
+        assertEquals(1L, createOrderPl.getIdClient().longValue());
     }
 
 }

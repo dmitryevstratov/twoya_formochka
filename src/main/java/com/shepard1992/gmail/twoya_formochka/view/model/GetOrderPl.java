@@ -8,7 +8,7 @@ import lombok.Data;
 @Builder
 public class GetOrderPl {
 
-    private Long id;
+    private Integer id;
 
     private ClientPl client;
 

@@ -80,7 +80,7 @@ public class ClientServiceTest {
     public void test_when_call_getClientById_then_return_result() {
         when(repository.findById(any())).thenReturn(Optional.ofNullable(stub));
 
-        ClientPl clientPl = service.getClientById(1L);
+        ClientPl clientPl = service.getClientById(1);
 
         assertEquals(stubPl.getId(), clientPl.getId());
     }
@@ -89,7 +89,7 @@ public class ClientServiceTest {
     public void test_when_call_deleteClientById_then_return_success() {
         doNothing().when(repository).deleteById(any());
 
-        service.deleteClientById(1L);
+        service.deleteClientById(1);
 
         verify(repository, times(1)).deleteById(any());
     }

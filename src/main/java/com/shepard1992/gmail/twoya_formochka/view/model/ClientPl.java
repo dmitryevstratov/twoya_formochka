@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 public class ClientPl {
 
-    private Long id;
+    private Integer id;
 
     private String firstName;
 

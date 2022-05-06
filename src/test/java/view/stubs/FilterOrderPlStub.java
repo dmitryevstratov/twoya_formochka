@@ -9,7 +9,7 @@ public class FilterOrderPlStub {
 
     public static FilterOrderPl getStub() {
         return FilterOrderPl.builder()
-                .id(1L)
+                .id(1)
                 .firstName("Kex")
                 .lastName("Shmexov")
                 .dateCreate("28-04-2022")

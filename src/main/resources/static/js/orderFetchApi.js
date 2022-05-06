@@ -22,9 +22,12 @@ const ORDER = "order";
 const ORDER_ID = "order-id";
 const ORDER_COUNT = "order-count";
 const ORDER_TOTAL_PRICE = "order-total-price";
+const ARTICLE_ORDER = "article-order";
 
 //ID modal window
 const MODAL_CREATE = "addOrder";
+const MODAL_DELETE = "deleteOrder";
+const MODAL_EDIT = "editOrder";
 
 //Load clients on client page
 
@@ -65,14 +68,14 @@ function addOrderInTable(order) {
         + order.id + ', ' +
         +0 + ', ' +
         +0 +
-        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editClient\">\n" +
+        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editOrder\">\n" +
         " Редактировать" +
         "</button></td>";
     tmp += "<td><button onmousedown= \"fillFormOrderById("
         + order.id + ', ' +
         +1 + ', ' +
         +1 +
-        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteClient\">\n" +
+        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteOrder\">\n" +
         " Удалить" +
         "</button></td>";
 
@@ -83,18 +86,18 @@ function addOrderInTable(order) {
 
 //Method SEARCH
 
-function searchClientToSelect() {
-    let id = document.querySelector(ID_ID + SUFFIX_SEARCH_FIELD);
-    let firstName = document.querySelector(FIRST_NAME_ID + SUFFIX_SEARCH_FIELD);
-    let lastName = document.querySelector(LAST_NAME_ID + SUFFIX_SEARCH_FIELD);
-    let telephone = document.querySelector(TELEPHONE_ID + SUFFIX_SEARCH_FIELD);
+function searchClientToSelect(suffix) {
+    let id = document.querySelector(ID_ID + SUFFIX_SEARCH_FIELD + suffix);
+    let firstName = document.querySelector(FIRST_NAME_ID + SUFFIX_SEARCH_FIELD + suffix);
+    let lastName = document.querySelector(LAST_NAME_ID + SUFFIX_SEARCH_FIELD + suffix);
+    let telephone = document.querySelector(TELEPHONE_ID + SUFFIX_SEARCH_FIELD + suffix);
 
     fetch(URL_CLIENTS + "/search" + `?id=${id.value}&firstName=${firstName.value}&lastName=${lastName.value}&telephone=${telephone.value}`)
         .then((resp) => resp.json())
         .then(function (data) {
             console.log(data);
-            document.getElementById(CLIENTS_COUNT).innerText = data.length;
-            let select = document.getElementById(CLIENTS_FOUND);
+            document.getElementById(CLIENTS_COUNT + suffix).innerText = data.length;
+            let select = document.getElementById(CLIENTS_FOUND + suffix);
             let tmp = EMPTY_VALUE;
             if (data.length > 0) {
                 tmp += "<option value='-1'>" + "Нет" + "</option>";
@@ -142,10 +145,10 @@ function searchOrder() {
 
 //Method fill fields
 
-function fillSelectDiscounts() {
+function fillSelectDiscounts(suffix) {
     let tmp = EMPTY_VALUE;
-    let selectDiscounts = document.getElementById(CLIENT_DISCOUNTS);
-    let selectClients = document.getElementById(CLIENTS_FOUND);
+    let selectDiscounts = document.getElementById(CLIENT_DISCOUNTS + suffix);
+    let selectClients = document.getElementById(CLIENTS_FOUND + suffix);
     let id = selectClients.options[selectClients.selectedIndex].value;
 
     if (id != -1) {
@@ -156,7 +159,7 @@ function fillSelectDiscounts() {
                 let discounts = client.discounts;
                 if (discounts != null) {
                     tmp += "<option value='-1'>" + "Нет" + "</option>";
-                    document.getElementById(CLIENT_DISCOUNTS_COUNT).innerText = discounts.length;
+                    document.getElementById(CLIENT_DISCOUNTS_COUNT + suffix).innerText = discounts.length;
                     discounts.forEach(discount => {
                         tmp += "<option value=" + discount.id + ">" + discount.type.name + " - " + discount.value + "</option>";
                     })
@@ -170,10 +173,9 @@ function fillSelectDiscounts() {
     }
 }
 
-function deleteItemFromTable(id) {
+function deleteItemFromTable(id, suffix) {
     let tmp = EMPTY_VALUE;
-    let clientItems = document.getElementById(CLIENT_ITEMS);
-
+    let clientItems = document.getElementById(CLIENT_ITEMS + suffix);
     clientItems.querySelectorAll(TAG_TR).forEach(el => {
         if (el.id !== ITEM + id) {
             tmp += "<tr id=" + el.id + ">" + el.innerHTML + "</tr>";
@@ -181,10 +183,10 @@ function deleteItemFromTable(id) {
         clientItems.innerHTML = tmp;
     })
 
-    setTotalForItems();
+    setTotalForItems(suffix);
 }
 
-function incrementItem(id, price) {
+function incrementItem(id, price, suffix) {
     let countEl = document.getElementById(ITEM_COUNT + id);
     let priceEl = document.getElementById(ITEM_PRICE + id);
     let count = Number(countEl.innerHTML);
@@ -195,10 +197,10 @@ function incrementItem(id, price) {
         countEl.innerHTML = ++count;
     }
     priceEl.innerHTML = setPrice(price, count);
-    setTotalForItems();
+    setTotalForItems(suffix);
 }
 
-function decrementItem(id, price) {
+function decrementItem(id, price, suffix) {
     let countEl = document.getElementById(ITEM_COUNT + id);
     let priceEl = document.getElementById(ITEM_PRICE + id);
     let count = Number(countEl.innerHTML);
@@ -209,19 +211,32 @@ function decrementItem(id, price) {
         countEl.innerHTML = --count;
     }
     priceEl.innerHTML = setPrice(price, count);
-    setTotalForItems();
+    setTotalForItems(suffix);
 }
 
 function setPrice(price, count) {
     return (Number(price) * Number(count)).toFixed(1);
 }
 
-function setTotalForItems() {
-    let discount = document.getElementById(CLIENT_DISCOUNTS);
+function setTotalForItems(suffix) {
+    let discount;
+    let clientItems;
+    let totalCountEl;
+    let totalPriceEl;
+
+    if (suffix != "null" && suffix != null) {
+        discount = document.getElementById(CLIENT_DISCOUNTS + suffix);
+        clientItems = document.getElementById(CLIENT_ITEMS + suffix);
+        totalCountEl = document.getElementById(ITEMS_TOTAL + "count" + suffix);
+        totalPriceEl = document.getElementById(ITEMS_TOTAL + "price" + suffix);
+    } else {
+        discount = document.getElementById(CLIENT_DISCOUNTS);
+        clientItems = document.getElementById(CLIENT_ITEMS);
+        totalCountEl = document.getElementById(ITEMS_TOTAL + "count");
+        totalPriceEl = document.getElementById(ITEMS_TOTAL + "price");
+    }
+
     let discountSelected = discount.options[discount.selectedIndex];
-    let clientItems = document.getElementById(CLIENT_ITEMS);
-    let totalCountEl = document.getElementById(ITEMS_TOTAL + "count");
-    let totalPriceEl = document.getElementById(ITEMS_TOTAL + "price");
     let count = 0;
     let price = 0;
 
@@ -252,23 +267,23 @@ function parseDiscount(price, discountHtml) {
     }
 }
 
-function fillFieldsForOrder() {
+function fillFieldsForOrder(suffix) {
     let tmp = EMPTY_VALUE;
 
-    let clientId = document.querySelector(CLIENT_ID_ORDER);
-    let discountId = document.querySelector(DISCOUNT_ID_ORDER);
-    let itemsIdCount = document.querySelector(ITEMS_ID_COUNT_ORDER);
-    let totalPrice = document.querySelector(TOTAL_PRICE_ORDER);
+    let clientId = document.querySelector(CLIENT_ID_ORDER + suffix);
+    let discountId = document.querySelector(DISCOUNT_ID_ORDER + suffix);
+    let itemsIdCount = document.querySelector(ITEMS_ID_COUNT_ORDER + suffix);
+    let totalPrice = document.querySelector(TOTAL_PRICE_ORDER + suffix);
 
 
-    let clientSelected = document.getElementById(CLIENTS_FOUND);
-    let discountSelected = document.getElementById(CLIENT_DISCOUNTS);
+    let clientSelected = document.getElementById(CLIENTS_FOUND + suffix);
+    let discountSelected = document.getElementById(CLIENT_DISCOUNTS + suffix);
 
     let clientSelectedIndex = clientSelected.options[clientSelected.selectedIndex];
     let discountSelectedIndex = discountSelected.options[discountSelected.selectedIndex];
-    let totalPriceSelected = document.getElementById(ITEMS_TOTAL + "price").innerHTML;
+    let totalPriceSelected = document.getElementById(ITEMS_TOTAL + "price" + suffix).innerHTML;
 
-    getAllItems().forEach(item => {
+    getAllItems(suffix).forEach(item => {
         if (item !== undefined) {
             tmp += item.returnString();
         }
@@ -280,8 +295,8 @@ function fillFieldsForOrder() {
     totalPrice.value = totalPriceSelected;
 }
 
-function getAllItems() {
-    let itemsRow = document.getElementById(CLIENT_ITEMS).querySelectorAll(TAG_TR);
+function getAllItems(suffix) {
+    let itemsRow = document.getElementById(CLIENT_ITEMS + suffix).querySelectorAll(TAG_TR);
     let itemsArray = new Array(itemsRow.length);
 
     itemsRow.forEach(item => {
@@ -294,11 +309,11 @@ function getAllItems() {
     return itemsArray;
 }
 
-function checkValidityOrderForm() {
-    let clientId = document.querySelector(CLIENT_ID_ORDER);
-    let itemsIdCount = document.querySelector(ITEMS_ID_COUNT_ORDER);
-    let totalPrice = document.querySelector(TOTAL_PRICE_ORDER);
-    let descriptionForResultHtml = document.getElementById(ORDER_RESULT);
+function checkValidityOrderForm(suffix) {
+    let clientId = document.querySelector(CLIENT_ID_ORDER + suffix);
+    let itemsIdCount = document.querySelector(ITEMS_ID_COUNT_ORDER + suffix);
+    let totalPrice = document.querySelector(TOTAL_PRICE_ORDER + suffix);
+    let descriptionForResultHtml = document.getElementById(ORDER_RESULT + suffix);
     let alertContainer = document.createElement('div');
     let alertContent = EMPTY_VALUE;
     let success = false;
@@ -323,9 +338,9 @@ function checkValidityOrderForm() {
 //Method POST
 
 function createOrder() {
-    fillFieldsForOrder()
-    if (checkValidityOrderForm()) {
-        fetchSendData(URL_CREATE, getDataOrder(), POST)
+    fillFieldsForOrder('')
+    if (checkValidityOrderForm('')) {
+        fetchSendData(URL_CREATE, getDataOrder(''), POST)
             .then((data) => {
                 fetchOrderThen(data, MODAL_CREATE)
             });
@@ -338,20 +353,25 @@ function fetchOrderThen(data, modal) {
     console.log(data);
     loadOrders();
     document.getElementById(DATA_ORDERS).innerHTML = EMPTY_VALUE;
-    clearOrderForm();
     hiddenForm(modal);
 }
 
 //Get data
 
-function getDataOrder() {
-    let clientId = document.querySelector(CLIENT_ID_ORDER).value;
-    let discountId = document.querySelector(DISCOUNT_ID_ORDER).value;
-    let totalPrice = document.querySelector(TOTAL_PRICE_ORDER).value;
+function getDataOrder(suffix) {
+    let clientId = document.querySelector(CLIENT_ID_ORDER + suffix).value;
+    let discountId = document.querySelector(DISCOUNT_ID_ORDER + suffix).value;
+    let totalPrice = document.querySelector(TOTAL_PRICE_ORDER + suffix).value;
+    let article = document.getElementById(ARTICLE_ORDER + suffix);
+
+    if(article != null){
+        article = article.value;
+    }
 
     return {
+        idOrder: article,
         idClient: clientId,
-        items: getAllItems(),
+        items: getAllItems(suffix),
         idDiscount: discountId,
         price: totalPrice
     }
@@ -359,22 +379,23 @@ function getDataOrder() {
 
 //Form
 
-function clearOrderForm() {
-    let formClient = document.getElementById("form-choose-client-for-order");
-    let formItem = document.getElementById("form-choose-item-for-order");
-    let formOrder = document.getElementById("form-send-order");
+function clearOrderForm(suffix) {
+    let formClient = document.getElementById("form-choose-client-for-order" + suffix);
+    let formItem = document.getElementById("form-choose-item-for-order" + suffix);
+    let formOrder = document.getElementById("form-send-order" + suffix);
+    let orderResult = document.getElementById(ORDER_RESULT + suffix);
 
-    let table = document.getElementById(CLIENT_ITEMS);
-    let totalCount = document.getElementById(ITEMS_TOTAL + "count");
-    let totalPrice = document.getElementById(ITEMS_TOTAL + "price");
+    let table = document.getElementById(CLIENT_ITEMS + suffix);
+    let totalCount = document.getElementById(ITEMS_TOTAL + "count" + suffix);
+    let totalPrice = document.getElementById(ITEMS_TOTAL + "price" + suffix);
 
-    let clientsCount = document.getElementById(CLIENTS_COUNT);
-    let discountCount = document.getElementById(CLIENT_DISCOUNTS_COUNT);
-    let itemsCount = document.getElementById(ITEMS_COUNT);
+    let clientsCount = document.getElementById(CLIENTS_COUNT + suffix);
+    let discountCount = document.getElementById(CLIENT_DISCOUNTS_COUNT + suffix);
+    let itemsCount = document.getElementById(ITEMS_COUNT + suffix);
 
-    let selectClient = document.getElementById(CLIENTS_FOUND);
-    let selectDiscount = document.getElementById(CLIENT_DISCOUNTS);
-    let selectItem = document.getElementById(ITEMS_FOUND);
+    let selectClient = document.getElementById(CLIENTS_FOUND + suffix);
+    let selectDiscount = document.getElementById(CLIENT_DISCOUNTS + suffix);
+    let selectItem = document.getElementById(ITEMS_FOUND + suffix);
 
     formClient.querySelectorAll(TAG_INPUT).forEach(input => {
         input.value = EMPTY_VALUE;
@@ -387,6 +408,7 @@ function clearOrderForm() {
     })
 
     table.innerHTML = EMPTY_VALUE;
+    orderResult.innerText = EMPTY_VALUE;
     totalCount.innerHTML = 0;
     totalPrice.innerHTML = 0;
 
@@ -394,9 +416,9 @@ function clearOrderForm() {
     selectDiscount.selectedIndex = 0;
     selectItem.selectedIndex = 0;
 
-    selectClient.innerHTML = EMPTY_VALUE;
-    selectDiscount.innerHTML = EMPTY_VALUE;
-    selectItem.innerHTML = EMPTY_VALUE;
+    selectClient.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
+    selectDiscount.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
+    selectItem.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
 
     clientsCount.innerHTML = 0;
     discountCount.innerHTML = 0;
@@ -453,4 +475,62 @@ function sortOrderBy(direction, field) {
 
     document.getElementById(DATA_ORDERS).innerHTML = tmp;
 
+}
+
+//Method PUT
+
+function editOrder() {
+    fillFieldsForOrder(SUFFIX_EDIT_FIELD);
+    if (checkValidityOrderForm(SUFFIX_EDIT_FIELD)) {
+        fetchSendData(URL_EDIT, getDataOrder(SUFFIX_EDIT_FIELD), PUT)
+            .then((data) => {
+                fetchOrderThen(data, MODAL_EDIT)
+            });
+    }
+}
+
+function fillFormOrderById(id, numSuffix, numModal) {
+    let suffix;
+    let modal;
+
+    if (numSuffix === 0 && numModal === 0) {
+        suffix = SUFFIX_EDIT_FIELD
+        modal = MODAL_EDIT
+    } else if (numSuffix === 1 && numModal === 1) {
+        suffix = SUFFIX_DELETE_FIELD
+        modal = MODAL_DELETE
+    }
+
+    fetch(URL_ORDERS + "/" + id).then((
+        resp => resp.json()
+    )).then(
+        function (order) {
+            console.log(order);
+            let selectClients = document.getElementById(CLIENTS_FOUND + suffix);
+            let selectDiscount = document.getElementById(CLIENT_DISCOUNTS + suffix);
+            let tableItems = document.getElementById(CLIENT_ITEMS + suffix);
+            let tmp = tableItems.innerHTML;
+            document.getElementById(ARTICLE_ORDER + suffix).value = id;
+
+            let client = order.clientPl;
+            let discount = order.discountPl;
+            let items = order.itemPlList;
+
+            selectClients.options[0].value = client.id;
+            selectClients.options[0].innerHTML = "№" + client.id + " - " + client.lastName + " " + client.firstName;
+
+            if (discount != null) {
+                selectDiscount.options[0].value = discount.id;
+                selectDiscount.options[0].innerHTML = discount.type.name + " - " + discount.value;
+            }
+
+            items.forEach(item => {
+                addItemToTableUpdate(item, tableItems, tmp, suffix);
+            });
+
+            openForm(modal);
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
 }

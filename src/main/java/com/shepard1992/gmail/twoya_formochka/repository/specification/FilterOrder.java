@@ -9,7 +9,7 @@ import java.time.ZonedDateTime;
 @Builder
 public class FilterOrder {
 
-    private Long id;
+    private Integer id;
 
     private String firstName;
 

@@ -24,14 +24,14 @@ public class ItemControllerImpl implements ItemController {
 
     @Override
     @GetMapping("/items/{id}")
-    public ItemPl getItemById(@PathVariable Long id) {
+    public ItemPl getItemById(@PathVariable Integer id) {
         return service.getItemById(id);
     }
 
     @Override
     @GetMapping("/items/search")
     public List<ItemPl> searchByParams(
-            @RequestParam(value = "id", required = false) Long id,
+            @RequestParam(value = "id", required = false) Integer id,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "type", required = false) String type,
             @RequestParam(value = "category", required = false) String category,

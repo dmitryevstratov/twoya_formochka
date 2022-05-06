@@ -10,7 +10,7 @@ public class DiscountPlStub {
 
     public static DiscountPl getStub(DiscountTypePl discountTypePl) {
         return DiscountPl.builder()
-                .id(1L)
+                .id(1)
                 .value(20)
                 .type(discountTypePl)
                 .build();

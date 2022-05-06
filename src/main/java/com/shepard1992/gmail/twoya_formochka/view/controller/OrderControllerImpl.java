@@ -6,13 +6,12 @@ import com.shepard1992.gmail.twoya_formochka.view.controller.api.OrderController
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.FilterOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -45,7 +44,7 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
 
     @GetMapping("orders/search")
     public List<GetOrderPl> searchByParams(
-            @RequestParam(value = "id", required = false) Long id,
+            @RequestParam(value = "id", required = false) Integer id,
             @RequestParam(value = "firstName", required = false) String firstName,
             @RequestParam(value = "lastName", required = false) String lastName,
             @RequestParam(value = "dateCreate", required = false) String dateCreate,
@@ -69,17 +68,19 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
     }
 
     @Override
-    public CreateOrderPl editOrders(CreateOrderPl createOrderPl) {
+    @PutMapping("/orders/edit")
+    public CreateOrderPl editOrders(@RequestBody CreateOrderPl createOrderPl) {
         return service.editOrders(createOrderPl);
     }
 
     @Override
-    public CreateOrderPl getOrderById(Long id) {
+    @GetMapping("/orders/{id}")
+    public GetOrderToUpdatePl getOrderById(@PathVariable Integer id) {
         return service.getOrderById(id);
     }
 
     @Override
-    public void deleteOrderById(Long id) {
+    public void deleteOrderById(Integer id) {
         service.deleteOrderById(id);
     }
 

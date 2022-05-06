@@ -26,7 +26,7 @@ public class ClientMapper {
 
     public Client mapperToClient(ClientPl clientPl) {
         Address address = addressMapper.mapperToAddress(clientPl.getAddress());
-        List<Discount> discounts = clientPl.getDiscounts().stream()
+        List<Discount> discounts = (clientPl.getDiscounts() == null) ? null : clientPl.getDiscounts().stream()
                 .map(discountMapper::mapperToDiscount)
                 .collect(Collectors.toList());
 
@@ -45,7 +45,7 @@ public class ClientMapper {
 
     public ClientPl mapperToClientPl(Client client) {
         AddressPl addressPl = addressMapper.mapperToAddressPl(client.getAddress());
-        List<DiscountPl> discountsPl = client.getDiscounts().stream()
+        List<DiscountPl> discountsPl = (client.getDiscounts() == null) ? null : client.getDiscounts().stream()
                 .map(discountMapper::mapperToDiscountPl)
                 .collect(Collectors.toList());
 

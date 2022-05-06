@@ -4,6 +4,7 @@ import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.OrderMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ItemsOrderPl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,19 +29,19 @@ public class OrderMapperTest {
     @Test
     public void test_mapperToOrder() {
         CreateOrderPl createOrderPl = CreateOrderPl.builder()
-                .idClient(1L)
-                .idDiscount(1L)
+                .idClient(1)
+                .idDiscount(1)
                 .price(200.1)
                 .items(List.of(ItemsOrderPl.builder()
-                                .id(5L)
+                                .id(5)
                                 .count(2)
                                 .build(),
                         ItemsOrderPl.builder()
-                                .id(5L)
+                                .id(5)
                                 .count(1)
                                 .build(),
                         ItemsOrderPl.builder()
-                                .id(1L)
+                                .id(1)
                                 .count(1)
                                 .build()))
                 .build();
@@ -75,4 +76,12 @@ public class OrderMapperTest {
         assertEquals(OrderStub.getStub().getTotalPrice(), orderPl.getTotalPrice());
     }
 
+    @Test
+    public void test_mapperToUpdateOrderPl(){
+        GetOrderToUpdatePl updatePl = orderMapper.mapperToUpdateOrderPl(OrderStub.getStub());
+
+        assertEquals(OrderStub.getStub().getClient().getId(), updatePl.getClientPl().getId());
+        assertEquals(OrderStub.getStub().getDiscount().getId(), updatePl.getDiscountPl().getId());
+        assertEquals(OrderStub.getStub().getItems().get(0).getId(), updatePl.getItemPlList().get(0).getId());
+    }
 }

@@ -22,7 +22,7 @@ public class FilterItemMapperTest {
     @Test
     public void test_mapperToFilter() {
         ItemFilterPl itemFilterPl = ItemFilterPl.builder()
-                .id(2L)
+                .id(2)
                 .name("Снежинка")
                 .type("Вырубка")
                 .category("НГ")

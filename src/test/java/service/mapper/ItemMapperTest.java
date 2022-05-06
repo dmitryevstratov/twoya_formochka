@@ -24,15 +24,15 @@ public class ItemMapperTest {
     @Test
     public void test_mapperToItemPl() {
         Item item = Item.builder()
-                .id(1L)
+                .id(1)
                 .category(ItemCategory.builder()
-                        .id(2L)
+                        .id(2)
                         .name("Техника")
                         .build())
                 .name("Машинка")
                 .price(10.5)
                 .type(ItemType.builder()
-                        .id(5L)
+                        .id(5)
                         .name("Вырубка")
                         .build())
                 .build();

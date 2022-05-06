@@ -12,11 +12,11 @@ public interface ClientController {
 
     ClientPl editClient(ClientPl clientPl);
 
-    ClientPl getClientById(Long id);
+    ClientPl getClientById(Integer id);
 
-    void deleteClientById(Long id);
+    void deleteClientById(Integer id);
 
-    List<ClientPl> searchByParams(Long id,
+    List<ClientPl> searchByParams(Integer id,
                                   String firstName,
                                   String lastName,
                                   String secondName,

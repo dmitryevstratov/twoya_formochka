@@ -10,7 +10,7 @@ import java.util.List;
 @Builder
 public class ItemTypePl {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 

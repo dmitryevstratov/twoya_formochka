@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class ItemsOrderPl {
 
-    private Long id;
+    private Integer id;
 
     private Integer count;
 

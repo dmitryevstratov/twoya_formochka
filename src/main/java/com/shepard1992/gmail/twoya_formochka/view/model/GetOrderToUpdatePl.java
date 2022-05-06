@@ -7,12 +7,10 @@ import java.util.List;
 
 @Data
 @Builder
-public class DiscountTypePl {
+public class GetOrderToUpdatePl {
 
-    private Integer id;
-
-    private String name;
-
-    private List<DiscountPl> discounts;
+    private ClientPl clientPl;
+    private DiscountPl discountPl;
+    private List<ItemPl> itemPlList;
 
 }
