@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
-import view.stubs.DiscountPlStub;
+import stubs.DiscountPlStub;
 
 import static org.junit.Assert.assertEquals;
 

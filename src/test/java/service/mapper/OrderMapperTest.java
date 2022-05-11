@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
-import view.stubs.OrderStub;
+import stubs.OrderStub;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;

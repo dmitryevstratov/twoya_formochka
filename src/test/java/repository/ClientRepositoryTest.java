@@ -7,14 +7,15 @@ import com.shepard1992.gmail.twoya_formochka.repository.entity.Address;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-import repository.config.ClientRepositoryTestConfig;
-import view.stubs.AddressStub;
-import view.stubs.ClientStub;
+import repository.config.RepositoryTestConfig;
+import stubs.AddressStub;
+import stubs.ClientStub;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {
         TwoyaFormochkaApplication.class,
-        ClientRepositoryTestConfig.class
+        RepositoryTestConfig.class
 })
 public class ClientRepositoryTest {
 
@@ -35,6 +36,11 @@ public class ClientRepositoryTest {
 
     @Autowired
     private AddressRepository addressRepository;
+
+    @Before
+    public void cleanDB() {
+        repository.deleteAll();
+    }
 
     private final List<Order> orderList = new ArrayList<>();
     private final List<Discount> discountList = new ArrayList<>();
@@ -56,7 +62,6 @@ public class ClientRepositoryTest {
 
     @Test
     public void test_when_call_findAll_then_return_result() {
-        repository.deleteAll();
         repository.save(stub);
         List<Client> clientList = repository.findAll();
 
@@ -65,7 +70,6 @@ public class ClientRepositoryTest {
 
     @Test
     public void test_when_call_findById_then_return_result() {
-        repository.deleteAll();
         Client clientSaved = repository.save(stub);
 
         assertEquals(clientSaved.getId(), repository.findById(clientSaved.getId()).get().getId());
@@ -73,7 +77,6 @@ public class ClientRepositoryTest {
 
     @Test
     public void test_when_call_deleteById_then_return_success() {
-        repository.deleteAll();
         Client clientSaved = repository.save(stub);
         repository.deleteById(clientSaved.getId());
 

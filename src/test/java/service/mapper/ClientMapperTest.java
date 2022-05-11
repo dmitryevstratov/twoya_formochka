@@ -13,10 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
-import view.stubs.AddressPlStub;
-import view.stubs.AddressStub;
-import view.stubs.ClientPlStub;
-import view.stubs.ClientStub;
+import stubs.AddressPlStub;
+import stubs.AddressStub;
+import stubs.ClientPlStub;
+import stubs.ClientStub;
 
 import java.util.ArrayList;
 import java.util.List;

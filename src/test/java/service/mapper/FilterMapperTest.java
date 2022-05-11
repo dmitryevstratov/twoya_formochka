@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
-import view.stubs.FilterOrderPlStub;
-import view.stubs.FilterPlStub;
+import stubs.FilterOrderPlStub;
+import stubs.FilterPlStub;
 
 import java.time.format.DateTimeFormatter;
 

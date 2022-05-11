@@ -1,4 +1,4 @@
-package view.stubs;
+package stubs;
 
 import com.shepard1992.gmail.twoya_formochka.repository.entity.*;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder;
