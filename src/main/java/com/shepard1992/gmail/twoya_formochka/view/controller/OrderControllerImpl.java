@@ -80,7 +80,8 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
     }
 
     @Override
-    public void deleteOrderById(Integer id) {
+    @DeleteMapping("/orders/{id}")
+    public void deleteOrderById(@PathVariable Integer id) {
         service.deleteOrderById(id);
     }
 

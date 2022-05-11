@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @Import(ViewTestConfig.class)
@@ -80,6 +80,17 @@ public class OrderControllerTest {
                 .build());
 
         assertEquals(1L, createOrderPl.getIdClient().longValue());
+    }
+
+    @Test
+    public void test_when_call_deleteOrderById_then_return_result() {
+
+        doNothing().when(service).deleteOrderById(any());
+
+        controller.deleteOrderById(1);
+
+        verify(service, times(1)).deleteOrderById(any());
+
     }
 
 }

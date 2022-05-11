@@ -27,7 +27,8 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 @RunWith(SpringRunner.class)
 @Import({
@@ -110,6 +111,15 @@ public class OrderServiceTest {
                 .build());
 
         assertEquals(1L, createOrderPl.getIdClient().longValue());
+    }
+
+    @Test
+    public void test_when_call_deleteOrderById_then_return_success() {
+        doNothing().when(repository).deleteById(any());
+
+        service.deleteOrderById(1);
+
+        verify(repository, times(1)).deleteById(any());
     }
 
 }

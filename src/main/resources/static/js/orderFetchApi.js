@@ -501,6 +501,8 @@ function fillFormDeleteOrderById(id) {
             let inputClient = document.getElementById(CLIENTS_FOUND + SUFFIX_DELETE_FIELD);
             let inputDiscount = document.getElementById(CLIENT_DISCOUNTS + SUFFIX_DELETE_FIELD);
             let tableItems = document.getElementById(CLIENT_ITEMS + SUFFIX_DELETE_FIELD);
+            document.getElementById(ORDER_ID + SUFFIX_DELETE_FIELD).value = id;
+
             let tmp = tableItems.innerHTML;
 
             let client = order.clientPl;
@@ -527,5 +529,11 @@ function fillFormDeleteOrderById(id) {
 }
 
 function deleteOrder() {
+    let id = document.getElementById(ORDER_ID + SUFFIX_DELETE_FIELD).value;
 
+    fetch(URL_ORDERS + "/" + id, {
+        method: DELETE,
+    }).then((id) => {
+        fetchOrderThen(id, MODAL_DELETE)
+    });
 }
