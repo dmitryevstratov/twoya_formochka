@@ -10,8 +10,10 @@ import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ItemsOrderPl;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -28,7 +30,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
 
 @RunWith(SpringRunner.class)
 @Import({
@@ -42,6 +43,11 @@ public class OrderServiceTest {
 
     @Autowired
     private OrderRepository repository;
+
+    @Before
+    public void clear(){
+        reset(repository);
+    }
 
     @Test
     public void when_call_addOrder_then_return_result() {
@@ -84,7 +90,7 @@ public class OrderServiceTest {
     }
 
     @Test
-    public void test_when_call_getOrderById_then_return_result(){
+    public void test_when_call_getOrderById_then_return_result() {
         when(repository.findById(any())).thenReturn(Optional.of(OrderStub.getStub()));
 
         GetOrderToUpdatePl order = service.getOrderById(1);
@@ -120,6 +126,26 @@ public class OrderServiceTest {
         service.deleteOrderById(1);
 
         verify(repository, times(1)).deleteById(any());
+    }
+
+    @Test
+    public void test_when_call_getOrdersStatus_then_return_success() {
+        when(repository.findAll()).thenReturn(List.of(OrderStub.getStub()));
+
+        List<GetOrderPl> ordersStatus = service.getOrdersStatus();
+
+        assertEquals(OrderStub.getStub().getId(), ordersStatus.get(0).getId());
+    }
+
+    @Test
+    public void test_when_call_editOrderStatus_then_return_success() {
+        when(repository.save(any())).thenReturn(OrderStub.getStub());
+        when(repository.findById(any())).thenReturn(Optional.of(OrderStub.getStub()));
+
+        service.editOrderStatus(1, "SENT");
+
+        verify(repository, times(1)).findById(any());
+        verify(repository, times(1)).save(any());
     }
 
 }

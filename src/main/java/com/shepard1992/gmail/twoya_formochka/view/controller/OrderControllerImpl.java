@@ -31,6 +31,12 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
     }
 
     @Override
+    @GetMapping("/orders-status.html")
+    public ModelAndView getViewOrdersStatus(Model model) {
+        return new ModelAndView("orders-status");
+    }
+
+    @Override
     @PostMapping("/orders/create")
     public CreateOrderPl addOrder(@RequestBody CreateOrderPl createOrderPl) {
         return service.addOrder(createOrderPl);
@@ -40,6 +46,12 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
     @GetMapping("/orders")
     public List<GetOrderPl> getOrders() {
         return service.getOrders();
+    }
+
+    @Override
+    @GetMapping("/orders-status")
+    public List<GetOrderPl> getOrdersStatus() {
+        return service.getOrdersStatus();
     }
 
     @GetMapping("orders/search")
@@ -71,6 +83,12 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
     @PutMapping("/orders/edit")
     public CreateOrderPl editOrders(@RequestBody CreateOrderPl createOrderPl) {
         return service.editOrders(createOrderPl);
+    }
+
+    @Override
+    @PutMapping("/orders-status/edit")
+    public CreateOrderPl editOrderStatus(@RequestParam Integer id, @RequestParam String status) {
+        return service.editOrderStatus(id, status);
     }
 
     @Override

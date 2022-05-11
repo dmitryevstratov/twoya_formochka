@@ -13,6 +13,8 @@ public interface OrderService {
 
     List<GetOrderPl> getOrders();
 
+    List<GetOrderPl> getOrdersStatus();
+
     List<GetOrderPl> searchByParams(FilterOrderPl filterOrderPl);
 
     CreateOrderPl editOrders(CreateOrderPl createOrderPl);
@@ -20,5 +22,7 @@ public interface OrderService {
     GetOrderToUpdatePl getOrderById(Integer id);
 
     void deleteOrderById(Integer id);
+
+    CreateOrderPl editOrderStatus(Integer id, String status);
 
 }

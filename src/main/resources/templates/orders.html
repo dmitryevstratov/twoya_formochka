@@ -29,7 +29,7 @@
                     <a th:href="@{/orders.html}">Заказы</a>
                 </li>
                 <li>
-                    <a th:href="service_1.html">Сервис 3</a>
+                    <a th:href="@{/orders-status.html}">Статусы заказов</a>
                 </li>
                 <li>
                     <a th:href="service_1.html">Сервис 4</a>
@@ -93,6 +93,7 @@
                         <option value="PRINTED">PRINTED</option>
                         <option value="PACKED">PACKED</option>
                         <option value="SENT">SENT</option>
+                        <option value="CANCELED">CANCELED</option>
                     </select>
                 </li>
                 <li>
@@ -494,7 +495,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('deleteOrder')" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <button onclick="hiddenForm('deleteOrder')" type="button" data-bs-dismiss="modal"
+                            aria-label="Close">
                         Закрыть
                     </button>
                     <button id="order-id-delete" onclick="deleteOrder()" type="button">Удалить
@@ -505,6 +507,8 @@
     </div>
 </div>
 <script>
+    loadOrders('/orders');
+
     (function () {
         'use strict'
 

@@ -1,5 +1,6 @@
 package view.controller;
 
+import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder;
 import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.OrderController;
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
@@ -92,5 +93,30 @@ public class OrderControllerTest {
         verify(service, times(1)).deleteOrderById(any());
 
     }
+
+    @Test
+    public void test_when_call_editOrderStatus_then_return_success() {
+        when(service.editOrderStatus(anyInt(), anyString())).thenReturn(CreateOrderPl.builder()
+                .idOrder(4)
+                .build());
+
+        CreateOrderPl orderPl = controller.editOrderStatus(1, "SENT");
+
+        assertEquals(Integer.valueOf(4), orderPl.getIdOrder());
+    }
+
+    @Test
+    public void test_when_call_getOrdersStatus_then_return_success() {
+        when(service.getOrdersStatus()).thenReturn(List.of(GetOrderPl.builder()
+                .id(1)
+                .status(StatusOrder.CREATED)
+                .build()));
+
+        GetOrderPl orderPl = controller.getOrdersStatus().get(0);
+
+        assertEquals(Integer.valueOf(1), orderPl.getId());
+        assertEquals(StatusOrder.CREATED, orderPl.getStatus());
+    }
+
 
 }
