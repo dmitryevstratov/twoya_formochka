@@ -2,6 +2,7 @@ package com.shepard1992.gmail.twoya_formochka.service;
 
 import com.shepard1992.gmail.twoya_formochka.repository.api.OrderRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder;
 import com.shepard1992.gmail.twoya_formochka.repository.specification.OrderSpecification;
 import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.FilterMapper;
@@ -14,8 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder.CANCELED;
 
 @Service
 @Transactional
@@ -48,6 +52,15 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public List<GetOrderPl> getOrdersStatus() {
+        return repository.findAll().stream()
+                .filter(order -> !order.getStatus().equals(CANCELED))
+                .map(orderMapper::mapperToGetOrderPl)
+                .sorted((o1, o2) -> Math.toIntExact(o1.getId() - o2.getId()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<GetOrderPl> searchByParams(FilterOrderPl filterOrderPl) {
         return repository.findAll(new OrderSpecification(filterMapper.mapperToOrderFilter(filterOrderPl))).stream()
                 .map(orderMapper::mapperToGetOrderPl)
@@ -69,6 +82,20 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void deleteOrderById(Integer id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public CreateOrderPl editOrderStatus(Integer id, String status) {
+        Order order = repository.findById(id).get();
+        StatusOrder statusOrder = StatusOrder.valueOf(status);
+
+        if (statusOrder == CANCELED) {
+            order.setDateClosed(ZonedDateTime.now());
+        }
+        order.setStatus(statusOrder);
+        repository.save(order);
+
+        return orderMapper.mapperToOrderPl(order);
     }
 
 }

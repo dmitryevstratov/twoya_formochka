@@ -1,8 +1,10 @@
 //URL
 const URL_CREATE = "/orders/create";
 const URL_ORDERS = "/orders";
+const URL_ORDERS_STATUS = "/orders-status";
 const DATA_ORDERS = "data-orders"
 const URL_EDIT = "/orders/edit";
+const URL_EDIT_STATUS = "/orders-status/edit";
 
 //Client field
 const CLIENTS_COUNT = "clients-count";
@@ -31,9 +33,9 @@ const MODAL_EDIT = "editOrder";
 
 //Load clients on client page
 
-function loadOrders() {
+function loadOrders(url) {
 
-    fetch(URL_ORDERS)
+    fetch(url)
         .then((resp) => resp.json())
         .then(function (data) {
             console.log(data);
@@ -48,21 +50,25 @@ function loadOrders() {
         });
 }
 
-loadOrders();
+function loadOrdersStatus(url) {
+
+    fetch(url)
+        .then((resp) => resp.json())
+        .then(function (data) {
+            console.log(data);
+            if (data.length > 0) {
+                data.forEach((order => {
+                    addOrderStatusInTable(order);
+                }))
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 
 function addOrderInTable(order) {
-    let table = document.getElementById(DATA_ORDERS);
-    let tmp = EMPTY_VALUE;
-    let discount = (order.discount != null) ? order.discount.type.name + " - " + order.discount.value + "%" : "";
-
-    tmp += "<td id=" + ORDER_ID + ">" + order.id + "</td>";
-    tmp += "<td>" + order.client.firstName + "</td>";
-    tmp += "<td>" + order.client.lastName + "</td>";
-    tmp += "<td>" + order.dateCreate + "</td>";
-    tmp += "<td>" + order.dateClosed + "</td>";
-    tmp += "<td>" + discount + "</td>";
-    tmp += "<td id=" + ORDER_TOTAL_PRICE + ">" + order.totalPrice + "</td>";
-    tmp += "<td id=" + ORDER_COUNT + ">" + order.countItems + "</td>";
+    let {table, tmp} = addOrderRow(order);
     tmp += "<td>" + order.status + "</td>";
     tmp += "<td><button onmousedown= \"fillFormUpdateOrderById("
         + order.id +
@@ -74,6 +80,40 @@ function addOrderInTable(order) {
         ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteOrder\">\n" +
         " Удалить" +
         "</button></td>";
+
+    table.innerHTML += tmp;
+}
+
+function addOrderRow(order) {
+    let table = document.getElementById(DATA_ORDERS);
+    let tmp = EMPTY_VALUE;
+    let discount = (order.discount != null) ? order.discount.type.name + " - " + order.discount.value + "%" : "";
+
+    tmp += "<td id=" + ORDER_ID + ">" + order.id + "</td>";
+    tmp += "<td>" + order.client.firstName + "</td>";
+    tmp += "<td>" + order.client.lastName + "</td>";
+    tmp += "<td>" + order.dateCreate + "</td>";
+    tmp += "<td>" + discount + "</td>";
+    tmp += "<td id=" + ORDER_TOTAL_PRICE + ">" + order.totalPrice + "</td>";
+    tmp += "<td id=" + ORDER_COUNT + ">" + order.countItems + "</td>";
+    return {table, tmp};
+}
+
+function addOrderStatusInTable(order) {
+    let {table, tmp} = addOrderRow(order);
+    let id = order.id;
+    let status = order.status;
+    let selectStatus = "<select id='edit-order-status-" + id + "' onchange='editOrderStatus(" + id + ")'>" +
+        "<option value=" + status + " >" + status + "</option>" +
+        "<option value='CREATED'>CREATED</option>" +
+        "<option value='MODELED'>MODELED</option>" +
+        "<option value='PAID'>PAID</option>" +
+        "<option value='PRINTED'>PRINTED</option>" +
+        "<option value='PACKED'>PACKED</option>" +
+        "<option value='SENT'>SENT</option>" +
+        "<option value='CANCELED'>CANCELED</option>" +
+        "</select>";
+    tmp += "<td>" + selectStatus + "</td>";
 
     table.innerHTML += tmp;
 }
@@ -114,14 +154,15 @@ function searchOrder() {
     let firstName = capitalizeFirstLetter(document.getElementById("firstname-" + ORDER + SUFFIX_SEARCH_FIELD).value.toLowerCase());
     let lastName = capitalizeFirstLetter(document.getElementById("lastname-" + ORDER + SUFFIX_SEARCH_FIELD).value.toLowerCase());
     let dateCreate = document.getElementById("dateCreate-" + ORDER + SUFFIX_SEARCH_FIELD).value;
-    let dateClosed = document.getElementById("dateClosed-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let dateClosed = document.getElementById("dateClosed-" + ORDER + SUFFIX_SEARCH_FIELD);
+    let dateClosedValue = (dateClosed == null) ? "" : dateClosed.value;
     let status = document.getElementById("status-" + ORDER + SUFFIX_SEARCH_FIELD);
     let selectedStatus = status.options[status.selectedIndex].value;
     let priceMin = document.getElementById("price-min-" + ORDER + SUFFIX_SEARCH_FIELD).value;
     let priceMax = document.getElementById("price-max-" + ORDER + SUFFIX_SEARCH_FIELD).value;
     let count = document.getElementById("count-" + ORDER + SUFFIX_SEARCH_FIELD).value;
 
-    fetch(URL_ORDERS + "/search" + `?id=${id}&firstName=${firstName}&lastName=${lastName}&dateCreate=${dateCreate}&dateClosed=${dateClosed}&selectedStatus=${selectedStatus}&priceMin=${priceMin}&priceMax=${priceMax}&count=${count}`)
+    fetch(URL_ORDERS + "/search" + `?id=${id}&firstName=${firstName}&lastName=${lastName}&dateCreate=${dateCreate}&dateClosed=${dateClosedValue}&selectedStatus=${selectedStatus}&priceMin=${priceMin}&priceMax=${priceMax}&count=${count}`)
         .then((resp) => resp.json())
         .then(function (data) {
             console.log(data);
@@ -364,7 +405,7 @@ function createOrder() {
 
 function fetchOrderThen(data, modal) {
     console.log(data);
-    loadOrders();
+    loadOrders(URL_ORDERS);
     document.getElementById(DATA_ORDERS).innerHTML = EMPTY_VALUE;
     hiddenForm(modal);
 }
@@ -451,6 +492,21 @@ function editOrder() {
                 fetchOrderThen(data, MODAL_EDIT)
             });
     }
+}
+
+function editOrderStatus(id) {
+    let status = document.getElementById("edit-order-status-" + id);
+    let selectStatus = status.options[status.selectedIndex].value;
+
+    fetchSendData(URL_EDIT_STATUS + `?id=${id}&status=${selectStatus}`, {
+        id: id,
+        status: selectStatus
+    }, PUT)
+        .then((data) => {
+            console.log(data);
+            document.getElementById(DATA_ORDERS).innerHTML = EMPTY_VALUE;
+            loadOrdersStatus(URL_ORDERS_STATUS);
+        });
 }
 
 function fillFormUpdateOrderById(id) {
