@@ -13,14 +13,13 @@ import com.shepard1992.gmail.twoya_formochka.view.model.ItemsOrderPl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
 import service.config.OrderServiceTestConfig;
-import view.stubs.FilterOrderPlStub;
-import view.stubs.OrderStub;
+import stubs.FilterOrderPlStub;
+import stubs.OrderStub;
 
 import java.util.Collections;
 import java.util.List;

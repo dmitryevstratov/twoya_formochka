@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.ClientServiceTestConfig;
 import service.config.MapperTestConfig;
-import view.stubs.*;
+import stubs.*;
 
 import java.util.ArrayList;
 import java.util.Collections;

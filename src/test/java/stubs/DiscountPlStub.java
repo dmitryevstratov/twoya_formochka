@@ -1,4 +1,4 @@
-package view.stubs;
+package stubs;
 
 import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.DiscountTypePl;

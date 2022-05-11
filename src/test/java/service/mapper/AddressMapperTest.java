@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
-import view.stubs.AddressPlStub;
-import view.stubs.AddressStub;
+import stubs.AddressPlStub;
+import stubs.AddressStub;
 
 import static org.junit.Assert.assertEquals;
 

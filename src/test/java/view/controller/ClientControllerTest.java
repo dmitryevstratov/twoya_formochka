@@ -12,9 +12,9 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
 import view.config.ViewTestConfig;
-import view.stubs.AddressPlStub;
-import view.stubs.ClientPlStub;
-import view.stubs.DiscountPlStub;
+import stubs.AddressPlStub;
+import stubs.ClientPlStub;
+import stubs.DiscountPlStub;
 
 import java.util.ArrayList;
 import java.util.Collection;
