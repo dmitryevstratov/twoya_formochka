@@ -37,7 +37,7 @@ function hiddenForm(id) {
             clearOrderForm(SUFFIX_EDIT_FIELD);
             break;
         case 'deleteOrder':
-            clearOrderForm(SUFFIX_DELETE_FIELD);
+            clearOrderFormDelete(SUFFIX_DELETE_FIELD);
             break;
         default:
             clearForm(id);
@@ -72,4 +72,72 @@ async function fetchSendData(url = '', data = {}, method) {
         body: JSON.stringify(data)
     });
     return await response.json();
+}
+
+function clearOrderForm(suffix) {
+    let formClient = document.getElementById("form-choose-client-for-order" + suffix);
+    let formItem = document.getElementById("form-choose-item-for-order" + suffix);
+    let formOrder = document.getElementById("form-send-order" + suffix);
+    let orderResult = document.getElementById(ORDER_RESULT + suffix);
+
+    let {table, totalCount, totalPrice} = totalForItemTable(suffix);
+
+    let clientsCount = document.getElementById(CLIENTS_COUNT + suffix);
+    let discountCount = document.getElementById(CLIENT_DISCOUNTS_COUNT + suffix);
+    let itemsCount = document.getElementById(ITEMS_COUNT + suffix);
+
+    let selectClient = document.getElementById(CLIENTS_FOUND + suffix);
+    let selectDiscount = document.getElementById(CLIENT_DISCOUNTS + suffix);
+    let selectItem = document.getElementById(ITEMS_FOUND + suffix);
+
+    formClient.querySelectorAll(TAG_INPUT).forEach(input => {
+        input.value = EMPTY_VALUE;
+    })
+    formItem.querySelectorAll(TAG_INPUT).forEach(input => {
+        input.value = EMPTY_VALUE;
+    })
+    formOrder.querySelectorAll(TAG_INPUT).forEach(input => {
+        input.value = EMPTY_VALUE;
+    })
+
+    table.innerHTML = EMPTY_VALUE;
+    orderResult.innerText = EMPTY_VALUE;
+    totalCount.innerHTML = 0;
+    totalPrice.innerHTML = 0;
+
+    selectClient.selectedIndex = 0;
+    selectDiscount.selectedIndex = 0;
+    selectItem.selectedIndex = 0;
+
+    selectClient.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
+    selectDiscount.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
+    selectItem.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
+
+    clientsCount.innerHTML = 0;
+    discountCount.innerHTML = 0;
+    itemsCount.innerHTML = 0;
+
+}
+
+function totalForItemTable(suffix) {
+    let table = document.getElementById(CLIENT_ITEMS + suffix);
+    let totalCount = document.getElementById(ITEMS_TOTAL + "count" + suffix);
+    let totalPrice = document.getElementById(ITEMS_TOTAL + "price" + suffix);
+    return {table, totalCount, totalPrice};
+}
+
+function clearOrderFormDelete(suffix) {
+    let {table, totalCount, totalPrice} = totalForItemTable(suffix);
+
+    let client = document.getElementById(CLIENTS_FOUND + suffix);
+    let discount = document.getElementById(CLIENT_DISCOUNTS + suffix);
+
+    table.innerHTML = EMPTY_VALUE;
+    totalCount.innerHTML = 0;
+    totalPrice.innerHTML = 0;
+
+    client.innerHTML = EMPTY_VALUE;
+    discount.innerHTML = EMPTY_VALUE;
+    client.value = EMPTY_VALUE;
+    discount.value = EMPTY_VALUE;
 }

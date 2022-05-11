@@ -204,7 +204,7 @@
                             <div>Найдено: <span id="clients-discounts-count">0</span></div>
                             <label for="client-discounts"></label>
                             <select name="client-discounts" id="client-discounts"
-                                    onchange="setTotalForItems(null)"></select>
+                                    onchange="setTotalForUpdateItems(null)"></select>
                         </div>
                     </div>
                     <div class="modal-body-items">
@@ -347,7 +347,7 @@
                             <div>Найдено: <span id="clients-discounts-count-edit">0</span></div>
                             <label for="client-discounts-edit"></label>
                             <select name="client-discounts-edit" id="client-discounts-edit"
-                                    onchange="setTotalForItems('-edit')">
+                                    onchange="setTotalForUpdateItems('-edit')">
                                 <option selected value="-1">Нет</option>
                             </select>
                         </div>
@@ -434,6 +434,70 @@
                         Закрыть
                     </button>
                     <button onclick="editOrder()" type="button">Редактировать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal delete order -->
+<div class="modal fade" id="deleteOrder" tabindex="-1" aria-labelledby="deleteOrderLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteOrderLabel">Удалить заказ</h5>
+                    <button type="button" onclick="hiddenForm('deleteOrder')" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-client">
+                        <h4>Выбрать клиента</h4>
+                        <div>
+                            <form>
+                                <label for="clients-found-delete"></label>
+                                <input type="text" id="clients-found-delete" readonly>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="delete">
+                        <h4>Выбрать скидку</h4>
+                        <div>
+                            <label for="client-discounts-delete"></label>
+                            <input type="text" id="client-discounts-delete" readonly>
+                        </div>
+                    </div>
+                    <div class="modal-body-items">
+                        <h4>Выбрать товары</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Артикул</th>
+                                <th>Имя товара</th>
+                                <th>Тип</th>
+                                <th>Категория</th>
+                                <th>Размер</th>
+                                <th>Количество единиц</th>
+                                <th>Стоимость</th>
+                            </tr>
+                            </thead>
+                            <tbody id="client-items-delete">
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td>Итого:</td>
+                                <td colspan="5" id="items-total-count-delete">0</td>
+                                <td id="items-total-price-delete">0</td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="hiddenForm('deleteOrder')" type="button" data-bs-dismiss="modal" aria-label="Close">
+                        Закрыть
+                    </button>
+                    <button id="order-id-delete" onclick="deleteOrder()" type="button">Удалить
                     </button>
                 </div>
             </div>
