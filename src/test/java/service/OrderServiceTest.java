@@ -1,9 +1,8 @@
 package service;
 
+import com.shepard1992.gmail.twoya_formochka.repository.api.ClientRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.api.OrderRepository;
-import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
-import com.shepard1992.gmail.twoya_formochka.repository.entity.Item;
-import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.*;
 import com.shepard1992.gmail.twoya_formochka.repository.specification.OrderSpecification;
 import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
@@ -43,8 +42,11 @@ public class OrderServiceTest {
     @Autowired
     private OrderRepository repository;
 
+    @Autowired
+    private ClientRepository clientRepository;
+
     @Before
-    public void clear(){
+    public void clear() {
         reset(repository);
     }
 
@@ -145,6 +147,36 @@ public class OrderServiceTest {
 
         verify(repository, times(1)).findById(any());
         verify(repository, times(1)).save(any());
+    }
+
+    @Test
+    public void test_when_call_editOrderStatus_with_status_paid_then_return_success() {
+        when(repository.findById(any())).thenReturn(Optional.of(OrderStub.getStub()));
+        when(clientRepository.findById(any())).thenReturn(Optional.of(Client.builder().id(100)
+                .discounts(List.of(Discount.builder()
+                                .id(3)
+                                .value(200)
+                                .type(DiscountType.builder()
+                                        .id(1)
+                                        .name("ДР")
+                                        .build())
+                                .build(),
+                        Discount.builder()
+                                .id(4)
+                                .value(100)
+                                .type(DiscountType.builder()
+                                        .id(1)
+                                        .name("НГ")
+                                        .build())
+                                .build()))
+                .build()));
+
+        service.editOrderStatus(1, "PAID");
+
+        verify(repository, times(1)).findById(any());
+        verify(repository, times(1)).save(any());
+        verify(clientRepository, times(1)).findById(any());
+        verify(clientRepository, times(1)).save(any());
     }
 
 }
