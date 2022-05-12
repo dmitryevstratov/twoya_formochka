@@ -70,3 +70,54 @@ function createItemRowForDeleteOrder(item, suffix, index) {
 
     return row;
 }
+
+//Sorted
+
+function sortBy(direction, field, data) {
+    let ordersRow = document.getElementById(data).querySelectorAll(TAG_TR);
+    let ordersArray = new Array(ordersRow.length);
+    let tmp = EMPTY_VALUE;
+
+    ordersRow.forEach(tr => ordersArray.push(tr));
+
+    ordersArray.sort(function (a, b) {
+        let firstEl;
+        let secondEl;
+
+        try {
+            firstEl = Number(a.querySelector("#" + field).innerHTML);
+            secondEl = Number(b.querySelector("#" + field).innerHTML);
+        } catch (e) {
+            console.log(e);
+        }
+
+        if (direction == 1) {
+            if (firstEl > secondEl) {
+                return 1;
+            }
+            if (firstEl < secondEl) {
+                return -1;
+            }
+            return 0;
+        }
+
+        if (direction == 2) {
+            if (firstEl > secondEl) {
+                return -1;
+            }
+            if (firstEl < secondEl) {
+                return 1;
+            }
+            return 0;
+        }
+    })
+
+    ordersArray.forEach(tr => {
+        if (tr != undefined && tr != null) {
+            tmp += tr.innerHTML + "</tr>";
+        }
+    })
+
+    document.getElementById(data).innerHTML = tmp;
+
+}
