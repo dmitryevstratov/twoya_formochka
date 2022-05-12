@@ -32,7 +32,7 @@
                     <a th:href="@{/orders-status.html}">Статусы заказов</a>
                 </li>
                 <li>
-                    <a th:href="service_1.html">Сервис 4</a>
+                    <a th:href="@{/discounts.html}">Скидки</a>
                 </li>
                 <li>
                     <a th:href="service_1.html">Сервис 5</a>
@@ -121,18 +121,18 @@
             </li>
             <li>
                 <h6>№</h6>
-                <button onclick="sortOrderBy(1, 'order-id')">&uarr;</button>
-                <button onclick="sortOrderBy(2, 'order-id')">&darr;</button>
+                <button onclick="sortBy(1, 'order-id', 'data-orders')">&uarr;</button>
+                <button onclick="sortBy(2, 'order-id', 'data-orders')">&darr;</button>
             </li>
             <li>
                 <h6>Количество единиц</h6>
-                <button onclick="sortOrderBy(1, 'order-count')">&uarr;</button>
-                <button onclick="sortOrderBy(2, 'order-count')">&darr;</button>
+                <button onclick="sortBy(1, 'order-count', 'data-orders')">&uarr;</button>
+                <button onclick="sortBy(2, 'order-count', 'data-orders')">&darr;</button>
             </li>
             <li>
                 <h6>Сумма заказа</h6>
-                <button onclick="sortOrderBy(1, 'order-total-price')">&uarr;</button>
-                <button onclick="sortOrderBy(2, 'order-total-price')">&darr;</button>
+                <button onclick="sortBy(1, 'order-total-price', 'data-orders')">&uarr;</button>
+                <button onclick="sortBy(2, 'order-total-price', 'data-orders')">&darr;</button>
             </li>
         </ul>
     </div>

@@ -431,57 +431,6 @@ function getDataOrder(suffix) {
     }
 }
 
-//Sorted
-
-function sortOrderBy(direction, field) {
-    let ordersRow = document.getElementById(DATA_ORDERS).querySelectorAll(TAG_TR);
-    let ordersArray = new Array(ordersRow.length);
-    let tmp = EMPTY_VALUE;
-
-    ordersRow.forEach(tr => ordersArray.push(tr));
-
-    ordersArray.sort(function (a, b) {
-        let firstEl;
-        let secondEl;
-
-        try {
-            firstEl = Number(a.querySelector("#" + field).innerHTML);
-            secondEl = Number(b.querySelector("#" + field).innerHTML);
-        } catch (e) {
-            console.log(e);
-        }
-
-        if (direction == 1) {
-            if (firstEl > secondEl) {
-                return 1;
-            }
-            if (firstEl < secondEl) {
-                return -1;
-            }
-            return 0;
-        }
-
-        if (direction == 2) {
-            if (firstEl > secondEl) {
-                return -1;
-            }
-            if (firstEl < secondEl) {
-                return 1;
-            }
-            return 0;
-        }
-    })
-
-    ordersArray.forEach(tr => {
-        if (tr != undefined && tr != null) {
-            tmp += tr.innerHTML + "</tr>";
-        }
-    })
-
-    document.getElementById(DATA_ORDERS).innerHTML = tmp;
-
-}
-
 //Method PUT
 
 function editOrder() {

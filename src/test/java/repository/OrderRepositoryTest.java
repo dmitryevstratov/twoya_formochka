@@ -1,8 +1,8 @@
 package repository;
 
 import com.shepard1992.gmail.twoya_formochka.TwoyaFormochkaApplication;
-import com.shepard1992.gmail.twoya_formochka.repository.api.ItemRepository;
-import com.shepard1992.gmail.twoya_formochka.repository.entity.Item;
+import com.shepard1992.gmail.twoya_formochka.repository.api.OrderRepository;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,10 +21,10 @@ import static org.junit.Assert.assertNotNull;
         TwoyaFormochkaApplication.class,
         RepositoryTestConfig.class
 })
-public class ItemRepositoryTest {
+public class OrderRepositoryTest {
 
     @Autowired
-    private ItemRepository repository;
+    private OrderRepository repository;
 
     @Before
     public void cleanDB() {
@@ -33,38 +33,38 @@ public class ItemRepositoryTest {
 
     @Test
     public void test_when_call_save_then_return_result() {
-        Item item = repository.save(Item.builder().build());
+        Order order = repository.save(Order.builder().build());
 
-        assertNotNull(item);
-        assertNotNull(repository.findById(item.getId()));
+        assertNotNull(order);
+        assertNotNull(repository.findById(order.getId()));
     }
 
     @Test
     public void test_when_call_findAll_then_return_result() {
-        repository.save(Item.builder().build());
-        repository.save(Item.builder().build());
-        repository.save(Item.builder().build());
+        repository.save(Order.builder().build());
+        repository.save(Order.builder().build());
+        repository.save(Order.builder().build());
 
-        List<Item> itemList = repository.findAll();
+        List<Order> orderList = repository.findAll();
 
-        assertEquals(3, itemList.size());
+        assertEquals(3, orderList.size());
     }
 
     @Test
     public void test_when_call_findById_then_return_result() {
-        repository.save(Item.builder()
+        repository.save(Order.builder()
                 .build());
 
-        Item item = repository.findAll().get(0);
+        Order order = repository.findAll().get(0);
 
-        assertNotNull(item);
+        assertNotNull(order);
     }
 
     @Test
     public void test_when_call_deleteById_then_return_success() {
-        Item item = repository.save(Item.builder().build());
+        Order order = repository.save(Order.builder().build());
 
-        repository.deleteById(item.getId());
+        repository.deleteById(order.getId());
 
         assertEquals(0, repository.findAll().size());
     }
