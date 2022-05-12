@@ -87,6 +87,10 @@ function sortBy(direction, field, data) {
         try {
             firstEl = Number(a.querySelector("#" + field).innerHTML);
             secondEl = Number(b.querySelector("#" + field).innerHTML);
+            if (isNaN(firstEl) || isNaN(secondEl)) {
+                firstEl = a.querySelector("#" + field).innerHTML;
+                secondEl = b.querySelector("#" + field).innerHTML;
+            }
         } catch (e) {
             console.log(e);
         }
