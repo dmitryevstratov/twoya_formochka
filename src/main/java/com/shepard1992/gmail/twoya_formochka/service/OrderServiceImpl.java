@@ -1,6 +1,9 @@
 package com.shepard1992.gmail.twoya_formochka.service;
 
+import com.shepard1992.gmail.twoya_formochka.repository.api.ClientRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.api.OrderRepository;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder;
 import com.shepard1992.gmail.twoya_formochka.repository.specification.OrderSpecification;
@@ -16,10 +19,12 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder.CANCELED;
+import static com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder.PAID;
 
 @Service
 @Transactional
@@ -28,12 +33,14 @@ public class OrderServiceImpl implements OrderService {
     private final OrderMapper orderMapper;
     private final FilterMapper filterMapper;
     private final OrderRepository repository;
+    private final ClientRepository clientRepository;
 
     @Autowired
-    public OrderServiceImpl(OrderMapper orderMapper, FilterMapper filterMapper, OrderRepository repository) {
+    public OrderServiceImpl(OrderMapper orderMapper, FilterMapper filterMapper, OrderRepository repository, ClientRepository clientRepository) {
         this.orderMapper = orderMapper;
         this.filterMapper = filterMapper;
         this.repository = repository;
+        this.clientRepository = clientRepository;
     }
 
     @Override
@@ -91,6 +98,20 @@ public class OrderServiceImpl implements OrderService {
 
         if (statusOrder == CANCELED) {
             order.setDateClosed(ZonedDateTime.now());
+        }
+        if (statusOrder == PAID) {
+            Discount discount = order.getDiscount();
+            if (discount != null) {
+                List<Discount> newClientDiscounts = new ArrayList<>();
+                Client client = clientRepository.findById(order.getClient().getId()).get();
+                client.getDiscounts().forEach(disc -> {
+                    if (!disc.getId().equals(discount.getId())) {
+                        newClientDiscounts.add(disc);
+                    }
+                });
+                client.setDiscounts(newClientDiscounts);
+                clientRepository.save(client);
+            }
         }
         order.setStatus(statusOrder);
         repository.save(order);
