@@ -10,4 +10,8 @@ public interface DiscountController {
 
     List<DiscountPl> searchByParams(Integer id, String type);
 
+    DiscountPl getDiscountById(Integer id);
+
+    DiscountPl addDiscount(DiscountPl discountPl);
+
 }

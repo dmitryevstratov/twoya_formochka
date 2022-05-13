@@ -45,7 +45,6 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public CreateOrderPl addOrder(CreateOrderPl createOrderPl) {
-        System.out.println(createOrderPl);
         Order order = repository.save(orderMapper.mapperToOrder(createOrderPl));
         return orderMapper.mapperToOrderPl(order);
     }

@@ -5,6 +5,8 @@ import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.DiscountType;
 import com.shepard1992.gmail.twoya_formochka.repository.specification.DiscountSpecification;
 import com.shepard1992.gmail.twoya_formochka.service.api.DiscountService;
+import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.DiscountTypePl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -67,6 +69,32 @@ public class DiscountServiceTest {
         Integer id = service.searchByParams(1, "").get(0).getId();
 
         assertEquals(Integer.valueOf(123), id);
+    }
+
+    @Test
+    public void test_when_call_getDiscountById_then_return_result() {
+        when(repository.getById(anyInt())).thenReturn(Discount.builder()
+                .id(7)
+                .type(DiscountType.builder().build())
+                .build());
+
+        Integer id = service.getDiscountById(4).getId();
+
+        assertEquals(Integer.valueOf(7), id);
+    }
+
+    @Test
+    public void test_when_call_addDiscount_then_return_result() {
+        when(repository.save(any())).thenReturn(Discount.builder()
+                .id(1234)
+                .type(DiscountType.builder().build())
+                .build());
+
+        Integer id = service.addDiscount(DiscountPl.builder()
+                .type(DiscountTypePl.builder().build())
+                .build()).getId();
+
+        assertEquals(Integer.valueOf(1234), id);
     }
 
 }

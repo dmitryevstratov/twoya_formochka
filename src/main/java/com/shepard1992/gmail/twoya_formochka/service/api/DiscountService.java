@@ -9,4 +9,8 @@ public interface DiscountService {
     List<DiscountPl> getDiscounts();
 
     List<DiscountPl> searchByParams(Integer id, String type);
+
+    DiscountPl getDiscountById(Integer id);
+
+    DiscountPl addDiscount(DiscountPl discountPl);
 }
