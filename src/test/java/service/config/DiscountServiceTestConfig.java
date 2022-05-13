@@ -24,8 +24,8 @@ public class DiscountServiceTestConfig {
     }
 
     @Bean
-    public DiscountService getDiscountServiceBean(DiscountMapper mapper, DiscountTypeRepository discountTypeRepository, DiscountRepository repository) {
-        return new DiscountServiceImpl(repository, discountTypeRepository, mapper);
+    public DiscountService getDiscountServiceBean(DiscountMapper mapper, DiscountRepository repository) {
+        return new DiscountServiceImpl(repository, mapper);
     }
 
 }

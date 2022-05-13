@@ -6,9 +6,7 @@ import com.shepard1992.gmail.twoya_formochka.view.controller.api.ModelAndViewCon
 import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -41,6 +39,18 @@ public class DiscountControllerImpl implements ModelAndViewController, DiscountC
             @RequestParam(value = "id", required = false) Integer id,
             @RequestParam(value = "type", required = false) String type) {
         return service.searchByParams(id, type);
+    }
+
+    @Override
+    @GetMapping("/discounts/{id}")
+    public DiscountPl getDiscountById(@PathVariable Integer id) {
+        return service.getDiscountById(id);
+    }
+
+    @Override
+    @PostMapping("/discounts/create")
+    public DiscountPl addDiscount(@RequestBody DiscountPl discountPl) {
+        return service.addDiscount(discountPl);
     }
 
 
