@@ -33,8 +33,14 @@ function hiddenForm(id) {
         case 'addOrder':
             clearOrderForm("");
             break;
+        case 'addDiscount':
+            clearDiscountForm("");
+            break;
         case 'editOrder':
             clearOrderForm(SUFFIX_EDIT_FIELD);
+            break;
+        case 'editDiscount':
+            clearDiscountForm(SUFFIX_EDIT_FIELD);
             break;
         case 'deleteOrder':
             clearOrderFormDelete(SUFFIX_DELETE_FIELD);
@@ -140,4 +146,22 @@ function clearOrderFormDelete(suffix) {
     discount.innerHTML = EMPTY_VALUE;
     client.value = EMPTY_VALUE;
     discount.value = EMPTY_VALUE;
+}
+
+function clearDiscountForm(suffix) {
+    let discountSearch = document.getElementById(DISCOUNT + SUFFIX_SEARCH_FIELD + suffix);
+    let discountFound = document.getElementById(DISCOUNT_FOUND + suffix);
+    let typeDiscountForRq = document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + suffix);
+    let valueDiscountForRq = document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + suffix);
+    let discountCount = document.getElementById(DISCOUNT_COUNT + suffix);
+    let result = document.getElementById(DISCOUNT_RESULT + suffix);
+
+    discountFound.selectedIndex = 0;
+    discountFound.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
+
+    discountSearch.value = EMPTY_VALUE;
+    typeDiscountForRq.value = EMPTY_VALUE;
+    valueDiscountForRq.value = EMPTY_VALUE;
+    result.innerHTML = EMPTY_VALUE;
+    discountCount.innerHTML = 0;
 }

@@ -53,5 +53,11 @@ public class DiscountControllerImpl implements ModelAndViewController, DiscountC
         return service.addDiscount(discountPl);
     }
 
+    @Override
+    @PutMapping("/discounts/edit")
+    public DiscountPl editDiscount(@RequestBody DiscountPl discountPl) {
+        return service.editDiscount(discountPl);
+    }
+
 
 }

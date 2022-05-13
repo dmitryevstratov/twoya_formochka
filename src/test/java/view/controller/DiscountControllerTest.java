@@ -75,4 +75,18 @@ public class DiscountControllerTest {
         assertEquals(Integer.valueOf(23), id);
     }
 
+    @Test
+    public void test_when_call_editDiscount_then_return_result() {
+        when(service.editDiscount(any())).thenReturn(DiscountPl.builder()
+                .id(23)
+                .type(DiscountTypePl.builder().build())
+                .build());
+
+        Integer id = controller.editDiscount(DiscountPl.builder()
+                .type(DiscountTypePl.builder().build())
+                .build()).getId();
+
+        assertEquals(Integer.valueOf(23), id);
+    }
+
 }
