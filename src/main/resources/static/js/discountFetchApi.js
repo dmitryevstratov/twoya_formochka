@@ -6,8 +6,8 @@ const URL_EDIT = "/discounts/edit";
 
 //ID modal window
 const MODAL_CREATE = "addDiscount";
-const MODAL_DELETE = "deleteOrder";
-const MODAL_EDIT = "editOrder";
+const MODAL_DELETE = "deleteDiscount";
+const MODAL_EDIT = "editDiscount";
 
 //Discount field
 const DISCOUNT_ID = "id-discount";
@@ -45,10 +45,14 @@ function addDiscountInTable(discount) {
     tmp += "<td id=" + DISCOUNT_ID + ">" + discount.id + "</td>";
     tmp += "<td id=" + DISCOUNT_TYPE + ">" + discount.type.name + "</td>";
     tmp += "<td id=" + DISCOUNT_VALUE + ">" + discount.value + "</td>";
-    tmp += "<td><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editDiscount\">\n" +
+    tmp += "<td><button type=\"button\" onmousedown= \"fillFormUpdateDiscountById("
+        + discount.id +
+        ")\" data-bs-toggle=\"modal\" data-bs-target=\"#editDiscount\">\n" +
         " Редактировать" +
         "</button></td>";
-    tmp += "<td><button type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteDiscount\">\n" +
+    tmp += "<td><button type=\"button\" onmousedown= \"fillFormDeleteDiscountById("
+        + discount.id +
+        ")\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteDiscount\">\n" +
         " Удалить" +
         "</button></td>";
 
@@ -77,15 +81,15 @@ function searchDiscount() {
         })
 }
 
-function searchDiscountToSelect() {
-    let type = document.getElementById(DISCOUNT + SUFFIX_SEARCH_FIELD).value;
+function searchDiscountToSelect(suffix) {
+    let type = document.getElementById(DISCOUNT + SUFFIX_SEARCH_FIELD + suffix).value;
 
     fetch(URL_DISCOUNTS + "/search" + `?type=${type}`)
         .then((resp) => resp.json())
         .then(function (data) {
             console.log(data);
-            document.getElementById(DISCOUNT_COUNT).innerText = data.length;
-            let select = document.getElementById(DISCOUNT_FOUND);
+            document.getElementById(DISCOUNT_COUNT + suffix).innerText = data.length;
+            let select = document.getElementById(DISCOUNT_FOUND + suffix);
             let tmp = EMPTY_VALUE;
             if (data.length > 0) {
                 tmp += "<option value='-1'>" + "Нет" + "</option>";
@@ -103,10 +107,10 @@ function searchDiscountToSelect() {
 
 //Method GET
 
-function fillSelectDiscountsType() {
-    let selectDiscount = document.getElementById(DISCOUNT_FOUND);
+function fillSelectDiscountsType(suffix) {
+    let selectDiscount = document.getElementById(DISCOUNT_FOUND + suffix);
     let id = selectDiscount.options[selectDiscount.selectedIndex].value;
-    let rq = document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ);
+    let rq = document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + suffix);
 
     if (id != -1) {
         fetch(URL_DISCOUNTS + "/" + id)
@@ -126,13 +130,14 @@ function checkValidityDiscountForm(type, value) {
     let alertContainer = document.createElement('div');
     let alertContent = EMPTY_VALUE;
     let success = false;
+    let numValue = Number(value);
 
     descriptionForResultHtml.innerHTML = EMPTY_VALUE;
 
     if (type === "" || type === "-1") {
         alertContent += "<p>Укажите тип скидки!</p>";
-    } else if (value === "" || value === "0") {
-        alertContent += "<p>Укажите значение скидки!</p>";
+    } else if (numValue === "" || numValue <= 0 || numValue >= 100) {
+        alertContent += "<p>Укажите корректно значение скидки!</p>";
     } else {
         alertContent += "<p>Скидка готова!</p>";
         success = true;
@@ -165,3 +170,39 @@ function fetchDiscountThen(data, modal) {
     document.getElementById(DATA_DISCOUNTS).innerHTML = EMPTY_VALUE;
     hiddenForm(modal);
 }
+
+//Method UPDATE
+
+function fillFormUpdateDiscountById(id) {
+    fetch(URL_DISCOUNTS + "/" + id).then((
+        resp => resp.json()
+    )).then(
+        function (discount) {
+            console.log(discount);
+            document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + SUFFIX_EDIT_FIELD).value = discount.type.name;
+            document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + SUFFIX_EDIT_FIELD).value = discount.value;
+            document.getElementById(DISCOUNT_ID + SUFFIX_EDIT_FIELD).value = id;
+            openForm(MODAL_EDIT);
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
+
+function editDiscount() {
+    let type = document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + SUFFIX_EDIT_FIELD).value;
+    let value = document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + SUFFIX_EDIT_FIELD).value;
+    let id = document.getElementById(DISCOUNT_ID + SUFFIX_EDIT_FIELD).value;
+    if (checkValidityDiscountForm(type, value)) {
+        fetchSendData(URL_EDIT, {
+            id: id,
+            type: {
+                name: type
+            },
+            value: value
+        }, PUT).then((data) => {
+            fetchDiscountThen(data, MODAL_EDIT)
+        });
+    }
+}
+

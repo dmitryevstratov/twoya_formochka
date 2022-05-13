@@ -13,4 +13,6 @@ public interface DiscountService {
     DiscountPl getDiscountById(Integer id);
 
     DiscountPl addDiscount(DiscountPl discountPl);
+
+    DiscountPl editDiscount(DiscountPl discountPl);
 }

@@ -14,4 +14,6 @@ public interface DiscountController {
 
     DiscountPl addDiscount(DiscountPl discountPl);
 
+    DiscountPl editDiscount(DiscountPl discountPl);
+
 }

@@ -52,4 +52,10 @@ public class DiscountServiceImpl implements DiscountService {
         return mapper.mapperToDiscountPl(discount);
     }
 
+    @Override
+    public DiscountPl editDiscount(DiscountPl discountPl) {
+        Discount discount = repository.save(mapper.mapperToDiscount(discountPl));
+        return mapper.mapperToDiscountPl(discount);
+    }
+
 }
