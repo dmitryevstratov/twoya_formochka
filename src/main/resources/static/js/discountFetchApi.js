@@ -1,6 +1,7 @@
 //URL
 const URL_CREATE = "/discounts/create";
 const URL_DISCOUNTS = "/discounts";
+const URL_DISCOUNT_TYPES = "/discount-types";
 const DATA_DISCOUNTS = "data-discounts"
 const URL_EDIT = "/discounts/edit";
 
@@ -84,7 +85,7 @@ function searchDiscount() {
 function searchDiscountTypeToSelect(suffix) {
     let type = document.getElementById(DISCOUNT + SUFFIX_SEARCH_FIELD + suffix).value;
 
-    fetch(URL_DISCOUNTS + "/search" + `?type=${type}`)
+    fetch(URL_DISCOUNT_TYPES + "/search" + `?type=${type}`)
         .then((resp) => resp.json())
         .then(function (data) {
             console.log(data);
@@ -93,8 +94,8 @@ function searchDiscountTypeToSelect(suffix) {
             let tmp = EMPTY_VALUE;
             if (data.length > 0) {
                 tmp += "<option value='-1'>" + "Нет" + "</option>";
-                data.forEach((discount => {
-                    tmp += "<option value=" + discount.id + "> №" + discount.id + " - " + discount.type.name + "</option>";
+                data.forEach((type => {
+                    tmp += "<option value=" + type.id + "> №" + type.id + " - " + type.name + "</option>";
                 }))
                 select.innerHTML = tmp;
                 select.selectedIndex = 0;

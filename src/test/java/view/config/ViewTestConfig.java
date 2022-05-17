@@ -1,9 +1,6 @@
 package view.config;
 
-import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
-import com.shepard1992.gmail.twoya_formochka.service.api.DiscountService;
-import com.shepard1992.gmail.twoya_formochka.service.api.ItemService;
-import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
+import com.shepard1992.gmail.twoya_formochka.service.api.*;
 import com.shepard1992.gmail.twoya_formochka.view.controller.*;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.*;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -55,8 +52,18 @@ public class ViewTestConfig {
     }
 
     @Bean
+    public DiscountTypeService getDiscountTypeServiceBean() {
+        return mock(DiscountTypeService.class);
+    }
+
+    @Bean
     public DiscountController getDiscountControllerBean(DiscountService service) {
         return new DiscountControllerImpl(service);
+    }
+
+    @Bean
+    public DiscountTypeController getDiscountTypeControllerBean(DiscountTypeService service) {
+        return new DiscountTypeControllerImpl(service);
     }
 
 }
