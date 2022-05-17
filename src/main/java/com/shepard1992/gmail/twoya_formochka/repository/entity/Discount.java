@@ -22,7 +22,7 @@ public class Discount {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discountsSeqGen")
     private Integer id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "discount_type_id")
     private DiscountType type;
 

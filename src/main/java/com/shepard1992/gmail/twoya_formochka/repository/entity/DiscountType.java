@@ -26,7 +26,13 @@ public class DiscountType {
     @NotNull
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+    @OneToMany(mappedBy = "type")
     private List<Discount> discounts;
+
+    public void deleteDiscount(Discount discount) {
+        if (discounts != null) {
+            discounts.remove(discount);
+        }
+    }
 
 }

@@ -10,12 +10,12 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DiscountSpecification implements Specification<Discount> {
+public class DiscountTypeSpecification implements Specification<Discount> {
 
     private final Integer id;
     private final String type;
 
-    public DiscountSpecification(Integer id, String type) {
+    public DiscountTypeSpecification(Integer id, String type) {
         this.id = id;
         this.type = type;
     }

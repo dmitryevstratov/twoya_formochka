@@ -15,4 +15,7 @@ public interface DiscountService {
     DiscountPl addDiscount(DiscountPl discountPl);
 
     DiscountPl editDiscount(DiscountPl discountPl);
+
+    void deleteDiscountById(Integer id);
+
 }

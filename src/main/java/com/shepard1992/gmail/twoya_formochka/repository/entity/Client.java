@@ -58,4 +58,10 @@ public class Client {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     private List<Order> orders;
 
+    public void deleteDiscount(Discount discount) {
+        if (discounts != null) {
+            discounts.remove(discount);
+        }
+    }
+
 }

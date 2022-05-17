@@ -58,4 +58,11 @@ public class Order {
 
     @Column
     private Integer count = items.size();
+
+    public void deleteDiscount(Discount discount) {
+        if (this.discount != null) {
+            if (this.discount.getId().equals(discount.getId())) this.discount = null;
+        }
+    }
+
 }

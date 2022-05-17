@@ -86,9 +86,7 @@ create table if not exists orders_items
 create table if not exists clients_discounts
 (
     client_id   int4 not null,
-    discount_id int4 not null,
-    foreign key (discount_id) references discounts(id),
-    foreign key (client_id) references clients(id)
+    discount_id int4 not null
 );
 
 create sequence hibernate_sequence start with 1 increment by 1;

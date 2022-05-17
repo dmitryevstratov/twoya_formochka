@@ -20,6 +20,11 @@ function clearForm(idForm) {
     }
 }
 
+function clearDiscountFormDelete(suffix) {
+    document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + suffix).value = EMPTY_VALUE;
+    document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + suffix).value = EMPTY_VALUE;
+}
+
 function hiddenForm(id) {
     document.body.classList.remove(MODAL_OPEN);
     document.querySelector("#" + id).style.display = DISPLAY_NONE;
@@ -44,6 +49,9 @@ function hiddenForm(id) {
             break;
         case 'deleteOrder':
             clearOrderFormDelete(SUFFIX_DELETE_FIELD);
+            break;
+        case 'deleteDiscount':
+            clearDiscountFormDelete(SUFFIX_DELETE_FIELD);
             break;
         default:
             clearForm(id);

@@ -128,7 +128,7 @@
                                     <input type="text" id="discount-search" placeholder="Тип">
                                 </li>
                                 <li>
-                                    <button onclick="searchDiscountToSelect('')" type="button">Найти</button>
+                                    <button onclick="searchDiscountTypeToSelect('')" type="button">Найти</button>
                                 </li>
                             </ul>
                         </form>
@@ -198,7 +198,7 @@
                                     <input type="text" id="discount-search-edit" placeholder="Тип">
                                 </li>
                                 <li>
-                                    <button onclick="searchDiscountToSelect('-edit')" type="button">Найти</button>
+                                    <button onclick="searchDiscountTypeToSelect('-edit')" type="button">Найти</button>
                                 </li>
                             </ul>
                         </form>
@@ -246,6 +246,53 @@
                         Закрыть
                     </button>
                     <button onclick="editDiscount()" type="button">Редактировать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal edit discount -->
+<div class="modal fade" id="deleteDiscount" tabindex="-1" aria-labelledby="deleteDiscountLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteDiscountLabel">Редактировать скидку</h5>
+                    <button type="button" onclick="hiddenForm('deleteDiscount')" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-discount">
+                        <div>
+                            <form>
+                                <ul>
+                                    <li>
+                                        <input id="id-discount-delete" type="text" hidden="hidden">
+                                    </li>
+                                    <li>
+                                        <label for="type-discount-for-rq-delete">
+                                        </label>
+                                        <input id="type-discount-for-rq-delete" type="text"
+                                               required readonly>
+                                    </li>
+                                    <li>
+                                        <label for="value-discount-for-rq-delete">
+                                        </label>
+                                        <input id="value-discount-for-rq-delete" type="number" min="1" max="99"
+                                               required readonly>
+                                    </li>
+                                </ul>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="hiddenForm('deleteDiscount')" type="button" data-bs-dismiss="modal"
+                            aria-label="Close">
+                        Закрыть
+                    </button>
+                    <button onclick="deleteDiscount()" type="button">Удалить
                     </button>
                 </div>
             </div>
