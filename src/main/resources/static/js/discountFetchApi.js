@@ -81,7 +81,7 @@ function searchDiscount() {
         })
 }
 
-function searchDiscountToSelect(suffix) {
+function searchDiscountTypeToSelect(suffix) {
     let type = document.getElementById(DISCOUNT + SUFFIX_SEARCH_FIELD + suffix).value;
 
     fetch(URL_DISCOUNTS + "/search" + `?type=${type}`)
@@ -206,3 +206,30 @@ function editDiscount() {
     }
 }
 
+//Method DELETE
+
+function deleteDiscount() {
+    let id = document.getElementById(DISCOUNT_ID + SUFFIX_DELETE_FIELD).value;
+
+    fetch(URL_DISCOUNTS + "/" + id, {
+        method: DELETE,
+    }).then((id) => {
+        fetchDiscountThen(id, MODAL_DELETE)
+    });
+}
+
+function fillFormDeleteDiscountById(id) {
+    fetch(URL_DISCOUNTS + "/" + id).then((
+        resp => resp.json()
+    )).then(
+        function (discount) {
+            console.log(discount);
+            document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + SUFFIX_DELETE_FIELD).value = discount.type.name;
+            document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + SUFFIX_DELETE_FIELD).value = discount.value;
+            document.getElementById(DISCOUNT_ID + SUFFIX_DELETE_FIELD).value = id;
+            openForm(MODAL_DELETE);
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}

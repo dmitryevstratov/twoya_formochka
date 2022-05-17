@@ -16,4 +16,6 @@ public interface DiscountController {
 
     DiscountPl editDiscount(DiscountPl discountPl);
 
+    void deleteDiscountById(Integer id);
+
 }

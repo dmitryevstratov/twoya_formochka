@@ -59,5 +59,11 @@ public class DiscountControllerImpl implements ModelAndViewController, DiscountC
         return service.editDiscount(discountPl);
     }
 
+    @Override
+    @DeleteMapping("/discounts/{id}")
+    public void deleteDiscountById(@PathVariable Integer id) {
+        service.deleteDiscountById(id);
+    }
+
 
 }

@@ -15,7 +15,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(SpringRunner.class)
 @Import(ViewTestConfig.class)
@@ -87,6 +87,15 @@ public class DiscountControllerTest {
                 .build()).getId();
 
         assertEquals(Integer.valueOf(23), id);
+    }
+
+    @Test
+    public void test_when_call_deleteDiscountById_then_return_success() {
+        doNothing().when(service).deleteDiscountById(anyInt());
+
+        controller.deleteDiscountById(1);
+
+        verify(service, times(1)).deleteDiscountById(any());
     }
 
 }
