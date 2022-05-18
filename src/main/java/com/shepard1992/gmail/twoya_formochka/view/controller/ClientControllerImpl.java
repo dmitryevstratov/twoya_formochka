@@ -28,10 +28,21 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
         return new ModelAndView("clients");
     }
 
+    @GetMapping("/clients-discounts.html")
+    public ModelAndView getViewClientsWithDiscounts(Model model) {
+        return new ModelAndView("clients-discounts");
+    }
+
     @Override
     @GetMapping("/clients")
     public List<ClientPl> getClients() {
         return service.getClients();
+    }
+
+    @Override
+    @GetMapping("/clients-discounts")
+    public List<ClientPl> getClientsWithDiscounts() {
+        return service.getClientsWithDiscounts();
     }
 
     @Override
