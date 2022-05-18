@@ -1,7 +1,7 @@
 package com.shepard1992.gmail.twoya_formochka.repository.specification;
 
-import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
 import com.shepard1992.gmail.twoya_formochka.repository.dto.Filter;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -49,6 +49,10 @@ public class ClientSpecification implements Specification<Client> {
         }
         if (filter.getTelephone() != null && !filter.getTelephone().equals("")) {
             Predicate predicate = cb.equal(rt.get("telephone"), filter.getTelephone());
+            predicates.add(predicate);
+        }
+        if (filter.getDiscountName() != null && !filter.getDiscountName().equals("")) {
+            Predicate predicate = cb.equal(rt.join("discounts").get("type").get("name"), filter.getDiscountName());
             predicates.add(predicate);
         }
 

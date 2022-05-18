@@ -14,7 +14,6 @@ const MODAL_EDIT = "editDiscount";
 const DISCOUNT_ID = "id-discount";
 const DISCOUNT_TYPE = "type-discount";
 const DISCOUNT_VALUE = "value-discount";
-const DISCOUNT = "discount";
 const DISCOUNT_COUNT = "discount-count";
 const DISCOUNT_FOUND = "discount-found";
 const DISCOUNT_FOR_RQ = "-for-rq";

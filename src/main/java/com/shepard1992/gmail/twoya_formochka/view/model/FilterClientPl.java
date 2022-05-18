@@ -21,4 +21,6 @@ public class FilterClientPl {
 
     private String telephone;
 
+    private String discountName;
+
 }

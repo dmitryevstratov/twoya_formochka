@@ -19,5 +19,7 @@ public interface ClientService {
 
     List<ClientPl> searchByParams(FilterClientPl filterClientPl);
 
+    List<ClientPl> clientWithDiscountSearchByParams(FilterClientPl filterClientPl);
+
     List<ClientPl> getClientsWithDiscounts();
 }
