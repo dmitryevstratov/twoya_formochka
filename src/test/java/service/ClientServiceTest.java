@@ -3,12 +3,13 @@ package service;
 import com.shepard1992.gmail.twoya_formochka.repository.api.ClientRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.DiscountType;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.repository.specification.ClientSpecification;
 import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,9 @@ public class ClientServiceTest {
 
     private final List<Order> orderList = new ArrayList<>();
     private final List<CreateOrderPl> createOrderPlList = new ArrayList<>();
-    private final List<Discount> discountList = new ArrayList<>();
+    private final List<Discount> discountList = List.of(Discount.builder()
+            .type(DiscountType.builder().build())
+            .build());
     private final List<DiscountPl> discountPlSet = new ArrayList<>();
     private final Client stub = ClientStub.getStub(
             AddressStub.getStub(),
@@ -109,6 +112,16 @@ public class ClientServiceTest {
         when(repository.findAll(any(ClientSpecification.class))).thenReturn(Collections.singletonList(stub));
 
         List<ClientPl> clients = service.searchByParams(FilterPlStub.getStub());
+
+        assertNotNull(clients);
+        assertEquals(stub.getId(), clients.get(0).getId());
+    }
+
+    @Test
+    public void test_when_call_getClientsWithDiscounts_then_return_result() {
+        when(repository.findAll()).thenReturn(Collections.singletonList(stub));
+
+        List<ClientPl> clients = service.getClientsWithDiscounts();
 
         assertNotNull(clients);
         assertEquals(stub.getId(), clients.get(0).getId());

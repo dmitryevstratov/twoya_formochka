@@ -33,7 +33,7 @@
                     <a th:href="@{/discounts.html}">Скидки</a>
                 </li>
                 <li>
-                    <a th:href="service_1.html">Сервис 5</a>
+                    <a th:href="@{/clients-discounts.html}">Скидки клиентов</a>
                 </li>
                 <li>
                     <a th:href="service_1.html">Сервис 6</a>
@@ -501,6 +501,7 @@
     </div>
 </div>
 <script>
+    loadClients();
     (function () {
         'use strict'
 

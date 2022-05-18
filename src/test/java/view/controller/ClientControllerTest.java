@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.Model;
-import view.config.ViewTestConfig;
 import stubs.AddressPlStub;
 import stubs.ClientPlStub;
 import stubs.DiscountPlStub;
+import view.config.ViewTestConfig;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -419,6 +419,17 @@ public class ClientControllerTest {
 
         }));
 
+    }
+
+    @Test
+    public void test_when_call_getClientsWithDiscounts_then_return_result() {
+        when(clientService.getClientsWithDiscounts()).thenReturn(List.of(ClientPl.builder()
+                .id(222)
+                .build()));
+
+        ClientPl clientPl = clientController.getClientsWithDiscounts().get(0);
+
+        assertEquals(Integer.valueOf(222), clientPl.getId());
     }
 
 }

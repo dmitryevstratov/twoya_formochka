@@ -71,4 +71,18 @@ public class ClientServiceImpl implements ClientService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<ClientPl> getClientsWithDiscounts() {
+        return repository.findAll().stream()
+                .filter(client -> {
+                    if (client.getDiscounts() != null) {
+                        return client.getDiscounts().size() != 0;
+                    }
+                    return false;
+                })
+                .map(mapper::mapperToClientPl)
+                .sorted((c, c1) -> Integer.parseInt((c.getId() - c1.getId()) + ""))
+                .collect(Collectors.toList());
+    }
+
 }

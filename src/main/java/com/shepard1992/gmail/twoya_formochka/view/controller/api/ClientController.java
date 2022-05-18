@@ -10,6 +10,8 @@ public interface ClientController {
 
     List<ClientPl> getClients();
 
+    List<ClientPl> getClientsWithDiscounts();
+
     ClientPl editClient(ClientPl clientPl);
 
     ClientPl getClientById(Integer id);

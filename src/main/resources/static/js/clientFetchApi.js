@@ -1,7 +1,9 @@
 //URL
 const URL_CREATE = "/clients/create";
 const DATA_CLIENTS = "data-clients"
+const DATA_CLIENTS_DISCOUNTS = "data-clients-with-discounts"
 const URL_EDIT = "/clients/edit";
+const URL_CLIENTS_DISCOUNTS = "/clients-discounts";
 
 //Create client field
 const SECOND_NAME_ID = "#secondname";
@@ -38,7 +40,21 @@ function loadClients() {
         });
 }
 
-loadClients();
+function loadClientsWithDiscounts() {
+    fetch(URL_CLIENTS_DISCOUNTS)
+        .then((resp) => resp.json())
+        .then(function (data) {
+            console.log(data);
+            if (data.length > 0) {
+                data.forEach((client => {
+                    addClientWithDiscountInTable(client);
+                }))
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+}
 
 function getDataClient(suffix) {
     let id = document.querySelector(ID_ID + suffix);
@@ -114,6 +130,28 @@ function addClientInTable(client) {
     tmp += contentClient(client);
     tmp += "</tr>";
     document.getElementById(DATA_CLIENTS).innerHTML += tmp;
+}
+
+function addClientWithDiscountInTable(client) {
+    let tmp = EMPTY_VALUE;
+    tmp += "<tr id =" + "client-" + client.id + ">";
+    tmp += "<td>" + client.id + "</td>";
+    tmp += "<td>" + client.firstName + "</td>";
+    tmp += "<td>" + client.lastName + "</td>";
+    tmp += "<td id =" + "discounts-" + client.id + ">" + addDiscountsForClient(client.discounts) + "</td>";
+    tmp += "<td>" + "<button>Редактировать</button>" + "</td>";
+    tmp += "</tr>";
+    document.getElementById(DATA_CLIENTS_DISCOUNTS).innerHTML += tmp;
+}
+
+function addDiscountsForClient(discounts) {
+    let tmp = EMPTY_VALUE;
+    if (discounts.length > 0) {
+        discounts.forEach(discount => {
+            tmp += discount.type.name + " - " + discount.value + "<br>";
+        });
+    }
+    return tmp;
 }
 
 function fillFormClientById(id, numSuffix, numModal) {
