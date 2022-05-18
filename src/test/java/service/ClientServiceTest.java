@@ -127,4 +127,14 @@ public class ClientServiceTest {
         assertEquals(stub.getId(), clients.get(0).getId());
     }
 
+    @Test
+    public void test_when_call_clientWithDiscountSearchByParams_then_return_result() {
+        when(repository.findAll(any(ClientSpecification.class))).thenReturn(Collections.singletonList(stub));
+
+        List<ClientPl> clients = service.clientWithDiscountSearchByParams(FilterPlStub.getStub());
+
+        assertNotNull(clients);
+        assertEquals(stub.getId(), clients.get(0).getId());
+    }
+
 }

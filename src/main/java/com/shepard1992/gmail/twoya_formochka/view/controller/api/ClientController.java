@@ -26,4 +26,9 @@ public interface ClientController {
                                   String email,
                                   String telephone);
 
+    List<ClientPl> searchByParams(Integer id,
+                                  String firstName,
+                                  String lastName,
+                                  String discountName);
+
 }

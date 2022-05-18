@@ -21,6 +21,9 @@ const TELEPHONE_ID = "#telephone";
 const CLIENT_DISCOUNTS = "client-discounts";
 const CLIENT_ITEMS = "client-items";
 
+//Discount field
+const DISCOUNT = "discount";
+
 //Item field
 const ITEM_PRICE = "item-price-";
 const ITEM_COUNT = "item-count-";

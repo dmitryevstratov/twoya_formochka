@@ -1,7 +1,7 @@
 package com.shepard1992.gmail.twoya_formochka.service.mapper;
 
 import com.shepard1992.gmail.twoya_formochka.repository.dto.Filter;
-import com.shepard1992.gmail.twoya_formochka.repository.specification.FilterOrder;
+import com.shepard1992.gmail.twoya_formochka.repository.dto.FilterOrder;
 import com.shepard1992.gmail.twoya_formochka.view.model.FilterClientPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.FilterOrderPl;
 import org.springframework.stereotype.Component;
@@ -20,6 +20,7 @@ public class FilterMapper {
                 .birthday(filterClientPl.getBirthday())
                 .email(filterClientPl.getEmail())
                 .telephone(filterClientPl.getTelephone())
+                .discountName(filterClientPl.getDiscountName())
                 .build();
     }
 

@@ -21,4 +21,6 @@ public class Filter {
 
     private String telephone;
 
+    private String discountName;
+
 }

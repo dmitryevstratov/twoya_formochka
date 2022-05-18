@@ -432,4 +432,19 @@ public class ClientControllerTest {
         assertEquals(Integer.valueOf(222), clientPl.getId());
     }
 
+    @Test
+    public void test_when_call_searchByParams_by_discounts_then_return_result() {
+
+        when(clientService.clientWithDiscountSearchByParams(any())).thenReturn(List.of(ClientPl.builder()
+                .id(5)
+                .build()));
+
+        ClientPl client = clientController.searchByParams(
+                1, "", "", ""
+        ).get(0);
+
+        assertEquals(Integer.valueOf(5), client.getId());
+
+    }
+
 }

@@ -91,4 +91,20 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
                 .build());
     }
 
+    @Override
+    @GetMapping("/clients-discounts/search")
+    public List<ClientPl> searchByParams(
+            @RequestParam(value = "id", required = false) Integer id,
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName,
+            @RequestParam(value = "discountName", required = false) String discountName
+    ) {
+        return service.clientWithDiscountSearchByParams(FilterClientPl.builder()
+                .id(id)
+                .firstName(firstName)
+                .lastName(lastName)
+                .discountName(discountName)
+                .build());
+    }
+
 }

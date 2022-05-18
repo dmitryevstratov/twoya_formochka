@@ -1,5 +1,6 @@
 package com.shepard1992.gmail.twoya_formochka.repository.specification;
 
+import com.shepard1992.gmail.twoya_formochka.repository.dto.FilterOrder;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder;
 import org.springframework.data.jpa.domain.Specification;

@@ -313,3 +313,25 @@ function searchClient() {
             console.log(e);
         })
 }
+
+function searchClientWithDiscount() {
+    let id = document.querySelector(ID_ID + SUFFIX_SEARCH_FIELD).value;
+    let firstName = document.querySelector(FIRST_NAME_ID + SUFFIX_SEARCH_FIELD).value;
+    let lastName = document.querySelector(LAST_NAME_ID + SUFFIX_SEARCH_FIELD).value;
+    let discountName = document.getElementById(DISCOUNT + SUFFIX_SEARCH_FIELD).value;
+
+    fetch(URL_CLIENTS_DISCOUNTS + "/search" + `?id=${id}&firstName=${firstName}&lastName=${lastName}&discountName=${discountName}`)
+        .then((resp) => resp.json())
+        .then(function (data) {
+            console.log(data);
+            document.getElementById(DATA_CLIENTS_DISCOUNTS).innerHTML = EMPTY_VALUE;
+            if (data.length > 0) {
+                data.forEach((client => {
+                    addClientWithDiscountInTable(client);
+                }))
+            }
+        })
+        .catch(function (e) {
+            console.log(e);
+        })
+}
