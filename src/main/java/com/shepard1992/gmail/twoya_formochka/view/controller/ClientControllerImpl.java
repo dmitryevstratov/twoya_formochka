@@ -4,6 +4,7 @@ import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.ClientController;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.ModelAndViewController;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.ClientWithDiscountPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.FilterClientPl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -61,6 +62,12 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
     @PutMapping("/clients/edit")
     public ClientPl editClient(@RequestBody ClientPl clientPl) {
         return service.editClient(clientPl);
+    }
+
+    @Override
+    @PutMapping("/clients-discounts/edit")
+    public ClientPl editClientWithDiscount(@RequestBody ClientWithDiscountPl clientPl) {
+        return service.editClientWithDiscount(clientPl);
     }
 
     @Override

@@ -1,6 +1,5 @@
 //URL
 const URL_CREATE = "/discounts/create";
-const URL_DISCOUNTS = "/discounts";
 const URL_DISCOUNT_TYPES = "/discount-types";
 const DATA_DISCOUNTS = "data-discounts"
 const URL_EDIT = "/discounts/edit";
@@ -14,8 +13,6 @@ const MODAL_EDIT = "editDiscount";
 const DISCOUNT_ID = "id-discount";
 const DISCOUNT_TYPE = "type-discount";
 const DISCOUNT_VALUE = "value-discount";
-const DISCOUNT_COUNT = "discount-count";
-const DISCOUNT_FOUND = "discount-found";
 const DISCOUNT_FOR_RQ = "-for-rq";
 const DISCOUNT_RESULT = "discount-result";
 

@@ -50,7 +50,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public DiscountPl getDiscountById(Integer id) {
-        return mapper.mapperToDiscountPl(repository.getById(id));
+        return mapper.mapperToDiscountPl(repository.findById(id).get());
     }
 
     @Override
@@ -65,7 +65,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public void deleteDiscountById(Integer id) {
-        Discount discount = repository.getById(id);
+        Discount discount = repository.findById(id).get();
 
         discount.getOrders().forEach(order -> order.deleteDiscount(discount));
         discount.getClients().forEach(client -> client.deleteDiscount(discount));

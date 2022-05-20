@@ -53,6 +53,9 @@ function hiddenForm(id) {
         case 'deleteDiscount':
             clearDiscountFormDelete(SUFFIX_DELETE_FIELD);
             break;
+        case 'editClient':
+            clearClientDiscountFormEdit(SUFFIX_EDIT_FIELD);
+            break;
         default:
             clearForm(id);
     }
@@ -172,4 +175,12 @@ function clearDiscountForm(suffix) {
     valueDiscountForRq.value = EMPTY_VALUE;
     result.innerHTML = EMPTY_VALUE;
     discountCount.innerHTML = 0;
+}
+
+function clearClientDiscountFormEdit() {
+    let select = document.getElementById(DISCOUNT_FOUND + SUFFIX_SEARCH_FIELD);
+
+    document.getElementById(DISCOUNT_COUNT + SUFFIX_SEARCH_FIELD).innerText = 0;
+    select.selectedIndex = 0;
+    select.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
 }

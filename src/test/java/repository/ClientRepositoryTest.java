@@ -17,6 +17,7 @@ import repository.config.RepositoryTestConfig;
 import stubs.AddressStub;
 import stubs.ClientStub;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,7 @@ import java.util.Optional;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+@Transactional
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {
         TwoyaFormochkaApplication.class,
