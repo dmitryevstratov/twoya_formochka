@@ -62,4 +62,18 @@ public class ClientMapper {
                 .build();
     }
 
+    public ClientPl mapperToClientPlWithDiscount(Client client) {
+        List<DiscountPl> discountsPl = (client.getDiscounts() == null) ? null : client.getDiscounts().stream()
+                .map(discountMapper::mapperToDiscountPl)
+                .collect(Collectors.toList());
+
+        return ClientPl.builder()
+                .id(client.getId())
+                .firstName(client.getFirstName())
+                .lastName(client.getLastName())
+                .secondName(client.getSecondName())
+                .discounts(discountsPl)
+                .build();
+    }
+
 }

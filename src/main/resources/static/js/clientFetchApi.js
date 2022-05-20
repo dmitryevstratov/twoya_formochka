@@ -16,6 +16,15 @@ const STREET_ID = "#street";
 const ROOM_ID = "#room";
 const INDEX_ID = "#index";
 const ADD_INFO_ID = "#additionalInfo";
+const DATA_CLIENT_ALL_DISCOUNTS = "data-client-all-discounts";
+const CLIENT_ID = "client-id";
+
+//Discount field
+const DISCOUNT_ARTICLE_ID = "discount-article";
+const DISCOUNT_NAME_ID = "discount-name";
+const DATA_DISCOUNT_ARTICLE = "data-discount-article";
+const DATA_DISCOUNT_NAME = "data-discount-name";
+const DATA_DISCOUNT_VALUE = "data-discount-value";
 
 //ID modal window
 const MODAL_CREATE = "addClient";
@@ -139,9 +148,67 @@ function addClientWithDiscountInTable(client) {
     tmp += "<td>" + client.firstName + "</td>";
     tmp += "<td>" + client.lastName + "</td>";
     tmp += "<td id =" + "discounts-" + client.id + ">" + addDiscountsForClient(client.discounts) + "</td>";
-    tmp += "<td>" + "<button>Редактировать</button>" + "</td>";
+    tmp += "<td>" + "<button onmousedown= \"fillFormClientDiscountById("
+        + client.id + ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editClient\">\n" +
+        " Редактировать" +
+        "</button>" + "</td>";
     tmp += "</tr>";
     document.getElementById(DATA_CLIENTS_DISCOUNTS).innerHTML += tmp;
+}
+
+function parseDiscountName(discountName) {
+    let nameTmp = EMPTY_VALUE;
+    let name = discountName.split(" ");
+    name.forEach(el => {
+        nameTmp += el + "_";
+    })
+    return nameTmp;
+}
+
+function fillFormClientDiscountById(id) {
+    let table = document.getElementById(DATA_CLIENT_ALL_DISCOUNTS);
+    let tmp = EMPTY_VALUE;
+
+    fetch(URL_CLIENTS + "/" + id).then(
+        result => result.json()
+    ).then(
+        function (client) {
+            console.log(client);
+            document.getElementById(DATA_CLIENT_ALL_DISCOUNTS).innerHTML = EMPTY_VALUE;
+            document.getElementById(CLIENT_ID).value = id;
+            let discounts = client.discounts;
+            if (discounts != null) {
+                let i;
+                for (i = 1; i <= discounts.length; i++) {
+                    tmp += "<tr data-discount-article=" + i + "><td>" + i + "</td>";
+                    tmp += "<td data-discount-name=" + parseDiscountName(discounts[i - 1].type.name) + ">" + discounts[i - 1].type.name + "</td>";
+                    tmp += "<td data-discount-value=" + discounts[i - 1].value + ">" + discounts[i - 1].value + "</td>";
+                    tmp += "<td>" + "<button onmousedown= \"deleteDiscountFromClientById("
+                        + i + ")\" type=\"button\">\n" +
+                        " Удалить" +
+                        "</button>" + "</td>";
+                }
+                table.innerHTML = tmp;
+            }
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+
+}
+
+function deleteDiscountFromClientById(id) {
+    let tmp = EMPTY_VALUE;
+    let table = document.getElementById(DATA_CLIENT_ALL_DISCOUNTS);
+    let discountsForDelete = document.querySelectorAll("[" + DATA_DISCOUNT_ARTICLE + "]");
+
+    discountsForDelete.forEach(discount => {
+        let attribute = discount.getAttribute(DATA_DISCOUNT_ARTICLE);
+        if (attribute != id) {
+            tmp += "<tr data-discount-article=" + attribute + ">" + discount.innerHTML;
+        }
+    })
+    table.innerHTML = tmp;
 }
 
 function addDiscountsForClient(discounts) {
@@ -247,6 +314,13 @@ function fetchClientThen(data, idForm, modal) {
     hiddenForm(modal);
 }
 
+function fetchClientDiscountsThen(data, modal) {
+    console.log(data);
+    document.getElementById(DATA_CLIENTS_DISCOUNTS).innerHTML = EMPTY_VALUE;
+    loadClientsWithDiscounts();
+    hiddenForm(modal);
+}
+
 //Method POST
 
 function createClient() {
@@ -334,4 +408,81 @@ function searchClientWithDiscount() {
         .catch(function (e) {
             console.log(e);
         })
+}
+
+function searchClientDiscountToSelect() {
+    let id = document.getElementById(DISCOUNT_ARTICLE_ID + SUFFIX_SEARCH_FIELD).value;
+    let type = document.getElementById(DISCOUNT_NAME_ID + SUFFIX_SEARCH_FIELD).value;
+
+    fetch(URL_DISCOUNTS + "/search" + `?id=${id}&type=${type}`)
+        .then((resp) => resp.json())
+        .then(function (data) {
+            console.log(data);
+            document.getElementById(DISCOUNT_COUNT + SUFFIX_SEARCH_FIELD).innerText = data.length;
+            let select = document.getElementById(DISCOUNT_FOUND + SUFFIX_SEARCH_FIELD);
+            let tmp = EMPTY_VALUE;
+            if (data.length > 0) {
+                tmp += "<option value='-1'>" + "Нет" + "</option>";
+                data.forEach((discount => {
+                    tmp += "<option value=" + discount.id + ">" + discount.id + "-" + discount.type.name + "-" + discount.value + "</option>";
+                }))
+                select.innerHTML = tmp;
+                select.selectedIndex = 0;
+            }
+        })
+        .catch(function (e) {
+            console.log(e);
+        })
+}
+
+function fillSelectClientDiscounts() {
+    let tmp = EMPTY_VALUE;
+    let table = document.getElementById(DATA_CLIENT_ALL_DISCOUNTS);
+    let selectDiscount = document.getElementById(DISCOUNT_FOUND + SUFFIX_SEARCH_FIELD);
+    let discount = selectDiscount.options[selectDiscount.selectedIndex].innerHTML;
+
+    let discountParse = discount.split("-");
+
+    tmp += "<tr data-discount-article=" + discountParse[0] + "><td>" + discountParse[0] + "</td>";
+    tmp += "<td data-discount-name=" + parseDiscountName(discountParse[1]) + ">" + discountParse[1] + "</td>";
+    tmp += "<td data-discount-value=" + discountParse[2] + ">" + discountParse[2] + "</td>";
+    tmp += "<td>" + "<button onmousedown= \"deleteDiscountFromClientById("
+        + discountParse[0] + ")\" type=\"button\">\n" +
+        " Удалить" +
+        "</button>" + "</td>";
+
+    table.innerHTML += tmp;
+}
+
+function editClientDiscount() {
+    let id = document.getElementById(CLIENT_ID).value;
+    let discountsForDelete = document.querySelectorAll("[" + DATA_DISCOUNT_ARTICLE + "]");
+    let data = {};
+    let discounts = [];
+
+    discountsForDelete.forEach(discount => {
+        let name = discount.querySelector("[" + DATA_DISCOUNT_NAME + "]").innerHTML;
+        let value = discount.querySelector("[" + DATA_DISCOUNT_VALUE + "]").innerHTML;
+        let type = new DiscountType(name);
+        let disc = new Discount(type, value);
+        discounts.push(disc);
+    })
+
+    fetch(URL_CLIENTS + "/" + id).then((
+        resp => resp.json()
+    )).then(
+        function (rs) {
+            data = {
+                id: rs.id,
+                discounts: discounts
+            };
+            console.log(data);
+            fetchSendData(URL_CLIENTS_DISCOUNTS + "/edit", data, PUT)
+                .then((data) => {
+                    fetchClientDiscountsThen(data, MODAL_EDIT);
+                })
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
 }

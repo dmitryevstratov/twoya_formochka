@@ -20,6 +20,7 @@ import service.config.MapperTestConfig;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -75,10 +76,10 @@ public class DiscountServiceTest {
 
     @Test
     public void test_when_call_getDiscountById_then_return_result() {
-        when(repository.getById(anyInt())).thenReturn(Discount.builder()
+        when(repository.findById(anyInt())).thenReturn(Optional.of(Discount.builder()
                 .id(7)
                 .type(DiscountType.builder().build())
-                .build());
+                .build()));
 
         Integer id = service.getDiscountById(4).getId();
 
@@ -126,7 +127,7 @@ public class DiscountServiceTest {
     @Test
     public void test_when_call_deleteDiscountById_then_return_success() {
         doNothing().when(repository).deleteById(anyInt());
-        when(repository.getById(anyInt())).thenReturn(Discount.builder()
+        when(repository.findById(anyInt())).thenReturn(Optional.of(Discount.builder()
                 .id(1)
                 .type(DiscountType.builder()
                         .id(1)
@@ -135,7 +136,7 @@ public class DiscountServiceTest {
                         Client.builder().build()
                 ))
                 .orders(List.of(Order.builder().build()))
-                .build());
+                .build()));
 
         service.deleteDiscountById(1);
 

@@ -23,6 +23,9 @@ const CLIENT_ITEMS = "client-items";
 
 //Discount field
 const DISCOUNT = "discount";
+const DISCOUNT_COUNT = "discount-count";
+const URL_DISCOUNTS = "/discounts";
+const DISCOUNT_FOUND = "discount-found";
 
 //Item field
 const ITEM_PRICE = "item-price-";

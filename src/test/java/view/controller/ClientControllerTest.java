@@ -447,4 +447,24 @@ public class ClientControllerTest {
 
     }
 
+    @Test
+    public void test_when_call_editClientWithDiscount_then_return_result() {
+        when(clientService.editClientWithDiscount(any())).thenReturn(ClientPl.builder()
+                .id(45)
+                .discounts(List.of(DiscountPl.builder()
+                        .value(22)
+                        .type(DiscountTypePl.builder()
+                                .name("HB")
+                                .build())
+                        .build()))
+                .build());
+
+        ClientPl clientPl = clientController.editClientWithDiscount(ClientWithDiscountPl.builder().build());
+
+        assertEquals(Integer.valueOf(45), clientPl.getId());
+        assertEquals(Integer.valueOf(22), clientPl.getDiscounts().get(0).getValue());
+        assertEquals("HB", clientPl.getDiscounts().get(0).getType().getName());
+    }
+
+
 }

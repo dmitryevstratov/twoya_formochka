@@ -1,15 +1,14 @@
 package service;
 
 import com.shepard1992.gmail.twoya_formochka.repository.api.ClientRepository;
+import com.shepard1992.gmail.twoya_formochka.repository.api.DiscountRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.DiscountType;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.repository.specification.ClientSpecification;
 import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
-import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +40,9 @@ public class ClientServiceTest {
 
     @Autowired
     private ClientRepository repository;
+
+    @Autowired
+    private DiscountRepository discountRepository;
 
     private final List<Order> orderList = new ArrayList<>();
     private final List<CreateOrderPl> createOrderPlList = new ArrayList<>();
@@ -135,6 +137,38 @@ public class ClientServiceTest {
 
         assertNotNull(clients);
         assertEquals(stub.getId(), clients.get(0).getId());
+    }
+
+    @Test
+    public void test_when_call_editClientWithDiscount_then_return_result() {
+        when(repository.findById(any())).thenReturn(Optional.of(Client.builder()
+                .id(2)
+                .discounts(new ArrayList<>())
+                .build()));
+
+        when(discountRepository.findByTypeNameAndValue(anyString(), anyInt())).thenReturn(Discount.builder()
+                .id(3)
+                .value(20)
+                .type(DiscountType.builder()
+                        .id(3)
+                        .name("NY")
+                        .build())
+                .build());
+
+        ClientPl clientPl = service.editClientWithDiscount(ClientWithDiscountPl.builder()
+                .id(2)
+                .discounts(List.of(DiscountPl.builder()
+                        .id(3)
+                        .value(20)
+                        .type(DiscountTypePl.builder()
+                                .id(3)
+                                .name("NY")
+                                .build())
+                        .build()))
+                .build());
+
+        assertEquals(Integer.valueOf(2), clientPl.getId());
+        assertEquals(Integer.valueOf(3), clientPl.getDiscounts().get(0).getId());
     }
 
 }
