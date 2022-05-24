@@ -95,6 +95,7 @@ function addOrderRow(order) {
     tmp += "<td>" + order.client.firstName + "</td>";
     tmp += "<td>" + order.client.lastName + "</td>";
     tmp += "<td>" + order.dateCreate + "</td>";
+    tmp += "<td>" + order.dateClosed + "</td>";
     tmp += "<td>" + discount + "</td>";
     tmp += "<td id=" + ORDER_TOTAL_PRICE + ">" + order.totalPrice + "</td>";
     tmp += "<td id=" + ORDER_COUNT + ">" + order.countItems + "</td>";
