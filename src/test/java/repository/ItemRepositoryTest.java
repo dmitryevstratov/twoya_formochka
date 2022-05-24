@@ -3,7 +3,6 @@ package repository;
 import com.shepard1992.gmail.twoya_formochka.TwoyaFormochkaApplication;
 import com.shepard1992.gmail.twoya_formochka.repository.api.ItemRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Item;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +11,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import repository.config.RepositoryTestConfig;
 
 import javax.transaction.Transactional;
-import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @Transactional
 @RunWith(SpringRunner.class)
@@ -28,11 +26,6 @@ public class ItemRepositoryTest {
     @Autowired
     private ItemRepository repository;
 
-    @Before
-    public void cleanDB() {
-        repository.deleteAll();
-    }
-
     @Test
     public void test_when_call_save_then_return_result() {
         Item item = repository.save(Item.builder().build());
@@ -43,13 +36,13 @@ public class ItemRepositoryTest {
 
     @Test
     public void test_when_call_findAll_then_return_result() {
-        repository.save(Item.builder().build());
-        repository.save(Item.builder().build());
-        repository.save(Item.builder().build());
+        Item save1 = repository.save(Item.builder().build());
+        Item save2 = repository.save(Item.builder().build());
+        Item save3 = repository.save(Item.builder().build());
 
-        List<Item> itemList = repository.findAll();
-
-        assertEquals(3, itemList.size());
+        assertEquals(save1.getId(), repository.getById(save1.getId()).getId());
+        assertEquals(save2.getId(), repository.getById(save2.getId()).getId());
+        assertEquals(save3.getId(), repository.getById(save3.getId()).getId());
     }
 
     @Test
@@ -67,8 +60,11 @@ public class ItemRepositoryTest {
         Item item = repository.save(Item.builder().build());
 
         repository.deleteById(item.getId());
+        Optional<Item> first = repository.findAll().stream()
+                .filter(it -> it.getId().equals(item.getId()))
+                .findFirst();
 
-        assertEquals(0, repository.findAll().size());
+        assertTrue(first.isEmpty());
     }
 
 }

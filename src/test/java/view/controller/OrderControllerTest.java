@@ -4,8 +4,10 @@ import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder
 import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.OrderController;
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetMonthStatisticPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
+import com.shepard1992.gmail.twoya_formochka.view.model.enums.Month;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,5 +120,17 @@ public class OrderControllerTest {
         assertEquals(StatusOrder.CREATED, orderPl.getStatus());
     }
 
+    @Test
+    public void test_when_call_searchByParams_then_return_success() {
+        when(service.searchByParams(anyString(), anyString())).thenReturn(List.of(GetMonthStatisticPl.builder()
+                .year(1990)
+                .month(Month.AUG)
+                .build()));
+
+        List<GetMonthStatisticPl> statisticPls = controller.searchByParams("01-01-2020", "05-05-2022");
+
+        assertEquals(Integer.valueOf(1990), statisticPls.get(0).getYear());
+        assertEquals(Month.AUG, statisticPls.get(0).getMonth());
+    }
 
 }

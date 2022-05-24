@@ -5,7 +5,6 @@ import com.shepard1992.gmail.twoya_formochka.repository.api.DiscountRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.api.DiscountTypeRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.DiscountType;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,9 @@ import repository.config.RepositoryTestConfig;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @Transactional
 @RunWith(SpringRunner.class)
@@ -33,11 +32,6 @@ public class DiscountRepositoryTest {
     @Autowired
     private DiscountTypeRepository discountTypeRepository;
 
-    @Before
-    public void cleanDB() {
-        repository.deleteAll();
-    }
-
     @Test
     public void test_when_call_save_then_return_result() {
         Discount discount = repository.save(Discount.builder().build());
@@ -48,13 +42,13 @@ public class DiscountRepositoryTest {
 
     @Test
     public void test_when_call_findAll_then_return_result() {
-        repository.save(Discount.builder().build());
-        repository.save(Discount.builder().build());
-        repository.save(Discount.builder().build());
+        Discount save1 = repository.save(Discount.builder().build());
+        Discount save2 = repository.save(Discount.builder().build());
+        Discount save3 = repository.save(Discount.builder().build());
 
-        List<Discount> discountList = repository.findAll();
-
-        assertEquals(3, discountList.size());
+        assertEquals(save1.getId(), repository.getById(save1.getId()).getId());
+        assertEquals(save2.getId(), repository.getById(save2.getId()).getId());
+        assertEquals(save3.getId(), repository.getById(save3.getId()).getId());
     }
 
     @Test
@@ -73,7 +67,11 @@ public class DiscountRepositoryTest {
 
         repository.deleteById(discount.getId());
 
-        assertEquals(0, repository.findAll().size());
+        Optional<Discount> first = repository.findAll().stream().filter(
+                dsc -> dsc.getId().equals(discount.getId())
+        ).findFirst();
+
+        assertFalse(first.isPresent());
     }
 
     @Test

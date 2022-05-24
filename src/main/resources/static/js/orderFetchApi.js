@@ -25,6 +25,8 @@ const ORDER_ID = "order-id";
 const ORDER_COUNT = "order-count";
 const ORDER_TOTAL_PRICE = "order-total-price";
 const ARTICLE_ORDER = "article-order";
+const DATE_START_ORDER = "dateStart-order";
+const DATE_END_ORDER = "dateEnd-order";
 
 //ID modal window
 const MODAL_CREATE = "addOrder";
@@ -178,6 +180,36 @@ function searchOrder() {
         })
 
 
+}
+
+function searchOrdersStatistics() {
+    let dateStart = document.getElementById(DATE_START_ORDER + SUFFIX_SEARCH_FIELD).value;
+    let dateEnd = document.getElementById(DATE_END_ORDER + SUFFIX_SEARCH_FIELD).value;
+    let tmp = EMPTY_VALUE;
+    let table = document.getElementById(DATA_ORDERS + "-statistics");
+
+    fetch(URL_ORDERS + "/statistics" + `?dateStart=${dateStart}&dateEnd=${dateEnd}`)
+        .then((resp) => resp.json())
+        .then(function (data) {
+            console.log(data);
+            table.innerHTML = EMPTY_VALUE;
+            if (data.length > 0) {
+                data.forEach((order => {
+                    tmp += "<tr><td>" + order.year + "</td>";
+                    tmp += "<td>" + order.month + "</td>";
+                    tmp += "<td>" + order.countOrders + "</td>";
+                    tmp += "<td>" + order.countItems + "</td>";
+                    tmp += "<td>" + order.totalSum + "</td>";
+                    tmp += "<td>" + Number(order.middleSumOfOrder).toFixed(1) + "</td>";
+                    tmp += "<td>" + Number(order.middleCountOfItems).toFixed(1) + "</td>";
+                    tmp += "<td>" + Number(order.middleSumOfItem).toFixed(1) + "</td>";
+                }))
+            }
+            table.innerHTML = tmp;
+        })
+        .catch(function (e) {
+            console.log(e);
+        })
 }
 
 //Method fill fields

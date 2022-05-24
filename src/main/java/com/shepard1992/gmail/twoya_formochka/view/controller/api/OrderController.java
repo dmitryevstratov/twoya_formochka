@@ -1,6 +1,7 @@
 package com.shepard1992.gmail.twoya_formochka.view.controller.api;
 
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetMonthStatisticPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
 import org.springframework.ui.Model;
@@ -28,6 +29,11 @@ public interface OrderController {
             String count
     );
 
+    List<GetMonthStatisticPl> searchByParams(
+            String dateStart,
+            String dateEnd
+    );
+
     CreateOrderPl editOrders(CreateOrderPl createOrderPl);
 
     CreateOrderPl editOrderStatus(Integer id, String status);
@@ -37,5 +43,7 @@ public interface OrderController {
     void deleteOrderById(Integer id);
 
     ModelAndView getViewOrdersStatus(Model model);
+
+    ModelAndView getViewOrdersStatisticsStatus(Model model);
 
 }

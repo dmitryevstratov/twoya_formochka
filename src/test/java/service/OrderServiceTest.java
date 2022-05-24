@@ -4,22 +4,22 @@ import com.shepard1992.gmail.twoya_formochka.repository.api.ClientRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.api.OrderRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.*;
 import com.shepard1992.gmail.twoya_formochka.repository.specification.OrderSpecification;
+import com.shepard1992.gmail.twoya_formochka.repository.specification.OrderStatisticSpecification;
 import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
-import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
-import com.shepard1992.gmail.twoya_formochka.view.model.ItemsOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.util.Pair;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
 import service.config.OrderServiceTestConfig;
 import stubs.FilterOrderPlStub;
 import stubs.OrderStub;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -177,6 +177,27 @@ public class OrderServiceTest {
         verify(repository, times(1)).save(any());
         verify(clientRepository, times(1)).findById(any());
         verify(clientRepository, times(1)).save(any());
+    }
+
+    @Test
+    public void test_when_call_searchByParams_with_status_paid_then_return_success() {
+        List<Pair<String, String>> pairs = new ArrayList<>();
+        pairs.add(Pair.of("01-01-2020", "01-01-2022"));
+        pairs.add(Pair.of("01-01-2020", ""));
+        pairs.add(Pair.of("", ""));
+
+        for (Pair<String, String> pair : pairs) {
+            if (pair.getFirst().equals("")) {
+                when(repository.findAll()).thenReturn(List.of(OrderStub.getStub()));
+            } else {
+                when(repository.findAll(any(OrderStatisticSpecification.class))).thenReturn(List.of(OrderStub.getStub()));
+            }
+
+            List<GetMonthStatisticPl> statisticPls = service.searchByParams(pair.getFirst(), pair.getSecond());
+
+            assertNotNull(statisticPls);
+        }
+
     }
 
 }

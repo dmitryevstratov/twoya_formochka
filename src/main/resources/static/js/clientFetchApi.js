@@ -1,8 +1,8 @@
 //URL
-const URL_CREATE = "/clients/create";
+const URL_CREATE_CLIENT = "/clients/create";
 const DATA_CLIENTS = "data-clients"
 const DATA_CLIENTS_DISCOUNTS = "data-clients-with-discounts"
-const URL_EDIT = "/clients/edit";
+const URL_EDIT_CLIENT = "/clients/edit";
 const URL_CLIENTS_DISCOUNTS = "/clients-discounts";
 
 //Create client field
@@ -27,9 +27,9 @@ const DATA_DISCOUNT_NAME = "data-discount-name";
 const DATA_DISCOUNT_VALUE = "data-discount-value";
 
 //ID modal window
-const MODAL_CREATE = "addClient";
-const MODAL_DELETE = "deleteClient";
-const MODAL_EDIT = "editClient";
+const MODAL_CREATE_CLIENT = "addClient";
+const MODAL_DELETE_CLIENT = "deleteClient";
+const MODAL_EDIT_CLIENT = "editClient";
 
 //Load clients on client page
 
@@ -228,10 +228,10 @@ function fillFormClientById(id, numSuffix, numModal) {
 
     if (numSuffix === 0 && numModal === 0) {
         suffix = SUFFIX_EDIT_FIELD
-        modal = MODAL_EDIT
+        modal = MODAL_EDIT_CLIENT
     } else if (numSuffix === 1 && numModal === 1) {
         suffix = SUFFIX_DELETE_FIELD
-        modal = MODAL_DELETE
+        modal = MODAL_DELETE_CLIENT
     }
 
     fetch(URL_CLIENTS + "/" + id).then((
@@ -325,9 +325,9 @@ function fetchClientDiscountsThen(data, modal) {
 
 function createClient() {
     if (checkValidityForm(EMPTY_VALUE)) {
-        fetchSendData(URL_CREATE, getDataClient(""), POST)
+        fetchSendData(URL_CREATE_CLIENT, getDataClient(""), POST)
             .then((data) => {
-                fetchClientThen(data, "addClientForm", MODAL_CREATE);
+                fetchClientThen(data, "addClientForm", MODAL_CREATE_CLIENT);
             });
     }
 }
@@ -336,9 +336,9 @@ function createClient() {
 
 function editClient() {
     if (checkValidityForm(SUFFIX_EDIT_FIELD)) {
-        fetchSendData(URL_EDIT, getDataClient(SUFFIX_EDIT_FIELD), PUT)
+        fetchSendData(URL_EDIT_CLIENT, getDataClient(SUFFIX_EDIT_FIELD), PUT)
             .then((data) => {
-                fetchClientThen(data, null, MODAL_EDIT);
+                fetchClientThen(data, null, MODAL_EDIT_CLIENT);
             })
     }
 }
@@ -354,7 +354,7 @@ function deleteClient() {
             console.log(result);
             document.getElementById(DATA_CLIENTS).innerHTML = EMPTY_VALUE;
             loadClients();
-            hiddenForm(MODAL_DELETE);
+            hiddenForm(MODAL_DELETE_CLIENT);
         }
     ).catch(function (error) {
         console.log(error);
@@ -479,7 +479,7 @@ function editClientDiscount() {
             console.log(data);
             fetchSendData(URL_CLIENTS_DISCOUNTS + "/edit", data, PUT)
                 .then((data) => {
-                    fetchClientDiscountsThen(data, MODAL_EDIT);
+                    fetchClientDiscountsThen(data, MODAL_EDIT_CLIENT);
                 })
         }
     ).catch(function (error) {

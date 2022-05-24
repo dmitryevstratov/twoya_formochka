@@ -3,10 +3,7 @@ package com.shepard1992.gmail.twoya_formochka.view.controller;
 import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.ModelAndViewController;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.OrderController;
-import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.FilterOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
+import com.shepard1992.gmail.twoya_formochka.view.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,6 +34,12 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
     }
 
     @Override
+    @GetMapping("/orders-statistics.html")
+    public ModelAndView getViewOrdersStatisticsStatus(Model model) {
+        return new ModelAndView("orders-statistics");
+    }
+
+    @Override
     @PostMapping("/orders/create")
     public CreateOrderPl addOrder(@RequestBody CreateOrderPl createOrderPl) {
         return service.addOrder(createOrderPl);
@@ -54,6 +57,7 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
         return service.getOrdersStatus();
     }
 
+    @Override
     @GetMapping("orders/search")
     public List<GetOrderPl> searchByParams(
             @RequestParam(value = "id", required = false) Integer id,
@@ -77,6 +81,15 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
                 .priceMin(priceMin)
                 .count(count)
                 .build());
+    }
+
+    @Override
+    @GetMapping("orders/statistics")
+    public List<GetMonthStatisticPl> searchByParams(
+            @RequestParam(value = "dateStart") String dateStart,
+            @RequestParam(value = "dateEnd") String dateEnd
+    ) {
+        return service.searchByParams(dateStart, dateEnd);
     }
 
     @Override

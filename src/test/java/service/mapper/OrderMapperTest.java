@@ -2,10 +2,7 @@ package service.mapper;
 
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.OrderMapper;
-import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
-import com.shepard1992.gmail.twoya_formochka.view.model.ItemsOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
 import stubs.OrderStub;
 
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -77,11 +75,27 @@ public class OrderMapperTest {
     }
 
     @Test
-    public void test_mapperToUpdateOrderPl(){
+    public void test_mapperToUpdateOrderPl() {
         GetOrderToUpdatePl updatePl = orderMapper.mapperToUpdateOrderPl(OrderStub.getStub());
 
         assertEquals(OrderStub.getStub().getClient().getId(), updatePl.getClientPl().getId());
         assertEquals(OrderStub.getStub().getDiscount().getId(), updatePl.getDiscountPl().getId());
         assertEquals(OrderStub.getStub().getItems().get(0).getId(), updatePl.getItemPlList().get(0).getId());
+    }
+
+    @Test
+    public void test_mapperToMonthStatisticPl() {
+        GetMonthStatisticPl statisticPls = orderMapper.mapperToMonthStatisticPl(List.of(OrderStub.getStub())).get(0);
+
+        ZonedDateTime time = ZonedDateTime.now();
+
+        assertEquals(Integer.valueOf(time.getYear()), statisticPls.getYear());
+        assertEquals(time.getMonth().getValue() - 1, statisticPls.getMonth().getNum());
+        assertEquals(Integer.valueOf(1), statisticPls.getCountItems());
+        assertEquals(Integer.valueOf(1), statisticPls.getCountOrders());
+        assertEquals(Double.valueOf(200), statisticPls.getTotalSum());
+        assertEquals(Double.valueOf(200), statisticPls.getMiddleSumOfItem());
+        assertEquals(Double.valueOf(200), statisticPls.getMiddleSumOfOrder());
+        assertEquals(Integer.valueOf(1), statisticPls.getMiddleCountOfItems());
     }
 }
