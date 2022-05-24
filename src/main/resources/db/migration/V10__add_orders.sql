@@ -41,6 +41,6 @@ insert into orders (client_id, count, date_closed, date_create, discount_id, sta
 insert into orders_items (order_id, item_id) values (9, 3);
 insert into orders_items (order_id, item_id) values (9, 6);
 
-insert into orders (client_id, count, date_closed, date_create, discount_id, status, total_price, id) values (2, 2, null, '20-05-2022', null, 'CANCELED', 23.2, 10);
+insert into orders (client_id, count, date_closed, date_create, discount_id, status, total_price, id) values (2, 2, '11-06-2022', '20-05-2022', null, 'CANCELED', 23.2, 10);
 insert into orders_items (order_id, item_id) values (10, 3);
 insert into orders_items (order_id, item_id) values (10, 1);
