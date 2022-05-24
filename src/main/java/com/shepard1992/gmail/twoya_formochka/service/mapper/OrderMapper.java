@@ -6,6 +6,7 @@ import com.shepard1992.gmail.twoya_formochka.repository.entity.Item;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder;
 import com.shepard1992.gmail.twoya_formochka.view.model.*;
+import com.shepard1992.gmail.twoya_formochka.view.model.enums.Month;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
@@ -14,6 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.shepard1992.gmail.twoya_formochka.service.utils.DateUtil.converterDate;
+import static com.shepard1992.gmail.twoya_formochka.service.utils.DateUtil.parseDateToMonth;
 
 @Component
 public class OrderMapper {
@@ -151,5 +153,47 @@ public class OrderMapper {
         }
 
         return orderPl;
+    }
+
+    public List<GetMonthStatisticPl> mapperToMonthStatisticPl(List<Order> order) {
+        List<GetMonthStatisticPl> statistics = new ArrayList<>();
+
+        for (Order o : order) {
+            Optional<GetMonthStatisticPl> st = getGetMonthStatisticPlByYearAndMonth(o.getDateCreate().getYear(), parseDateToMonth(o.getDateCreate()), statistics);
+
+            if (st.isEmpty()) {
+                st = Optional.of(GetMonthStatisticPl.builder()
+                        .year(o.getDateCreate().getYear())
+                        .month(parseDateToMonth(o.getDateCreate()))
+                        .countItems(o.getItems().size())
+                        .countOrders(1)
+                        .middleCountOfItems(o.getItems().size())
+                        .middleSumOfOrder(o.getTotalPrice() / 1)
+                        .middleSumOfItem(o.getTotalPrice() / o.getItems().size())
+                        .totalSum(o.getTotalPrice())
+                        .build());
+                statistics.add(st.get());
+            } else {
+                GetMonthStatisticPl monthStatisticPl = st.get();
+
+                monthStatisticPl.addCountOrders();
+                monthStatisticPl.addTotalSum(o.getTotalPrice());
+                monthStatisticPl.addCountItems(o.getItems());
+                monthStatisticPl.addMiddleCountOfItems();
+                monthStatisticPl.addMiddleSumOfItem();
+                monthStatisticPl.addMiddleSumOfOrder();
+
+            }
+
+        }
+
+        return statistics;
+    }
+
+    private Optional<GetMonthStatisticPl> getGetMonthStatisticPlByYearAndMonth(int year, Month month, List<GetMonthStatisticPl> statistics) {
+        return statistics.stream()
+                .filter(st -> st.getYear().equals(year))
+                .filter(st -> st.getMonth().getName().equals(month.getName()))
+                .findFirst();
     }
 }
