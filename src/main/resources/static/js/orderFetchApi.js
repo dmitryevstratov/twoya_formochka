@@ -200,10 +200,10 @@ function searchOrdersStatistics() {
                     tmp += "<td>" + order.month + "</td>";
                     tmp += "<td>" + order.countOrders + "</td>";
                     tmp += "<td>" + order.countItems + "</td>";
-                    tmp += "<td>" + order.totalSum + "</td>";
-                    tmp += "<td>" + Number(order.middleSumOfOrder).toFixed(1) + "</td>";
-                    tmp += "<td>" + Number(order.middleCountOfItems).toFixed(1) + "</td>";
-                    tmp += "<td>" + Number(order.middleSumOfItem).toFixed(1) + "</td>";
+                    tmp += "<td>" + Number(order.totalSum).toFixed(2) + "</td>";
+                    tmp += "<td>" + Number(order.middleSumOfOrder).toFixed(2) + "</td>";
+                    tmp += "<td>" + Number(order.middleCountOfItems).toFixed(2) + "</td>";
+                    tmp += "<td>" + Number(order.middleSumOfItem).toFixed(2) + "</td>";
                 }))
             }
             table.innerHTML = tmp;
