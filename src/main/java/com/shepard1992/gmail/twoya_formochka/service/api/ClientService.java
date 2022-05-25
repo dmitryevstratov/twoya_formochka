@@ -1,7 +1,8 @@
 package com.shepard1992.gmail.twoya_formochka.service.api;
 
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.FilterPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.ClientWithDiscountPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.FilterClientPl;
 
 import java.util.List;
 
@@ -13,10 +14,15 @@ public interface ClientService {
 
     ClientPl editClient(ClientPl clientPl);
 
-    ClientPl getClientById(Long id);
+    ClientPl getClientById(Integer id);
 
-    void deleteClientById(Long id);
+    void deleteClientById(Integer id);
 
-    List<ClientPl> searchByParams(FilterPl filterPl);
+    List<ClientPl> searchByParams(FilterClientPl filterClientPl);
 
+    List<ClientPl> clientWithDiscountSearchByParams(FilterClientPl filterClientPl);
+
+    List<ClientPl> getClientsWithDiscounts();
+
+    ClientPl editClientWithDiscount(ClientWithDiscountPl clientPl);
 }

@@ -1,4 +1,4 @@
-package view.stubs;
+package stubs;
 
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Address;
 
@@ -9,7 +9,7 @@ public class AddressStub {
 
     public static Address getStub() {
         return Address.builder()
-                .id(1L)
+                .id(1)
                 .country("Беларусь")
                 .region("Гродненская")
                 .locality("Гродно")

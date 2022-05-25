@@ -2,16 +2,15 @@ package com.shepard1992.gmail.twoya_formochka.repository.entity;
 
 import com.shepard1992.gmail.twoya_formochka.repository.entity.enums.StatusOrder;
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,8 +19,9 @@ import java.util.List;
 public class Order {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @SequenceGenerator(name = "ordersSeqGen", sequenceName = "orders_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ordersSeqGen")
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -52,5 +52,15 @@ public class Order {
             joinColumns = {@JoinColumn(name = "order_id")},
             inverseJoinColumns = {@JoinColumn(name = "item_id")}
     )
-    private List<Item> items;
+    private List<Item> items = new ArrayList<>();
+
+    @Column
+    private Integer count = items.size();
+
+    public void deleteDiscount(Discount discount) {
+        if (this.discount != null) {
+            if (this.discount.getId().equals(discount.getId())) this.discount = null;
+        }
+    }
+
 }

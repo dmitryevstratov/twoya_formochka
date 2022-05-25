@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class Filter {
 
-    private Long id;
+    private Integer id;
 
     private String firstName;
 
@@ -20,5 +20,7 @@ public class Filter {
     private String email;
 
     private String telephone;
+
+    private String discountName;
 
 }

@@ -1,19 +1,26 @@
 package com.shepard1992.gmail.twoya_formochka.service.api;
 
-import com.shepard1992.gmail.twoya_formochka.view.model.OrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.*;
 
 import java.util.List;
 
 public interface OrderService {
 
-    OrderPl addOrder(OrderPl orderPl);
+    CreateOrderPl addOrder(CreateOrderPl createOrderPl);
 
-    List<OrderPl> getOrders();
+    List<GetOrderPl> getOrders();
 
-    OrderPl editOrders(OrderPl orderPl);
+    List<GetOrderPl> getOrdersStatus();
 
-    OrderPl getOrderById(Long id);
+    List<GetOrderPl> searchByParams(FilterOrderPl filterOrderPl);
 
-    void deleteOrderById(Long id);
+    CreateOrderPl editOrders(CreateOrderPl createOrderPl);
 
+    GetOrderToUpdatePl getOrderById(Integer id);
+
+    void deleteOrderById(Integer id);
+
+    CreateOrderPl editOrderStatus(Integer id, String status);
+
+    List<GetMonthStatisticPl> searchByParams(String dateStart, String dateEnd);
 }

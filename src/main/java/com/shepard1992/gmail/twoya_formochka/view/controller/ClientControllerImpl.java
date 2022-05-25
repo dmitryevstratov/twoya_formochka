@@ -4,7 +4,8 @@ import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.ClientController;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.ModelAndViewController;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.FilterPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.ClientWithDiscountPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.FilterClientPl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,11 @@ import java.util.List;
 @RestController
 public class ClientControllerImpl implements ModelAndViewController, ClientController {
 
-    private final ClientService clientService;
+    private final ClientService service;
 
     @Autowired
-    public ClientControllerImpl(ClientService clientService) {
-        this.clientService = clientService;
+    public ClientControllerImpl(ClientService service) {
+        this.service = service;
     }
 
     @Override
@@ -28,40 +29,57 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
         return new ModelAndView("clients");
     }
 
+    @GetMapping("/clients-discounts.html")
+    public ModelAndView getViewClientsWithDiscounts(Model model) {
+        return new ModelAndView("clients-discounts");
+    }
+
     @Override
     @GetMapping("/clients")
     public List<ClientPl> getClients() {
-        return clientService.getClients();
+        return service.getClients();
+    }
+
+    @Override
+    @GetMapping("/clients-discounts")
+    public List<ClientPl> getClientsWithDiscounts() {
+        return service.getClientsWithDiscounts();
     }
 
     @Override
     @GetMapping("/clients/{id}")
-    public ClientPl getClientById(@PathVariable Long id) {
-        return clientService.getClientById(id);
+    public ClientPl getClientById(@PathVariable Integer id) {
+        return service.getClientById(id);
     }
 
     @Override
     @PostMapping("/clients/create")
     public ClientPl addClient(@RequestBody ClientPl clientPl) {
-        return clientService.addClient(clientPl);
+        return service.addClient(clientPl);
     }
 
     @Override
     @PutMapping("/clients/edit")
     public ClientPl editClient(@RequestBody ClientPl clientPl) {
-        return clientService.editClient(clientPl);
+        return service.editClient(clientPl);
+    }
+
+    @Override
+    @PutMapping("/clients-discounts/edit")
+    public ClientPl editClientWithDiscount(@RequestBody ClientWithDiscountPl clientPl) {
+        return service.editClientWithDiscount(clientPl);
     }
 
     @Override
     @DeleteMapping("/clients/{id}")
-    public void deleteClientById(@PathVariable Long id) {
-        clientService.deleteClientById(id);
+    public void deleteClientById(@PathVariable Integer id) {
+        service.deleteClientById(id);
     }
 
     @Override
     @GetMapping("/clients/search")
     public List<ClientPl> searchByParams(
-            @RequestParam(value = "id", required = false) Long id,
+            @RequestParam(value = "id", required = false) Integer id,
             @RequestParam(value = "firstName", required = false) String firstName,
             @RequestParam(value = "lastName", required = false) String lastName,
             @RequestParam(value = "secondName", required = false) String secondName,
@@ -69,7 +87,7 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
             @RequestParam(value = "email", required = false) String email,
             @RequestParam(value = "telephone", required = false) String telephone
     ) {
-        return clientService.searchByParams(FilterPl.builder()
+        return service.searchByParams(FilterClientPl.builder()
                 .id(id)
                 .firstName(firstName)
                 .lastName(lastName)
@@ -77,6 +95,22 @@ public class ClientControllerImpl implements ModelAndViewController, ClientContr
                 .birthday(birthday)
                 .email(email)
                 .telephone(telephone)
+                .build());
+    }
+
+    @Override
+    @GetMapping("/clients-discounts/search")
+    public List<ClientPl> searchByParams(
+            @RequestParam(value = "id", required = false) Integer id,
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName,
+            @RequestParam(value = "discountName", required = false) String discountName
+    ) {
+        return service.clientWithDiscountSearchByParams(FilterClientPl.builder()
+                .id(id)
+                .firstName(firstName)
+                .lastName(lastName)
+                .discountName(discountName)
                 .build());
     }
 

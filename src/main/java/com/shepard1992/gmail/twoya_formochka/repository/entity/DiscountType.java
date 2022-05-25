@@ -1,15 +1,13 @@
 package com.shepard1992.gmail.twoya_formochka.repository.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -18,14 +16,21 @@ import java.util.List;
 public class DiscountType {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @SequenceGenerator(name = "discountTypeSeqGen", sequenceName = "discount_types_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "discountTypeSeqGen")
+    private Integer id;
 
     @Column
     @NotNull
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "type")
+    @OneToMany(mappedBy = "type")
     private List<Discount> discounts;
+
+    public void deleteDiscount(Discount discount) {
+        if (discounts != null) {
+            discounts.remove(discount);
+        }
+    }
 
 }

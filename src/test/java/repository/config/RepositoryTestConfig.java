@@ -9,6 +9,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = "com.shepard1992.gmail.twoya_formochka.repository")
 @PropertySource("classpath:/application_test.properties")
 @EnableTransactionManagement
-public class ClientRepositoryTestConfig {
+public class RepositoryTestConfig {
 
 }

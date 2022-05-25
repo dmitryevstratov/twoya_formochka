@@ -1,4 +1,4 @@
-package view.stubs;
+package stubs;
 
 import com.shepard1992.gmail.twoya_formochka.view.model.AddressPl;
 
@@ -9,7 +9,7 @@ public class AddressPlStub {
 
     public static AddressPl getStub() {
         return AddressPl.builder()
-                .id(1L)
+                .id(1)
                 .country("Беларусь")
                 .region("Гродненская")
                 .locality("Гродно")

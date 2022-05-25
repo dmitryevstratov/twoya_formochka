@@ -9,7 +9,7 @@ import java.util.List;
 @Builder
 public class DiscountTypePl {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 

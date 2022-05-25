@@ -29,10 +29,10 @@ public class ItemControllerTest {
     @Test
     public void test_when_call_getItemById_then_return_result() {
         when(service.getItemById(any())).thenReturn(ItemPl.builder()
-                .id(1L)
+                .id(1)
                 .build());
 
-        ItemPl itemPl = controller.getItemById(1L);
+        ItemPl itemPl = controller.getItemById(1);
 
         assertEquals(1L, itemPl.getId().longValue());
     }
@@ -40,10 +40,10 @@ public class ItemControllerTest {
     @Test
     public void test_when_call_searchByParams_then_return_result() {
         when(service.searchByParams(any())).thenReturn(List.of(ItemPl.builder()
-                .id(1L)
+                .id(1)
                 .build()));
 
-        List<ItemPl> itemPlList = controller.searchByParams(1L, "", "", "", 10.0);
+        List<ItemPl> itemPlList = controller.searchByParams(1, "", "", "", 10.0);
 
         assertEquals(1L, itemPlList.get(0).getId().longValue());
     }

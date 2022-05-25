@@ -21,6 +21,12 @@ const TELEPHONE_ID = "#telephone";
 const CLIENT_DISCOUNTS = "client-discounts";
 const CLIENT_ITEMS = "client-items";
 
+//Discount field
+const DISCOUNT = "discount";
+const DISCOUNT_COUNT = "discount-count";
+const URL_DISCOUNTS = "/discounts";
+const DISCOUNT_FOUND = "discount-found";
+
 //Item field
 const ITEM_PRICE = "item-price-";
 const ITEM_COUNT = "item-count-";
@@ -30,6 +36,8 @@ const ITEM_ARTICLE_CL = "item-article";
 const SUFFIX_SEARCH_FIELD = "-search";
 const TAG_TR = "tr";
 const TAG_INPUT = "input";
+const SUFFIX_EDIT_FIELD = "-edit";
+const SUFFIX_DELETE_FIELD = "-delete";
 
 //Class
 const ITEM_COUNT_CL = "item-count";

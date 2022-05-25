@@ -1,16 +1,8 @@
 package view.config;
 
-import com.shepard1992.gmail.twoya_formochka.service.api.ClientService;
-import com.shepard1992.gmail.twoya_formochka.service.api.ItemService;
-import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
-import com.shepard1992.gmail.twoya_formochka.view.controller.ClientControllerImpl;
-import com.shepard1992.gmail.twoya_formochka.view.controller.ItemControllerImpl;
-import com.shepard1992.gmail.twoya_formochka.view.controller.MainControllerImpl;
-import com.shepard1992.gmail.twoya_formochka.view.controller.OrderControllerImpl;
-import com.shepard1992.gmail.twoya_formochka.view.controller.api.ClientController;
-import com.shepard1992.gmail.twoya_formochka.view.controller.api.ItemController;
-import com.shepard1992.gmail.twoya_formochka.view.controller.api.OrderController;
-import com.shepard1992.gmail.twoya_formochka.view.controller.api.ViewController;
+import com.shepard1992.gmail.twoya_formochka.service.api.*;
+import com.shepard1992.gmail.twoya_formochka.view.controller.*;
+import com.shepard1992.gmail.twoya_formochka.view.controller.api.*;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 
@@ -52,6 +44,36 @@ public class ViewTestConfig {
     @Bean
     public ViewController getViewControllerBean() {
         return new MainControllerImpl();
+    }
+
+    @Bean
+    public DiscountService getDiscountServiceBean() {
+        return mock(DiscountService.class);
+    }
+
+    @Bean
+    public DiscountTypeService getDiscountTypeServiceBean() {
+        return mock(DiscountTypeService.class);
+    }
+
+    @Bean
+    public DiscountController getDiscountControllerBean(DiscountService service) {
+        return new DiscountControllerImpl(service);
+    }
+
+    @Bean
+    public DiscountTypeController getDiscountTypeControllerBean(DiscountTypeService service) {
+        return new DiscountTypeControllerImpl(service);
+    }
+
+    @Bean
+    public ReportService getReportServiceBean() {
+        return mock(ReportService.class);
+    }
+
+    @Bean
+    public ReportController getReportControllerBean(ReportService reportService) {
+        return new ReportControllerImpl(reportService);
     }
 
 }

@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class ItemCategoryPl {
 
-    private Long id;
+    private Integer id;
 
     private String name;
 

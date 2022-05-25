@@ -3,13 +3,10 @@ package com.shepard1992.gmail.twoya_formochka.view.controller;
 import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.ModelAndViewController;
 import com.shepard1992.gmail.twoya_formochka.view.controller.api.OrderController;
-import com.shepard1992.gmail.twoya_formochka.view.model.OrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -31,29 +28,91 @@ public class OrderControllerImpl implements ModelAndViewController, OrderControl
     }
 
     @Override
+    @GetMapping("/orders-status.html")
+    public ModelAndView getViewOrdersStatus(Model model) {
+        return new ModelAndView("orders-status");
+    }
+
+    @Override
+    @GetMapping("/orders-statistics.html")
+    public ModelAndView getViewOrdersStatisticsStatus(Model model) {
+        return new ModelAndView("orders-statistics");
+    }
+
+    @Override
     @PostMapping("/orders/create")
-    public OrderPl addOrder(@RequestBody OrderPl orderPl) {
-        return service.addOrder(orderPl);
+    public CreateOrderPl addOrder(@RequestBody CreateOrderPl createOrderPl) {
+        return service.addOrder(createOrderPl);
     }
 
     @Override
     @GetMapping("/orders")
-    public List<OrderPl> getOrders() {
+    public List<GetOrderPl> getOrders() {
         return service.getOrders();
     }
 
     @Override
-    public OrderPl editOrders(OrderPl orderPl) {
-        return service.editOrders(orderPl);
+    @GetMapping("/orders-status")
+    public List<GetOrderPl> getOrdersStatus() {
+        return service.getOrdersStatus();
     }
 
     @Override
-    public OrderPl getOrderById(Long id) {
+    @GetMapping("orders/search")
+    public List<GetOrderPl> searchByParams(
+            @RequestParam(value = "id", required = false) Integer id,
+            @RequestParam(value = "firstName", required = false) String firstName,
+            @RequestParam(value = "lastName", required = false) String lastName,
+            @RequestParam(value = "dateCreate", required = false) String dateCreate,
+            @RequestParam(value = "dateClosed", required = false) String dateClosed,
+            @RequestParam(value = "selectedStatus", required = false) String selectedStatus,
+            @RequestParam(value = "priceMin", required = false) String priceMin,
+            @RequestParam(value = "priceMax", required = false) String priceMax,
+            @RequestParam(value = "count", required = false) String count
+    ) {
+        return service.searchByParams(FilterOrderPl.builder()
+                .id(id)
+                .firstName(firstName)
+                .lastName(lastName)
+                .dateCreate(dateCreate)
+                .dateClosed(dateClosed)
+                .selectedStatus(selectedStatus)
+                .priceMax(priceMax)
+                .priceMin(priceMin)
+                .count(count)
+                .build());
+    }
+
+    @Override
+    @GetMapping("orders/statistics")
+    public List<GetMonthStatisticPl> searchByParams(
+            @RequestParam(value = "dateStart") String dateStart,
+            @RequestParam(value = "dateEnd") String dateEnd
+    ) {
+        return service.searchByParams(dateStart, dateEnd);
+    }
+
+    @Override
+    @PutMapping("/orders/edit")
+    public CreateOrderPl editOrders(@RequestBody CreateOrderPl createOrderPl) {
+        return service.editOrders(createOrderPl);
+    }
+
+    @Override
+    @PutMapping("/orders-status/edit")
+    public CreateOrderPl editOrderStatus(@RequestParam Integer id, @RequestParam String status) {
+        return service.editOrderStatus(id, status);
+    }
+
+    @Override
+    @GetMapping("/orders/{id}")
+    public GetOrderToUpdatePl getOrderById(@PathVariable Integer id) {
         return service.getOrderById(id);
     }
 
     @Override
-    public void deleteOrderById(Long id) {
+    @DeleteMapping("/orders/{id}")
+    public void deleteOrderById(@PathVariable Integer id) {
         service.deleteOrderById(id);
     }
 

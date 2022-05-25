@@ -1,19 +1,49 @@
 package com.shepard1992.gmail.twoya_formochka.view.controller.api;
 
-import com.shepard1992.gmail.twoya_formochka.view.model.OrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetMonthStatisticPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.GetOrderToUpdatePl;
+import org.springframework.ui.Model;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 public interface OrderController {
 
-    OrderPl addOrder(OrderPl orderPl);
+    CreateOrderPl addOrder(CreateOrderPl createOrderPl);
 
-    List<OrderPl> getOrders();
+    List<GetOrderPl> getOrders();
 
-    OrderPl editOrders(OrderPl orderPl);
+    List<GetOrderPl> getOrdersStatus();
 
-    OrderPl getOrderById(Long id);
+    List<GetOrderPl> searchByParams(
+            Integer id,
+            String firstName,
+            String lastName,
+            String dateCreate,
+            String dateClosed,
+            String selectedStatus,
+            String priceMin,
+            String priceMax,
+            String count
+    );
 
-    void deleteOrderById(Long id);
+    List<GetMonthStatisticPl> searchByParams(
+            String dateStart,
+            String dateEnd
+    );
+
+    CreateOrderPl editOrders(CreateOrderPl createOrderPl);
+
+    CreateOrderPl editOrderStatus(Integer id, String status);
+
+    GetOrderToUpdatePl getOrderById(Integer id);
+
+    void deleteOrderById(Integer id);
+
+    ModelAndView getViewOrdersStatus(Model model);
+
+    ModelAndView getViewOrdersStatisticsStatus(Model model);
 
 }

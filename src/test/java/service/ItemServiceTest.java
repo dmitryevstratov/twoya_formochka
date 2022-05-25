@@ -36,16 +36,16 @@ public class ItemServiceTest {
     @Autowired
     private ItemRepository repository;
 
-    private static Item itemStub = Item.builder()
-            .id(1L)
+    private static final Item itemStub = Item.builder()
+            .id(1)
             .price(10.0)
             .size(7.5)
             .category(ItemCategory.builder()
-                    .id(1L)
+                    .id(1)
                     .name("Категория")
                     .build())
             .type(ItemType.builder()
-                    .id(4L)
+                    .id(4)
                     .name("Оттиск")
                     .build())
             .build();
@@ -54,7 +54,7 @@ public class ItemServiceTest {
     public void test_when_call_getItemById_then_return_result() {
         when(repository.findById(any())).thenReturn(Optional.ofNullable(itemStub));
 
-        ItemPl item = itemService.getItemById(1L);
+        ItemPl item = itemService.getItemById(1);
 
         assertEquals(1L, item.getId().longValue());
     }

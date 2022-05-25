@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class FilterPl {
+public class FilterClientPl {
 
-    private Long id;
+    private Integer id;
 
     private String firstName;
 
@@ -20,5 +20,7 @@ public class FilterPl {
     private String email;
 
     private String telephone;
+
+    private String discountName;
 
 }

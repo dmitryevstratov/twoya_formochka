@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface ItemController {
 
-    ItemPl getItemById(Long id);
+    ItemPl getItemById(Integer id);
 
-    List<ItemPl> searchByParams(Long id,
+    List<ItemPl> searchByParams(Integer id,
                                 String name,
                                 String type,
                                 String category,

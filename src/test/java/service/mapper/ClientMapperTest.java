@@ -2,21 +2,22 @@ package service.mapper;
 
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Client;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Discount;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.DiscountType;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.ClientMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.ClientPl;
+import com.shepard1992.gmail.twoya_formochka.view.model.CreateOrderPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
-import com.shepard1992.gmail.twoya_formochka.view.model.OrderPl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import service.config.MapperTestConfig;
-import view.stubs.AddressPlStub;
-import view.stubs.AddressStub;
-import view.stubs.ClientPlStub;
-import view.stubs.ClientStub;
+import stubs.AddressPlStub;
+import stubs.AddressStub;
+import stubs.ClientPlStub;
+import stubs.ClientStub;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +33,11 @@ public class ClientMapperTest {
 
     @Test
     public void test_mapperToClient() {
-        List<OrderPl> orderPlList = new ArrayList<>();
+        List<CreateOrderPl> createOrderPlList = new ArrayList<>();
         List<DiscountPl> discountPlSet = new ArrayList<>();
         ClientPl stub = ClientPlStub.getStub(
                 AddressPlStub.getStub(),
-                orderPlList,
+                createOrderPlList,
                 discountPlSet
         );
 
@@ -70,6 +71,26 @@ public class ClientMapperTest {
         assertEquals(stub.getBirthday(), clientPl.getBirthday());
         assertEquals(stub.getEmail(), clientPl.getEmail());
         assertEquals(stub.getTelephone(), clientPl.getTelephone());
+    }
+
+    @Test
+    public void test_mapperToClientPlWithDiscount() {
+        ClientPl clientPl = clientMapper.mapperToClientPlWithDiscount(Client.builder()
+                .id(7)
+                .discounts(List.of(Discount.builder()
+                        .value(15)
+                        .type(DiscountType.builder()
+                                .id(4)
+                                .name("HB")
+                                .build())
+                        .build()))
+                .build());
+        DiscountPl discountPl = clientPl.getDiscounts().get(0);
+
+        assertEquals(Integer.valueOf(7), clientPl.getId());
+        assertEquals(Integer.valueOf(15), discountPl.getValue());
+        assertEquals(Integer.valueOf(4), discountPl.getType().getId());
+        assertEquals("HB", discountPl.getType().getName());
     }
 
 }
