@@ -9,6 +9,7 @@
     <script th:src="@{js/commonConstants.js}" type="text/javascript"></script>
     <script th:src="@{js/orderFetchApi.js}" type="text/javascript"></script>
     <script th:src="@{js/clientFetchApi.js}" type="text/javascript"></script>
+    <script th:src="@{js/reportForTaxFetchApi.js}" type="text/javascript"></script>
     <script th:src="@{js/utils.js}" type="text/javascript"></script>
     <script th:src="@{js/form.js}" type="text/javascript"></script>
     <script th:src="@{js/classes/discount.js}" type="text/javascript"></script>
@@ -51,26 +52,46 @@
 <body>
 <section>
     <div>
-        <h1>Статистика по заказам</h1>
+        <h1>Квартальные отчеты для налоговой</h1>
     </div>
     <div>
         <form>
             <ul>
                 <li>
-                    <h5>Выберите период</h5>
+                    <h5>Показать отчет</h5>
                 </li>
                 <li>
-                    <label for="dateStart-order-search"></label>
-                    <input type="text" id="dateStart-order-search" placeholder="Начало периода [dd-mm-yyyy]"
-                           pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[1-9]{1}[0-9]{3}">
+                    <label for="report-show-year"></label>
+                    <input type="number" id="report-show-year" placeholder="Год">
                 </li>
                 <li>
-                    <label for="dateEnd-order-search"></label>
-                    <input type="text" id="dateEnd-order-search" placeholder="Конец периода [dd-mm-yyyy]"
-                           pattern="(0[1-9]|1[0-9]|2[0-9]|3[01])-(0[1-9]|1[012])-[1-9]{1}[0-9]{3}">
+                    <label for="report-show-quarter"></label>
+                    <input type="number" id="report-show-quarter" pattern="[1-4]{1}" placeholder="Квартал">
                 </li>
                 <li>
-                    <button onclick="searchOrdersStatistics()" type="button">Найти</button>
+                    <button onclick="showReportForTax()" type="button">Показать</button>
+                </li>
+            </ul>
+        </form>
+        <form>
+            <ul>
+                <li>
+                    <h5>Создать отчет</h5>
+                </li>
+                <li>
+                    <label for="report-create-year"></label>
+                    <input type="number" id="report-create-year" placeholder="Год" required>
+                </li>
+                <li>
+                    <label for="report-create-quarter"></label>
+                    <input type="number" id="report-create-quarter" pattern="[1-4]{1}" placeholder="Квартал" required>
+                </li>
+                <li>
+                    <label for="report-create-value"></label>
+                    <input type="number" id="report-create-value" pattern="[0-9]{2}" placeholder="Размер налога" required>
+                </li>
+                <li>
+                    <button onclick="createReportForTax()" type="button">Создать</button>
                 </li>
             </ul>
         </form>
@@ -79,16 +100,14 @@
         <thead>
         <tr>
             <th>Год</th>
-            <th>Месяц</th>
-            <th>Количество заказов</th>
-            <th>Количество изделий</th>
-            <th>Сумма итого</th>
-            <th>Средняя сумма заказа</th>
-            <th>Среднее количество изделий в заказе</th>
-            <th>Средняя стоимость изделия</th>
+            <th>Квартал</th>
+            <th>Доход, руб</th>
+            <th>Налог, %</th>
+            <th>Налог, руб</th>
+            <th>Чистая прибыль</th>
         </tr>
         </thead>
-        <tbody id="data-orders-statistics">
+        <tbody id="data-reports">
         </tbody>
     </table>
 </section>

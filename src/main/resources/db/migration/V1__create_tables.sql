@@ -20,7 +20,7 @@ create table if not exists clients
     second_name varchar(255),
     telephone   varchar(255),
     address_id  int4,
-    foreign key (address_id) references addresses(id)
+    foreign key (address_id) references addresses (id)
 );
 
 create table if not exists discount_type
@@ -34,7 +34,7 @@ create table if not exists discounts
     id               int4 not null primary key,
     value            int4,
     discount_type_id int4,
-    foreign key (discount_type_id) references discount_type(id)
+    foreign key (discount_type_id) references discount_type (id)
 );
 
 create table if not exists item_categories
@@ -57,8 +57,8 @@ create table if not exists items
     size             float8,
     item_category_id int4,
     item_type_id     int4,
-    foreign key (item_category_id) references item_categories(id),
-    foreign key (item_type_id) references item_types(id)
+    foreign key (item_category_id) references item_categories (id),
+    foreign key (item_type_id) references item_types (id)
 );
 
 create table if not exists orders
@@ -71,22 +71,33 @@ create table if not exists orders
     total_price float8,
     client_id   int4,
     discount_id int4,
-    foreign key (client_id) references clients(id),
-    foreign key (discount_id) references discounts(id)
+    foreign key (client_id) references clients (id),
+    foreign key (discount_id) references discounts (id)
 );
 
 create table if not exists orders_items
 (
     order_id int4 not null,
     item_id  int4 not null,
-    foreign key (item_id) references items(id),
-    foreign key (order_id) references orders(id)
+    foreign key (item_id) references items (id),
+    foreign key (order_id) references orders (id)
 );
 
 create table if not exists clients_discounts
 (
     client_id   int4 not null,
     discount_id int4 not null
+);
+
+create table if not exists reports
+(
+    id           int4 not null primary key,
+    year         int4,
+    quarter      int4,
+    income       float8,
+    tax          int4,
+    sum_for_tax  float8,
+    clear_income float8
 );
 
 create sequence hibernate_sequence start with 1 increment by 1;
@@ -100,3 +111,4 @@ create sequence item_categories_id_seq start with 5 increment by 1;
 create sequence items_id_seq start with 11 increment by 1;
 create sequence orders_id_seq start with 11 increment by 1;
 create sequence orders_items_id_seq start with 11 increment by 1;
+create sequence reports_id_seq start with 1 increment by 1;

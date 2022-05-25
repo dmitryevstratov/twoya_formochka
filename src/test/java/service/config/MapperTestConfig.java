@@ -42,4 +42,9 @@ public class MapperTestConfig {
         return new FilterMapper();
     }
 
+    @Bean
+    public ReportMapper getReportMapperBean() {
+        return new ReportMapper();
+    }
+
 }
