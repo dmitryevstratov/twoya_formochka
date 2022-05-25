@@ -12,10 +12,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import repository.config.RepositoryTestConfig;
 
 import javax.transaction.Transactional;
+import java.time.ZonedDateTime;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 @Transactional
 @RunWith(SpringRunner.class)
@@ -69,6 +69,28 @@ public class OrderRepositoryTest {
         repository.deleteById(order.getId());
 
         assertEquals(0, repository.findAll().size());
+    }
+
+    @Test
+    public void test_when_call_getOrdersByYearAndMonth_then_return_success() {
+        Order order = repository.save(Order.builder()
+                .dateCreate(ZonedDateTime.now())
+                .totalPrice(100.0)
+                .build());
+        Order order1 = repository.save(Order.builder()
+                .dateCreate(ZonedDateTime.now())
+                .totalPrice(50.0)
+                .build());
+        Order order2 = repository.save(Order.builder()
+                .dateCreate(ZonedDateTime.now())
+                .totalPrice(200.0)
+                .build());
+
+        List<Order> orderList = repository.getOrdersByYearAndMonth(2022, "05");
+
+        assertTrue(orderList.stream().anyMatch(or -> or.getId().equals(order.getId())));
+        assertTrue(orderList.stream().anyMatch(or -> or.getId().equals(order1.getId())));
+        assertTrue(orderList.stream().anyMatch(or -> or.getId().equals(order2.getId())));
     }
 
 }

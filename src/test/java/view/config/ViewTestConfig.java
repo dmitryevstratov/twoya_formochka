@@ -66,4 +66,14 @@ public class ViewTestConfig {
         return new DiscountTypeControllerImpl(service);
     }
 
+    @Bean
+    public ReportService getReportServiceBean() {
+        return mock(ReportService.class);
+    }
+
+    @Bean
+    public ReportController getReportControllerBean(ReportService reportService) {
+        return new ReportControllerImpl(reportService);
+    }
+
 }
