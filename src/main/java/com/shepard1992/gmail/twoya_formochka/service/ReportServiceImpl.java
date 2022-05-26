@@ -1,7 +1,7 @@
 package com.shepard1992.gmail.twoya_formochka.service;
 
 import com.shepard1992.gmail.twoya_formochka.repository.api.OrderRepository;
-import com.shepard1992.gmail.twoya_formochka.repository.api.Report;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Report;
 import com.shepard1992.gmail.twoya_formochka.repository.api.ReportRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
 import com.shepard1992.gmail.twoya_formochka.service.api.ReportService;
