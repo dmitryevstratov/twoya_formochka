@@ -1,7 +1,7 @@
 package repository;
 
 import com.shepard1992.gmail.twoya_formochka.TwoyaFormochkaApplication;
-import com.shepard1992.gmail.twoya_formochka.repository.api.Report;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Report;
 import com.shepard1992.gmail.twoya_formochka.repository.api.ReportRepository;
 import org.junit.Before;
 import org.junit.Test;

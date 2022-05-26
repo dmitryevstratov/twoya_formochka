@@ -1,4 +1,4 @@
-package com.shepard1992.gmail.twoya_formochka.repository.api;
+package com.shepard1992.gmail.twoya_formochka.repository.entity;
 
 import com.sun.istack.NotNull;
 import lombok.*;
