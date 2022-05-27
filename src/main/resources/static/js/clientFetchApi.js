@@ -120,14 +120,14 @@ function contentClient(client) {
         + client.id + ', ' +
         +0 + ', ' +
         +0 +
-        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editClient\">\n" +
+        ")\" type=\"button\" data-bs-toggle=\"modal\" class=\"button button-update\" data-bs-target=\"#editClient\">\n" +
         " Редактировать" +
         "</button></td>";
     tmp += "<td><button onmousedown= \"fillFormClientById("
         + client.id + ', ' +
         +1 + ', ' +
         +1 +
-        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteClient\">\n" +
+        ")\" type=\"button\" class=\"button button-delete\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteClient\">\n" +
         " Удалить" +
         "</button></td>";
     return tmp;
@@ -149,7 +149,7 @@ function addClientWithDiscountInTable(client) {
     tmp += "<td>" + client.lastName + "</td>";
     tmp += "<td id =" + "discounts-" + client.id + ">" + addDiscountsForClient(client.discounts) + "</td>";
     tmp += "<td>" + "<button onmousedown= \"fillFormClientDiscountById("
-        + client.id + ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editClient\">\n" +
+        + client.id + ")\" type=\"button\" class=\"button button-update\" data-bs-toggle=\"modal\" data-bs-target=\"#editClient\">\n" +
         " Редактировать" +
         "</button>" + "</td>";
     tmp += "</tr>";

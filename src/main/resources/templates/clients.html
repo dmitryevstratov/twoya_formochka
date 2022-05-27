@@ -15,7 +15,7 @@
 </head>
 <header>
     <section>
-        <nav>
+        <nav class="main-menu clearfix">
             <ul>
                 <li>
                     <a th:href="@{/index.html}">Главная</a>
@@ -46,17 +46,17 @@
     </section>
 </header>
 <body>
-<section>
+<section class="content-main">
     <div>
         <h1>Клиенты</h1>
     </div>
     <div>
         <!-- Button trigger modal create client -->
-        <button data-bs-toggle="modal" data-bs-target="#addClient" onmousedown="openForm('addClient')">
+        <button class="button button-add" data-bs-toggle="modal" data-bs-target="#addClient" onmousedown="openForm('addClient')">
             Добавить клиента
         </button>
     </div>
-    <div>
+    <div class="container-search clearfix">
         <form>
             <ul>
                 <li>
@@ -92,12 +92,12 @@
                     <input type="tel" id="telephone-search" placeholder="Контактный телефон">
                 </li>
                 <li>
-                    <button onclick="searchClient()" type="button">Найти</button>
+                    <button onclick="searchClient()" class="button button-search" type="button">Найти</button>
                 </li>
             </ul>
         </form>
     </div>
-    <table>
+    <table class="table-content">
         <thead>
         <tr>
             <th>№</th>
@@ -227,10 +227,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('addClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <button class="button button-search" onclick="hiddenForm('addClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
                         Закрыть
                     </button>
-                    <button onclick="createClient()" type="button">Добавить
+                    <button class="button button-add" onclick="createClient()" type="button">Добавить
                     </button>
                 </div>
             </form>
@@ -358,10 +358,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('editClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <button class="button button-search" onclick="hiddenForm('editClient')" type="button" data-bs-dismiss="modal" aria-label="Close">
                         Закрыть
                     </button>
-                    <button onclick="editClient()" type="button">Изменить
+                    <button class="button button-update" onclick="editClient()" type="button">Изменить
                     </button>
                 </div>
             </form>
@@ -492,11 +492,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('deleteClient')" type="button" data-bs-dismiss="modal"
+                    <button class="button button-search" onclick="hiddenForm('deleteClient')" type="button" data-bs-dismiss="modal"
                             aria-label="Close">
                         Закрыть
                     </button>
-                    <button onclick="deleteClient()" type="button">Удалить
+                    <button class="button button-delete" onclick="deleteClient()" type="button">Удалить
                     </button>
                 </div>
             </form>
@@ -505,25 +505,7 @@
 </div>
 <script>
     loadClients();
-    (function () {
-        'use strict'
 
-        // Получите все формы, к которым мы хотим применить пользовательские стили проверки Bootstrap
-        const forms = document.querySelectorAll('.needs-validation');
-
-        // Зацикливайтесь на них и предотвращайте отправку
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-                form.addEventListener('click', function (event) {
-                    if (!form.checkValidity()) {
-                        event.preventDefault()
-                        event.stopPropagation()
-                    }
-
-                    form.classList.add('was-validated')
-                }, false)
-            })
-    })()
 </script>
 </body>
 <footer>

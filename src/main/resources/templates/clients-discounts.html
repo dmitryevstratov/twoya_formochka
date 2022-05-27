@@ -17,7 +17,7 @@
 </head>
 <header>
     <section>
-        <nav>
+        <nav class="main-menu clearfix">
             <ul>
                 <li>
                     <a th:href="@{/index.html}">Главная</a>
@@ -48,11 +48,11 @@
     </section>
 </header>
 <body>
-<section>
+<section class="content-main">
     <div>
         <h1>Скидки клиентов</h1>
     </div>
-    <div>
+    <div class="container-search clearfix">
         <form>
             <ul>
                 <li>
@@ -75,12 +75,12 @@
                     <input type="text" id="discount-search" placeholder="Название скидки">
                 </li>
                 <li>
-                    <button onclick="searchClientWithDiscount()" type="button">Найти</button>
+                    <button class="button button-search" onclick="searchClientWithDiscount()" type="button">Найти</button>
                 </li>
             </ul>
         </form>
     </div>
-    <table>
+    <table class="table-content">
         <thead>
         <tr>
             <th>№</th>
@@ -119,7 +119,7 @@
                                 <input type="text" id="discount-name-search" placeholder="Название скидки">
                             </li>
                             <li>
-                                <button onclick="searchClientDiscountToSelect()" type="button">Найти</button>
+                                <button class="button button-search" onclick="searchClientDiscountToSelect()" type="button">Найти</button>
                             </li>
                         </ul>
                     </div>
@@ -132,7 +132,7 @@
                         </form>
                     </div>
                     <div>
-                        <table>
+                        <table class="table-content">
                             <thead>
                             <tr>
                                 <th>№</th>
@@ -146,11 +146,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('editClient')" type="button" data-bs-dismiss="modal"
+                    <button class="button button-search" onclick="hiddenForm('editClient')" type="button" data-bs-dismiss="modal"
                             aria-label="Close">
                         Закрыть
                     </button>
-                    <button id="client-id" onclick="editClientDiscount()" type="button">Изменить
+                    <button class="button button-update" id="client-id" onclick="editClientDiscount()" type="button">Изменить
                     </button>
                 </div>
             </form>
