@@ -16,7 +16,7 @@
 </head>
 <header>
     <section>
-        <nav>
+        <nav class="main-menu clearfix">
             <ul>
                 <li>
                     <a th:href="@{/index.html}">Главная</a>
@@ -47,17 +47,17 @@
     </section>
 </header>
 <body>
-<section>
+<section class="content-main">
     <div>
         <h1>Скидки</h1>
     </div>
     <div>
         <!-- Button trigger modal create order -->
-        <button data-bs-toggle="modal" data-bs-target="#addDiscount" onmousedown="openForm('addDiscount')">
+        <button class="button button-add" data-bs-toggle="modal" data-bs-target="#addDiscount" onmousedown="openForm('addDiscount')">
             Создать скидку
         </button>
     </div>
-    <div>
+    <div class="container-search clearfix">
         <form id="search-discount">
             <ul>
                 <li>
@@ -72,12 +72,12 @@
                     <input type="text" id="type-discount-search" placeholder="Тип скидки">
                 </li>
                 <li>
-                    <button onclick="searchDiscount()" type="button">Найти</button>
+                    <button class="button button-search" onclick="searchDiscount()" type="button">Найти</button>
                 </li>
             </ul>
         </form>
     </div>
-    <div>
+    <div class="container-sort clearfix">
         <ul id="sort-discount">
             <li>
                 <h5>Сортировка</h5>
@@ -99,7 +99,7 @@
             </li>
         </ul>
     </div>
-    <table>
+    <table class="table-content">
         <thead>
         <tr>
             <th>№</th>
@@ -131,7 +131,7 @@
                                     <input type="text" id="discount-search" placeholder="Тип">
                                 </li>
                                 <li>
-                                    <button onclick="searchDiscountTypeToSelect('')" type="button">Найти</button>
+                                    <button class="button button-search" onclick="searchDiscountTypeToSelect('')" type="button">Найти</button>
                                 </li>
                             </ul>
                         </form>
@@ -170,11 +170,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('addDiscount')" type="button" data-bs-dismiss="modal"
+                    <button class="button button-search" onclick="hiddenForm('addDiscount')" type="button" data-bs-dismiss="modal"
                             aria-label="Close">
                         Закрыть
                     </button>
-                    <button onclick="createDiscount()" type="button">Создать
+                    <button class="button button-add" onclick="createDiscount()" type="button">Создать
                     </button>
                 </div>
             </div>
@@ -201,7 +201,7 @@
                                     <input type="text" id="discount-search-edit" placeholder="Тип">
                                 </li>
                                 <li>
-                                    <button onclick="searchDiscountTypeToSelect('-edit')" type="button">Найти</button>
+                                    <button class="button button-search" onclick="searchDiscountTypeToSelect('-edit')" type="button">Найти</button>
                                 </li>
                             </ul>
                         </form>
@@ -244,11 +244,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('editDiscount')" type="button" data-bs-dismiss="modal"
+                    <button class="button button-search" onclick="hiddenForm('editDiscount')" type="button" data-bs-dismiss="modal"
                             aria-label="Close">
                         Закрыть
                     </button>
-                    <button onclick="editDiscount()" type="button">Редактировать
+                    <button class="button button-update" onclick="editDiscount()" type="button">Редактировать
                     </button>
                 </div>
             </div>
@@ -291,11 +291,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('deleteDiscount')" type="button" data-bs-dismiss="modal"
+                    <button class="button button-search" onclick="hiddenForm('deleteDiscount')" type="button" data-bs-dismiss="modal"
                             aria-label="Close">
                         Закрыть
                     </button>
-                    <button onclick="deleteDiscount()" type="button">Удалить
+                    <button class="button button-delete" onclick="deleteDiscount()" type="button">Удалить
                     </button>
                 </div>
             </div>

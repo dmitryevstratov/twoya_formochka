@@ -19,7 +19,7 @@
 </head>
 <header>
     <section>
-        <nav>
+        <nav class="main-menu clearfix">
             <ul>
                 <li>
                     <a th:href="@{/index.html}">Главная</a>
@@ -50,12 +50,12 @@
     </section>
 </header>
 <body>
-<section>
+<section class="content-main">
     <div>
         <h1>Квартальные отчеты для налоговой</h1>
     </div>
     <div>
-        <form>
+        <form class="container-search clearfix">
             <ul>
                 <li>
                     <h5>Показать отчет</h5>
@@ -69,11 +69,11 @@
                     <input type="number" id="report-show-quarter" pattern="[1-4]{1}" placeholder="Квартал">
                 </li>
                 <li>
-                    <button onclick="showReportForTax()" type="button">Показать</button>
+                    <button class="button button-search" onclick="showReportForTax()" type="button">Показать</button>
                 </li>
             </ul>
         </form>
-        <form>
+        <form class="container-search clearfix">
             <ul>
                 <li>
                     <h5>Создать отчет</h5>
@@ -91,12 +91,12 @@
                     <input type="number" id="report-create-value" pattern="[0-9]{2}" placeholder="Размер налога" required>
                 </li>
                 <li>
-                    <button onclick="createReportForTax()" type="button">Создать</button>
+                    <button class="button button-add" onclick="createReportForTax()" type="button">Создать</button>
                 </li>
             </ul>
         </form>
     </div>
-    <table>
+    <table class="table-content">
         <thead>
         <tr>
             <th>Год</th>

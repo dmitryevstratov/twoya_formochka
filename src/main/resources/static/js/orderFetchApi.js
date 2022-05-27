@@ -74,12 +74,12 @@ function addOrderInTable(order) {
     tmp += "<td>" + order.status + "</td>";
     tmp += "<td><button onmousedown= \"fillFormUpdateOrderById("
         + order.id +
-        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#editOrder\">\n" +
+        ")\" type=\"button\" class=\"button button-update\" data-bs-toggle=\"modal\" data-bs-target=\"#editOrder\">\n" +
         " Редактировать" +
         "</button></td>";
     tmp += "<td><button onmousedown= \"fillFormDeleteOrderById("
         + order.id +
-        ")\" type=\"button\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteOrder\">\n" +
+        ")\" type=\"button\" class=\"button button-delete\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteOrder\">\n" +
         " Удалить" +
         "</button></td>";
 
@@ -106,7 +106,7 @@ function addOrderStatusInTable(order) {
     let {table, tmp} = addOrderRow(order);
     let id = order.id;
     let status = order.status;
-    let selectStatus = "<select id='edit-order-status-" + id + "' onchange='editOrderStatus(" + id + ")'>" +
+    let selectStatus = "<select id='edit-order-status-" + id + "' class=\"button button-update\" onchange='editOrderStatus(" + id + ")'>" +
         "<option value=" + status + " >" + status + "</option>" +
         "<option value='CREATED'>CREATED</option>" +
         "<option value='MODELED'>MODELED</option>" +

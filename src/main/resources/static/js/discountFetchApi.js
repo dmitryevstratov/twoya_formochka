@@ -44,12 +44,12 @@ function addDiscountInTable(discount) {
     tmp += "<td id=" + DISCOUNT_VALUE + ">" + discount.value + "</td>";
     tmp += "<td><button type=\"button\" onmousedown= \"fillFormUpdateDiscountById("
         + discount.id +
-        ")\" data-bs-toggle=\"modal\" data-bs-target=\"#editDiscount\">\n" +
+        ")\" data-bs-toggle=\"modal\" class=\"button button-update\" data-bs-target=\"#editDiscount\">\n" +
         " Редактировать" +
         "</button></td>";
     tmp += "<td><button type=\"button\" onmousedown= \"fillFormDeleteDiscountById("
         + discount.id +
-        ")\" data-bs-toggle=\"modal\" data-bs-target=\"#deleteDiscount\">\n" +
+        ")\" data-bs-toggle=\"modal\" class=\"button button-delete\" data-bs-target=\"#deleteDiscount\">\n" +
         " Удалить" +
         "</button></td>";
 

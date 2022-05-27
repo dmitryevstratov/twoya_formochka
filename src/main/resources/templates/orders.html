@@ -17,7 +17,7 @@
 </head>
 <header>
     <section>
-        <nav>
+        <nav class="main-menu clearfix">
             <ul>
                 <li>
                     <a th:href="@{/index.html}">Главная</a>
@@ -48,17 +48,17 @@
     </section>
 </header>
 <body>
-<section>
+<section class="content-main">
     <div>
         <h1>Заказы</h1>
     </div>
     <div>
         <!-- Button trigger modal create order -->
-        <button data-bs-toggle="modal" data-bs-target="#addOrder" onmousedown="openForm('addOrder')">
+        <button class="button button-add" data-bs-toggle="modal" data-bs-target="#addOrder" onmousedown="openForm('addOrder')">
             Создать заказ
         </button>
     </div>
-    <div>
+    <div class="container-search clearfix">
         <form id="search-order">
             <ul>
                 <li>
@@ -112,12 +112,12 @@
                     <input type="number" id="count-order-search" placeholder="Количесто единиц товара">
                 </li>
                 <li>
-                    <button onclick="searchOrder()" type="button">Найти</button>
+                    <button class="button button-search" onclick="searchOrder()" type="button">Найти</button>
                 </li>
             </ul>
         </form>
     </div>
-    <div>
+    <div class="container-sort clearfix">
         <ul id="sort-order">
             <li>
                 <h5>Сортировка</h5>
@@ -139,7 +139,7 @@
             </li>
         </ul>
     </div>
-    <table>
+    <table class="table-content">
         <thead>
         <tr>
             <th>№</th>
@@ -189,7 +189,7 @@
                                     <input type="tel" id="telephone-search" placeholder="Контактный телефон">
                                 </li>
                                 <li>
-                                    <button onclick="searchClientToSelect('')" type="button">Найти</button>
+                                    <button class="button button-search" onclick="searchClientToSelect('')" type="button">Найти</button>
                                 </li>
                             </ul>
                         </form>
@@ -216,9 +216,6 @@
                         <form id="form-choose-item-for-order">
                             <ul>
                                 <li>
-                                    <h5>Поиск</h5>
-                                </li>
-                                <li>
                                     <label for="item-article-search"></label>
                                     <input type="text" id="item-article-search" placeholder="Артикул">
                                 </li>
@@ -239,7 +236,7 @@
                                     <input type="number" id="item-size-search" placeholder="Размер">
                                 </li>
                                 <li>
-                                    <button onclick="searchItemToSelect('')" type="button">Найти</button>
+                                    <button class="button button-search" onclick="searchItemToSelect('')" type="button">Найти</button>
                                 </li>
                             </ul>
                         </form>
@@ -251,7 +248,7 @@
                                         id="items-found"></select>
                             </form>
                         </div>
-                        <table>
+                        <table class="table-content">
                             <thead>
                             <tr>
                                 <th>Артикул</th>
@@ -288,10 +285,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('addOrder')" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <button class="button button-search" onclick="hiddenForm('addOrder')" type="button" data-bs-dismiss="modal" aria-label="Close">
                         Закрыть
                     </button>
-                    <button onclick="createOrder()" type="button">Создать
+                    <button class="button button-add" onclick="createOrder()" type="button">Создать
                     </button>
                 </div>
             </div>
@@ -330,7 +327,7 @@
                                     <input type="tel" id="telephone-search-edit" placeholder="Контактный телефон">
                                 </li>
                                 <li>
-                                    <button onclick="searchClientToSelect('-edit')" type="button">Найти</button>
+                                    <button class="button button-search" onclick="searchClientToSelect('-edit')" type="button">Найти</button>
                                 </li>
                             </ul>
                         </form>
@@ -384,7 +381,7 @@
                                     <input type="number" id="item-size-search-edit" placeholder="Размер">
                                 </li>
                                 <li>
-                                    <button onclick="searchItemToSelect('-edit')" type="button">Найти</button>
+                                    <button class="button button-search" onclick="searchItemToSelect('-edit')" type="button">Найти</button>
                                 </li>
                             </ul>
                         </form>
@@ -396,7 +393,7 @@
                                         id="items-found-edit"></select>
                             </form>
                         </div>
-                        <table>
+                        <table class="table-content">
                             <thead>
                             <tr>
                                 <th>Артикул</th>
@@ -434,10 +431,10 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('editOrder')" type="button" data-bs-dismiss="modal" aria-label="Close">
+                    <button class="button button-search" onclick="hiddenForm('editOrder')" type="button" data-bs-dismiss="modal" aria-label="Close">
                         Закрыть
                     </button>
-                    <button onclick="editOrder()" type="button">Редактировать
+                    <button class="button button-update" onclick="editOrder()" type="button">Редактировать
                     </button>
                 </div>
             </div>
@@ -473,7 +470,7 @@
                     </div>
                     <div class="modal-body-items">
                         <h4>Выбрать товары</h4>
-                        <table>
+                        <table class="table-content">
                             <thead>
                             <tr>
                                 <th>Артикул</th>
@@ -498,11 +495,11 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button onclick="hiddenForm('deleteOrder')" type="button" data-bs-dismiss="modal"
+                    <button class="button button-search" onclick="hiddenForm('deleteOrder')" type="button" data-bs-dismiss="modal"
                             aria-label="Close">
                         Закрыть
                     </button>
-                    <button id="order-id-delete" onclick="deleteOrder()" type="button">Удалить
+                    <button class="button button-delete" id="order-id-delete" onclick="deleteOrder()" type="button">Удалить
                     </button>
                 </div>
             </div>

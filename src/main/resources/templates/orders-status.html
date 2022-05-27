@@ -17,7 +17,7 @@
 </head>
 <header>
     <section>
-        <nav>
+        <nav class="main-menu clearfix">
             <ul>
                 <li>
                     <a th:href="@{/index.html}">Главная</a>
@@ -48,11 +48,11 @@
     </section>
 </header>
 <body>
-<section>
+<section class="content-main">
     <div>
         <h1>Статусы заказов</h1>
     </div>
-    <div>
+    <div class="container-search clearfix">
         <form id="search-order">
             <ul>
                 <li>
@@ -100,12 +100,12 @@
                     <input type="number" id="count-order-search" placeholder="Количесто единиц товара">
                 </li>
                 <li>
-                    <button onclick="searchOrder()" type="button">Найти</button>
+                    <button class="button button-search" onclick="searchOrder()" type="button">Найти</button>
                 </li>
             </ul>
         </form>
     </div>
-    <div>
+    <div class="container-sort clearfix">
         <ul id="sort-order">
             <li>
                 <h5>Сортировка</h5>
@@ -127,7 +127,7 @@
             </li>
         </ul>
     </div>
-    <table>
+    <table class="table-content">
         <thead>
         <tr>
             <th>№</th>
