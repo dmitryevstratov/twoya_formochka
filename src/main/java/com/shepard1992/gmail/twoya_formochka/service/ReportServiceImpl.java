@@ -1,13 +1,14 @@
 package com.shepard1992.gmail.twoya_formochka.service;
 
 import com.shepard1992.gmail.twoya_formochka.repository.api.OrderRepository;
-import com.shepard1992.gmail.twoya_formochka.repository.entity.Report;
 import com.shepard1992.gmail.twoya_formochka.repository.api.ReportRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.entity.Order;
+import com.shepard1992.gmail.twoya_formochka.repository.entity.Report;
 import com.shepard1992.gmail.twoya_formochka.service.api.ReportService;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.ReportMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.CreateReportPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ReportPl;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -24,6 +25,7 @@ public class ReportServiceImpl implements ReportService {
     private final ReportRepository reportRepository;
     private final OrderRepository orderRepository;
     private final ReportMapper mapper;
+    private static final Logger log = Logger.getLogger(ReportServiceImpl.class.getName());
 
     @Autowired
     public ReportServiceImpl(ReportRepository reportRepository, OrderRepository orderRepository, ReportMapper mapper) {
@@ -34,6 +36,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public ReportPl addReport(CreateReportPl createReportPl) {
+        log.debug("Add report: " + createReportPl);
         List<Order> orderList = new ArrayList<>();
         Report report = reportRepository.findByYearAndQuarter(createReportPl.getYear(), createReportPl.getQuarter());
 
@@ -76,6 +79,7 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public List<ReportPl> searchByParams(Integer year, Integer quarter) {
+        log.debug("Get report by params: year=" + year + ", quarter" + quarter);
         if (StringUtils.isEmpty(year) && StringUtils.isEmpty(quarter)) {
             return reportRepository.findAll().stream()
                     .map(mapper::mapperToReportPl)

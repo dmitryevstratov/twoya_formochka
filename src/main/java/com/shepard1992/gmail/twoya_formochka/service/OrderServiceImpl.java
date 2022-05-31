@@ -12,6 +12,7 @@ import com.shepard1992.gmail.twoya_formochka.service.api.OrderService;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.FilterMapper;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.OrderMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.*;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,7 @@ public class OrderServiceImpl implements OrderService {
     private final FilterMapper filterMapper;
     private final OrderRepository repository;
     private final ClientRepository clientRepository;
+    private static final Logger log = Logger.getLogger(OrderServiceImpl.class.getName());
 
     @Autowired
     public OrderServiceImpl(OrderMapper orderMapper, FilterMapper filterMapper, OrderRepository repository, ClientRepository clientRepository) {
@@ -49,12 +51,14 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public CreateOrderPl addOrder(CreateOrderPl createOrderPl) {
+        log.debug("Add order: " + createOrderPl);
         Order order = repository.save(orderMapper.mapperToOrder(createOrderPl));
         return orderMapper.mapperToOrderPl(order);
     }
 
     @Override
     public List<GetOrderPl> getOrders() {
+        log.debug("Get all orders");
         return repository.findAll().stream()
                 .map(orderMapper::mapperToGetOrderPl)
                 .sorted((o1, o2) -> Math.toIntExact(o1.getId() - o2.getId()))
@@ -63,6 +67,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<GetOrderPl> getOrdersStatus() {
+        log.debug("Get all orders without status=CANCELED");
         return repository.findAll().stream()
                 .filter(order -> !order.getStatus().equals(CANCELED))
                 .map(orderMapper::mapperToGetOrderPl)
@@ -72,6 +77,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<GetOrderPl> searchByParams(FilterOrderPl filterOrderPl) {
+        log.debug("Get order by params: " + filterOrderPl);
         return repository.findAll(new OrderSpecification(filterMapper.mapperToOrderFilter(filterOrderPl))).stream()
                 .map(orderMapper::mapperToGetOrderPl)
                 .sorted((o1, o2) -> Math.toIntExact(o1.getId() - o2.getId()))
@@ -80,22 +86,26 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public CreateOrderPl editOrders(CreateOrderPl createOrderPl) {
+        log.debug("Edit order: " + createOrderPl);
         Order order = repository.save(orderMapper.mapperToOrder(createOrderPl));
         return orderMapper.mapperToOrderPl(order);
     }
 
     @Override
     public GetOrderToUpdatePl getOrderById(Integer id) {
+        log.debug("Get order by id= " + id);
         return orderMapper.mapperToUpdateOrderPl(repository.findById(id).get());
     }
 
     @Override
     public void deleteOrderById(Integer id) {
+        log.debug("Delete order by id= " + id);
         repository.deleteById(id);
     }
 
     @Override
     public CreateOrderPl editOrderStatus(Integer id, String status) {
+        log.debug("Edit order by params: id= " + id + ", status=" + status);
         Order order = repository.findById(id).get();
         StatusOrder statusOrder = StatusOrder.valueOf(status);
 
@@ -125,6 +135,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<GetMonthStatisticPl> searchByParams(String dateStart, String dateEnd) {
+        log.debug("Edit order by params: dateStart= " + dateStart + ", dateEnd=" + dateEnd);
         Integer[] parseDateStart = (dateStart.isEmpty()) ? null : parseDate(dateStart);
         Integer[] parseDateEnd = (dateEnd.isEmpty()) ? null : parseDate(dateEnd);
         ZonedDateTime ds;

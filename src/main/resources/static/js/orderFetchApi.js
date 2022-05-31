@@ -183,6 +183,37 @@ function searchOrder() {
 
 }
 
+function searchOrderStatus() {
+    let id = document.getElementById("id-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let firstName = capitalizeFirstLetter(document.getElementById("firstname-" + ORDER + SUFFIX_SEARCH_FIELD).value.toLowerCase());
+    let lastName = capitalizeFirstLetter(document.getElementById("lastname-" + ORDER + SUFFIX_SEARCH_FIELD).value.toLowerCase());
+    let dateCreate = document.getElementById("dateCreate-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let dateClosed = document.getElementById("dateClosed-" + ORDER + SUFFIX_SEARCH_FIELD);
+    let dateClosedValue = (dateClosed == null) ? "" : dateClosed.value;
+    let status = document.getElementById("status-" + ORDER + SUFFIX_SEARCH_FIELD);
+    let selectedStatus = status.options[status.selectedIndex].value;
+    let priceMin = document.getElementById("price-min-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let priceMax = document.getElementById("price-max-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+    let count = document.getElementById("count-" + ORDER + SUFFIX_SEARCH_FIELD).value;
+
+    fetch(URL_ORDERS + "/search" + `?id=${id}&firstName=${firstName}&lastName=${lastName}&dateCreate=${dateCreate}&dateClosed=${dateClosedValue}&selectedStatus=${selectedStatus}&priceMin=${priceMin}&priceMax=${priceMax}&count=${count}`)
+        .then((resp) => resp.json())
+        .then(function (data) {
+            console.log(data);
+            document.getElementById(DATA_ORDERS).innerHTML = EMPTY_VALUE;
+            if (data.length > 0) {
+                data.forEach((client => {
+                    addOrderStatusInTable(client);
+                }))
+            }
+        })
+        .catch(function (e) {
+            console.log(e);
+        })
+
+
+}
+
 function searchOrdersStatistics() {
     let dateStart = document.getElementById(DATE_START_ORDER + SUFFIX_SEARCH_FIELD).value;
     let dateEnd = document.getElementById(DATE_END_ORDER + SUFFIX_SEARCH_FIELD).value;
