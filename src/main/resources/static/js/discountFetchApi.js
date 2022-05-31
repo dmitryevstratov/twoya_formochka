@@ -13,7 +13,6 @@ const MODAL_EDIT = "editDiscount";
 const DISCOUNT_ID = "id-discount";
 const DISCOUNT_TYPE = "type-discount";
 const DISCOUNT_VALUE = "value-discount";
-const DISCOUNT_FOR_RQ = "-for-rq";
 const DISCOUNT_RESULT = "discount-result";
 
 //Method GET
@@ -107,7 +106,7 @@ function searchDiscountTypeToSelect(suffix) {
 function fillSelectDiscountsType(suffix) {
     let selectDiscount = document.getElementById(DISCOUNT_FOUND + suffix);
     let id = selectDiscount.options[selectDiscount.selectedIndex].value;
-    let rq = document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + suffix);
+    let rq = document.getElementById(DISCOUNT_TYPE + FOR_RQ + suffix);
 
     if (id != -1) {
         fetch(URL_DISCOUNTS + "/" + id)
@@ -147,8 +146,8 @@ function checkValidityDiscountForm(type, value) {
 }
 
 function createDiscount() {
-    let type = document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ).value;
-    let value = document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ).value;
+    let type = document.getElementById(DISCOUNT_TYPE + FOR_RQ).value;
+    let value = document.getElementById(DISCOUNT_VALUE + FOR_RQ).value;
     if (checkValidityDiscountForm(type, value)) {
         fetchSendData(URL_CREATE, {
             type: {
@@ -176,8 +175,8 @@ function fillFormUpdateDiscountById(id) {
     )).then(
         function (discount) {
             console.log(discount);
-            document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + SUFFIX_EDIT_FIELD).value = discount.type.name;
-            document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + SUFFIX_EDIT_FIELD).value = discount.value;
+            document.getElementById(DISCOUNT_TYPE + FOR_RQ + SUFFIX_EDIT_FIELD).value = discount.type.name;
+            document.getElementById(DISCOUNT_VALUE + FOR_RQ + SUFFIX_EDIT_FIELD).value = discount.value;
             document.getElementById(DISCOUNT_ID + SUFFIX_EDIT_FIELD).value = id;
             openForm(MODAL_EDIT);
         }
@@ -187,8 +186,8 @@ function fillFormUpdateDiscountById(id) {
 }
 
 function editDiscount() {
-    let type = document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + SUFFIX_EDIT_FIELD).value;
-    let value = document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + SUFFIX_EDIT_FIELD).value;
+    let type = document.getElementById(DISCOUNT_TYPE + FOR_RQ + SUFFIX_EDIT_FIELD).value;
+    let value = document.getElementById(DISCOUNT_VALUE + FOR_RQ + SUFFIX_EDIT_FIELD).value;
     let id = document.getElementById(DISCOUNT_ID + SUFFIX_EDIT_FIELD).value;
     if (checkValidityDiscountForm(type, value)) {
         fetchSendData(URL_EDIT, {
@@ -221,8 +220,8 @@ function fillFormDeleteDiscountById(id) {
     )).then(
         function (discount) {
             console.log(discount);
-            document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + SUFFIX_DELETE_FIELD).value = discount.type.name;
-            document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + SUFFIX_DELETE_FIELD).value = discount.value;
+            document.getElementById(DISCOUNT_TYPE + FOR_RQ + SUFFIX_DELETE_FIELD).value = discount.type.name;
+            document.getElementById(DISCOUNT_VALUE + FOR_RQ + SUFFIX_DELETE_FIELD).value = discount.value;
             document.getElementById(DISCOUNT_ID + SUFFIX_DELETE_FIELD).value = id;
             openForm(MODAL_DELETE);
         }

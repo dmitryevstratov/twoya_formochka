@@ -38,6 +38,8 @@ const TAG_TR = "tr";
 const TAG_INPUT = "input";
 const SUFFIX_EDIT_FIELD = "-edit";
 const SUFFIX_DELETE_FIELD = "-delete";
+const FOR_RQ = "-for-rq";
+const SEND = "-send";
 
 //Class
 const ITEM_COUNT_CL = "item-count";

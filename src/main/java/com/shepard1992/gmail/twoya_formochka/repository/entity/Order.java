@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -63,4 +64,10 @@ public class Order {
         }
     }
 
+    public void deleteItem(Item item) {
+        if (this.items != null) {
+            Optional<Item> optionalItem = items.stream().filter(it -> it.getId().equals(item.getId())).findFirst();
+            optionalItem.ifPresent(value -> items.remove(value));
+        }
+    }
 }

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Товары</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script th:src="@{js/classes/item.js}" type="text/javascript"></script>
+    <script th:src="@{js/utils.js}" type="text/javascript"></script>
+    <script th:src="@{js/commonConstants.js}" type="text/javascript"></script>
+    <script th:src="@{js/orderFetchApi.js}" type="text/javascript"></script>
+    <script th:src="@{js/form.js}" type="text/javascript"></script>
+    <script th:src="@{js/itemFetchApi.js}" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+
+</head>
+<header>
+    <section>
+        <nav class="main-menu clearfix">
+            <ul>
+                <li>
+                    <a th:href="@{/index.html}">Главная</a>
+                </li>
+                <li>
+                    <a th:href="@{/clients.html}">Клиенты</a>
+                </li>
+                <li>
+                    <a th:href="@{/orders.html}">Заказы</a>
+                </li>
+                <li>
+                    <a th:href="@{/orders-status.html}">Статусы заказов</a>
+                </li>
+                <li>
+                    <a th:href="@{/discounts.html}">Скидки</a>
+                </li>
+                <li>
+                    <a th:href="@{/clients-discounts.html}">Скидки клиентов</a>
+                </li>
+                <li>
+                    <a th:href="@{/items.html}">Товары</a>
+                </li>
+                <li>
+                    <a th:href="@{/orders-statistics.html}">Статистика по заказам</a>
+                </li>
+                <li>
+                    <a th:href="@{/tax.html}">Квартальные отчеты</a>
+                </li>
+            </ul>
+        </nav>
+    </section>
+</header>
+<body>
+<section class="content-main">
+    <div>
+        <h1>Товары</h1>
+    </div>
+    <div>
+        <!-- Button trigger modal create order -->
+        <button class="button button-add" data-bs-toggle="modal" data-bs-target="#addItem"
+                onmousedown="openForm('addItem')">
+            Создать товар
+        </button>
+    </div>
+    <div class="container-search clearfix">
+        <form id="search-order">
+            <ul>
+                <li>
+                    <h5>Поиск</h5>
+                </li>
+                <li>
+                    <label for="item-article-search"></label>
+                    <input type="text" id="item-article-search" placeholder="Артикул">
+                </li>
+                <li>
+                    <label for="item-name-search"></label>
+                    <input type="text" id="item-name-search" placeholder="Название">
+                </li>
+                <li>
+                    <label for="item-type-search"></label>
+                    <input type="text" id="item-type-search" placeholder="Тип">
+                </li>
+                <li>
+                    <label for="item-category-search"></label>
+                    <input type="text" id="item-category-search" placeholder="Категория">
+                </li>
+                <li>
+                    <label for="item-size-search"></label>
+                    <input type="number" id="item-size-search" placeholder="Размер">
+                </li>
+                <li>
+                    <button class="button button-search" onclick="searchItems('')" type="button">Найти</button>
+                </li>
+            </ul>
+        </form>
+    </div>
+    <div class="container-sort clearfix">
+        <ul id="sort-items">
+            <li>
+                <h5>Сортировка</h5>
+            </li>
+            <li>
+                <h6>№</h6>
+                <button onclick="sortBy(1, 'item-id', 'data-items')">&uarr;</button>
+                <button onclick="sortBy(2, 'item-id', 'data-items')">&darr;</button>
+            </li>
+            <li>
+                <h6>Тип</h6>
+                <button onclick="sortBy(1, 'item-type', 'data-items')">&uarr;</button>
+                <button onclick="sortBy(2, 'item-type', 'data-items')">&darr;</button>
+            </li>
+            <li>
+                <h6>Категория</h6>
+                <button onclick="sortBy(1, 'item-category', 'data-items')">&uarr;</button>
+                <button onclick="sortBy(2, 'item-category', 'data-items')">&darr;</button>
+            </li>
+            <li>
+                <h6>Размер</h6>
+                <button onclick="sortBy(1, 'item-size', 'data-items')">&uarr;</button>
+                <button onclick="sortBy(2, 'item-size', 'data-items')">&darr;</button>
+            </li>
+            <li>
+                <h6>Цена</h6>
+                <button onclick="sortBy(1, 'item-price', 'data-items')">&uarr;</button>
+                <button onclick="sortBy(2, 'item-price', 'data-items')">&darr;</button>
+            </li>
+        </ul>
+    </div>
+    <table class="table-content">
+        <thead>
+        <tr>
+            <th>№</th>
+            <th>Название</th>
+            <th>Тип</th>
+            <th>Категория</th>
+            <th>Размер</th>
+            <th>Цена</th>
+        </tr>
+        </thead>
+        <tbody id="data-items">
+        </tbody>
+    </table>
+</section>
+<!-- Modal add item -->
+<div class="modal fade" id="addItem" tabindex="-1" aria-labelledby="addItemLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addItemLabel">Создать товар</h5>
+                    <button type="button" onclick="hiddenForm('addItem')" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-type">
+                        <h4>Выбрать тип</h4>
+                        <form id="form-choose-type-for-item">
+                            <ul>
+                                <li>
+                                    <label for="type-name-search"></label>
+                                    <input type="text" id="type-name-search" placeholder="Название">
+                                </li>
+                                <li>
+                                    <button class="button button-search" onclick="searchItemTypeToSelect('')"
+                                            type="button">Найти
+                                    </button>
+                                </li>
+                            </ul>
+                        </form>
+                        <div>
+                            <div>Найдено: <span id="item-types-count">0</span></div>
+                            <form>
+                                <label for="item-types-found"></label>
+                                <select onchange="fillSelectItemTypes('')" name="item-types-found"
+                                        id="item-types-found"></select>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-body-categories">
+                        <h4>Выбрать категорию</h4>
+                        <form id="form-choose-categories-for-item">
+                            <ul>
+                                <li>
+                                    <label for="item-categories-name-search"></label>
+                                    <input type="text" id="item-categories-name-search" placeholder="Название">
+                                </li>
+                                <li>
+                                    <button class="button button-search" onclick="searchItemCategoryToSelect('')"
+                                            type="button">Найти
+                                    </button>
+                                </li>
+                            </ul>
+                        </form>
+                        <div>
+                            <div>Найдено: <span id="item-categories-count">0</span></div>
+                            <form>
+                                <label for="item-categories-found"></label>
+                                <select onchange="fillSelectItemCategories('')" name="item-categories-found"
+                                        id="item-categories-found"></select>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <form>
+                            <ul>
+                                <li>
+                                    <label for="item-name-for-rq">
+                                    </label>
+                                    <input id="item-name-for-rq" type="text" placeholder="Название" required>
+                                </li>
+                                <li>
+                                    <label for="item-type-for-rq">
+                                    </label>
+                                    <input id="item-type-for-rq" type="text" placeholder="Тип" required>
+                                </li>
+                                <li>
+                                    <label for="item-category-for-rq">
+                                    </label>
+                                    <input id="item-category-for-rq" type="text" placeholder="Категория" required>
+                                </li>
+                                <li>
+                                    <label for="item-size-for-rq">
+                                    </label>
+                                    <input id="item-size-for-rq" type="number" placeholder="Размер" required>
+                                </li>
+                                <li>
+                                    <label for="item-price-for-rq">
+                                    </label>
+                                    <input id="item-price-for-rq" type="number" placeholder="Цена" required>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="modal-body-send-result">
+                        <div>
+                            <h4>Результат:</h4>
+                            <div id="item-result"></div>
+                        </div>
+                        <form id="form-send-item">
+                            <input id="item-id-send" type="text" readonly hidden="hidden">
+                            <input id="item-name-send" type="text" required readonly hidden="hidden">
+                            <input id="item-type-send" type="text" required readonly hidden="hidden">
+                            <input id="item-category-send" type="text" required readonly hidden="hidden">
+                            <input id="item-size-send" type="number" required readonly hidden="hidden">
+                            <input id="item-price-send" type="number" required readonly hidden="hidden">
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button button-search" onclick="hiddenForm('addItem')" type="button"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        Закрыть
+                    </button>
+                    <button class="button button-add" onclick="createItem()" type="button">Создать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal edit item -->
+<div class="modal fade" id="editItem" tabindex="-1" aria-labelledby="editItemLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editItemLabel">Создать товар</h5>
+                    <button type="button" onclick="hiddenForm('editItem')" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-body-type">
+                        <h4>Выбрать тип</h4>
+                        <form>
+                            <ul>
+                                <li>
+                                    <label for="type-name-search-edit"></label>
+                                    <input type="text" id="type-name-search-edit" placeholder="Название">
+                                </li>
+                                <li>
+                                    <button class="button button-search" onclick="searchItemTypeToSelect('-edit')"
+                                            type="button">Найти
+                                    </button>
+                                </li>
+                            </ul>
+                        </form>
+                        <div>
+                            <div>Найдено: <span id="item-types-count-edit">0</span></div>
+                            <form>
+                                <label for="item-types-found-edit"></label>
+                                <select onchange="fillSelectItemTypes('-edit')" name="item-types-found-edit"
+                                        id="item-types-found-edit"></select>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="modal-body-categories">
+                        <h4>Выбрать категорию</h4>
+                        <form>
+                            <ul>
+                                <li>
+                                    <label for="item-categories-name-search-edit"></label>
+                                    <input type="text" id="item-categories-name-search-edit" placeholder="Название">
+                                </li>
+                                <li>
+                                    <button class="button button-search" onclick="searchItemCategoryToSelect('-edit')"
+                                            type="button">Найти
+                                    </button>
+                                </li>
+                            </ul>
+                        </form>
+                        <div>
+                            <div>Найдено: <span id="item-categories-count-edit">0</span></div>
+                            <form>
+                                <label for="item-categories-found-edit"></label>
+                                <select onchange="fillSelectItemCategories('-edit')" name="item-categories-found-edit"
+                                        id="item-categories-found-edit"></select>
+                            </form>
+                        </div>
+                    </div>
+                    <div>
+                        <form>
+                            <ul>
+                                <li>
+                                    <label for="item-id-for-rq-edit">
+                                    </label>
+                                    <input id="item-id-for-rq-edit" type="number" placeholder="Артикул" required readonly>
+                                </li>
+                                <li>
+                                    <label for="item-name-for-rq-edit">
+                                    </label>
+                                    <input id="item-name-for-rq-edit" type="text" placeholder="Название" required>
+                                </li>
+                                <li>
+                                    <label for="item-type-for-rq-edit">
+                                    </label>
+                                    <input id="item-type-for-rq-edit" type="text" placeholder="Тип" required>
+                                </li>
+                                <li>
+                                    <label for="item-category-for-rq-edit">
+                                    </label>
+                                    <input id="item-category-for-rq-edit" type="text" placeholder="Категория" required>
+                                </li>
+                                <li>
+                                    <label for="item-size-for-rq-edit">
+                                    </label>
+                                    <input id="item-size-for-rq-edit" type="number" placeholder="Размер" required>
+                                </li>
+                                <li>
+                                    <label for="item-price-for-rq-edit">
+                                    </label>
+                                    <input id="item-price-for-rq-edit" type="number" placeholder="Цена" required>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="modal-body-send-result">
+                        <div>
+                            <h4>Результат:</h4>
+                            <div id="item-result-edit"></div>
+                        </div>
+                        <form id="form-send-item-edit">
+                            <input id="item-id-send-edit" type="text" required readonly hidden="hidden">
+                            <input id="item-name-send-edit" type="text" required readonly hidden="hidden">
+                            <input id="item-type-send-edit" type="text" required readonly hidden="hidden">
+                            <input id="item-category-send-edit" type="text" required readonly hidden="hidden">
+                            <input id="item-size-send-edit" type="number" required readonly hidden="hidden">
+                            <input id="item-price-send-edit" type="number" required readonly hidden="hidden">
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button button-search" onclick="hiddenForm('editItem')" type="button"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        Закрыть
+                    </button>
+                    <button class="button button-add" onclick="editItem()" type="button">Редактировать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal edit item -->
+<div class="modal fade" id="deleteItem" tabindex="-1" aria-labelledby="deleteItemLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteItemLabel">Создать товар</h5>
+                    <button type="button" onclick="hiddenForm('deleteItem')" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <form>
+                            <ul>
+                                <li>
+                                    <label for="item-id-for-rq-delete">
+                                    </label>
+                                    <input id="item-id-for-rq-delete" type="number" placeholder="Артикул" required readonly>
+                                </li>
+                                <li>
+                                    <label for="item-name-for-rq-delete">
+                                    </label>
+                                    <input id="item-name-for-rq-delete" type="text" placeholder="Название" required readonly>
+                                </li>
+                                <li>
+                                    <label for="item-type-for-rq-delete">
+                                    </label>
+                                    <input id="item-type-for-rq-delete" type="text" placeholder="Тип" required readonly>
+                                </li>
+                                <li>
+                                    <label for="item-category-for-rq-delete">
+                                    </label>
+                                    <input id="item-category-for-rq-delete" type="text" placeholder="Категория" required readonly>
+                                </li>
+                                <li>
+                                    <label for="item-size-for-rq-delete">
+                                    </label>
+                                    <input id="item-size-for-rq-delete" type="number" placeholder="Размер" required readonly>
+                                </li>
+                                <li>
+                                    <label for="item-price-for-rq-delete">
+                                    </label>
+                                    <input id="item-price-for-rq-delete" type="number" placeholder="Цена" required readonly>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="button button-search" onclick="hiddenForm('deleteItem')" type="button"
+                            data-bs-dismiss="modal" aria-label="Close">
+                        Закрыть
+                    </button>
+                    <button class="button button-add" onclick="deleteItem()" type="button">Удалить
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    loadItems('/items');
+</script>
+</body>
+<footer>
+    <section>
+        <i>Created by Evstratov Dmitry</i>
+    </section>
+</footer>
+</html>

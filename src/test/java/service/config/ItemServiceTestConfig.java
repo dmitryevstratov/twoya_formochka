@@ -1,6 +1,8 @@
 package service.config;
 
+import com.shepard1992.gmail.twoya_formochka.repository.api.ItemCategoryRepository;
 import com.shepard1992.gmail.twoya_formochka.repository.api.ItemRepository;
+import com.shepard1992.gmail.twoya_formochka.repository.api.ItemTypeRepository;
 import com.shepard1992.gmail.twoya_formochka.service.ItemServiceImpl;
 import com.shepard1992.gmail.twoya_formochka.service.api.ItemService;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.ItemFilterMapper;
@@ -19,8 +21,18 @@ public class ItemServiceTestConfig {
     }
 
     @Bean
-    public ItemService getItemServiceBean(ItemRepository repository, ItemFilterMapper filterMapper, ItemMapper itemMapper) {
-        return new ItemServiceImpl(repository, filterMapper, itemMapper);
+    public ItemTypeRepository getItemTypeRepositoryBean() {
+        return mock(ItemTypeRepository.class);
+    }
+
+    @Bean
+    public ItemCategoryRepository getItemCategoryRepositoryBean() {
+        return mock(ItemCategoryRepository.class);
+    }
+
+    @Bean
+    public ItemService getItemServiceBean(ItemRepository repository, ItemTypeRepository typeRepository, ItemCategoryRepository categoryRepository, ItemFilterMapper filterMapper, ItemMapper itemMapper) {
+        return new ItemServiceImpl(repository, typeRepository, categoryRepository, filterMapper, itemMapper);
     }
 
 }
