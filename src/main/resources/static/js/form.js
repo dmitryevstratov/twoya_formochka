@@ -21,8 +21,8 @@ function clearForm(idForm) {
 }
 
 function clearDiscountFormDelete(suffix) {
-    document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + suffix).value = EMPTY_VALUE;
-    document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + suffix).value = EMPTY_VALUE;
+    document.getElementById(DISCOUNT_TYPE + FOR_RQ + suffix).value = EMPTY_VALUE;
+    document.getElementById(DISCOUNT_VALUE + FOR_RQ + suffix).value = EMPTY_VALUE;
 }
 
 function hiddenForm(id) {
@@ -37,6 +37,12 @@ function hiddenForm(id) {
     switch (id) {
         case 'addOrder':
             clearOrderForm("");
+            break;
+        case 'addItem':
+            clearItemForm("");
+            break;
+        case 'editItem':
+            clearItemForm(SUFFIX_EDIT_FIELD);
             break;
         case 'addDiscount':
             clearDiscountForm("");
@@ -162,8 +168,8 @@ function clearOrderFormDelete(suffix) {
 function clearDiscountForm(suffix) {
     let discountSearch = document.getElementById(DISCOUNT + SUFFIX_SEARCH_FIELD + suffix);
     let discountFound = document.getElementById(DISCOUNT_FOUND + suffix);
-    let typeDiscountForRq = document.getElementById(DISCOUNT_TYPE + DISCOUNT_FOR_RQ + suffix);
-    let valueDiscountForRq = document.getElementById(DISCOUNT_VALUE + DISCOUNT_FOR_RQ + suffix);
+    let typeDiscountForRq = document.getElementById(DISCOUNT_TYPE + FOR_RQ + suffix);
+    let valueDiscountForRq = document.getElementById(DISCOUNT_VALUE + FOR_RQ + suffix);
     let discountCount = document.getElementById(DISCOUNT_COUNT + suffix);
     let result = document.getElementById(DISCOUNT_RESULT + suffix);
 
@@ -183,4 +189,31 @@ function clearClientDiscountFormEdit() {
     document.getElementById(DISCOUNT_COUNT + SUFFIX_SEARCH_FIELD).innerText = 0;
     select.selectedIndex = 0;
     select.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
+}
+
+function clearItemForm(suffix) {
+    document.getElementById(ITEM_NAME_ID + SEND + suffix).value = EMPTY_VALUE;
+    document.getElementById(ITEM_TYPE_ID + SEND + suffix).value = EMPTY_VALUE;
+    document.getElementById(ITEM_CATEGORY_ID + SEND + suffix).value = EMPTY_VALUE;
+    document.getElementById(ITEM_SIZE_ID + SEND + suffix).value = EMPTY_VALUE;
+    document.getElementById(ITEM_PRICE_ID + SEND + suffix).value = EMPTY_VALUE;
+
+    document.getElementById(ITEM_NAME_ID + FOR_RQ + suffix).value = EMPTY_VALUE;
+    document.getElementById(ITEM_TYPE_ID + FOR_RQ + suffix).value = EMPTY_VALUE;
+    document.getElementById(ITEM_CATEGORY_ID + FOR_RQ + suffix).value = EMPTY_VALUE;
+    document.getElementById(ITEM_SIZE_ID + FOR_RQ + suffix).value = EMPTY_VALUE;
+    document.getElementById(ITEM_PRICE_ID + FOR_RQ + suffix).value = EMPTY_VALUE;
+    document.getElementById(TYPE_NAME + SUFFIX_SEARCH_FIELD + suffix).value = EMPTY_VALUE;
+    document.getElementById(CATEGORY_NAME + SUFFIX_SEARCH_FIELD + suffix).value = EMPTY_VALUE;
+
+    let selectType = document.getElementById(ITEMS_TYPE_FOUND + suffix);
+    let selectCategpory = document.getElementById(ITEMS_CATEGORY_FOUND + suffix);
+
+    document.getElementById(ITEMS_TYPE_COUNT + suffix).innerText = 0;
+    selectType.selectedIndex = 0;
+    selectType.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
+
+    document.getElementById(ITEMS_CATEGORY_COUNT + suffix).innerText = 0;
+    selectCategpory.selectedIndex = 0;
+    selectCategpory.innerHTML = "<option value='-1'>" + "Нет" + "</option>";
 }

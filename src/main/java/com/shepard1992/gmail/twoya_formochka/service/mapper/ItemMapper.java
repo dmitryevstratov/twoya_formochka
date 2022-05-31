@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ItemMapper {
 
-    /*public Item mapperToItem(ItemPl itemPl) {
+    public Item mapperToItem(ItemPl itemPl) {
         return Item.builder()
                 .id(itemPl.getId())
                 .name(itemPl.getName())
@@ -26,7 +26,7 @@ public class ItemMapper {
                 .size(itemPl.getSize())
                 .price(itemPl.getPrice())
                 .build();
-    }*/
+    }
 
     public ItemPl mapperToItemPl(Item item) {
         return ItemPl.builder()

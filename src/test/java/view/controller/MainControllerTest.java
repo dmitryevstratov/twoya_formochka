@@ -4,6 +4,7 @@ import com.shepard1992.gmail.twoya_formochka.view.controller.api.ViewController;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import view.config.ViewTestConfig;
@@ -15,6 +16,7 @@ import static org.junit.Assert.assertNotNull;
 public class MainControllerTest {
 
     @Autowired
+    @Qualifier("getViewControllerBean")
     public ViewController controller;
 
     @Test
