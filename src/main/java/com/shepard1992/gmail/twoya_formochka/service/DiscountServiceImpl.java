@@ -8,6 +8,7 @@ import com.shepard1992.gmail.twoya_formochka.repository.specification.DiscountTy
 import com.shepard1992.gmail.twoya_formochka.service.api.DiscountService;
 import com.shepard1992.gmail.twoya_formochka.service.mapper.DiscountMapper;
 import com.shepard1992.gmail.twoya_formochka.view.model.DiscountPl;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,10 +21,9 @@ import java.util.stream.Collectors;
 public class DiscountServiceImpl implements DiscountService {
 
     private final DiscountRepository repository;
-
     private final DiscountTypeRepository discountTypeRepository;
-
     private final DiscountMapper mapper;
+    private static final Logger log = Logger.getLogger(DiscountServiceImpl.class.getName());
 
     @Autowired
     public DiscountServiceImpl(DiscountRepository repository, DiscountTypeRepository discountTypeRepository, DiscountMapper mapper) {
@@ -34,6 +34,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public List<DiscountPl> getDiscounts() {
+        log.debug("Get all discounts");
         return repository.findAll().stream()
                 .map(mapper::mapperToDiscountPl)
                 .sorted((o1, o2) -> Math.toIntExact(o1.getId() - o2.getId()))
@@ -42,6 +43,7 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public List<DiscountPl> searchByParams(Integer id, String type) {
+        log.debug("Get all discounts by params id=" + id + ", type=" + type);
         return repository.findAll(new DiscountTypeSpecification(id, type)).stream()
                 .map(mapper::mapperToDiscountPl)
                 .sorted((o1, o2) -> Math.toIntExact(o1.getId() - o2.getId()))
@@ -50,21 +52,25 @@ public class DiscountServiceImpl implements DiscountService {
 
     @Override
     public DiscountPl getDiscountById(Integer id) {
+        log.debug("Get discount by id=" + id);
         return mapper.mapperToDiscountPl(repository.findById(id).get());
     }
 
     @Override
     public DiscountPl addDiscount(DiscountPl discountPl) {
+        log.debug("Add discount: " + discountPl);
         return getDiscountPlForSave(discountPl);
     }
 
     @Override
     public DiscountPl editDiscount(DiscountPl discountPl) {
+        log.debug("Edit discount by id=" + discountPl.getId());
         return getDiscountPlForSave(discountPl);
     }
 
     @Override
     public void deleteDiscountById(Integer id) {
+        log.debug("Delete discount by id=" + id);
         Discount discount = repository.findById(id).get();
 
         discount.getOrders().forEach(order -> order.deleteDiscount(discount));

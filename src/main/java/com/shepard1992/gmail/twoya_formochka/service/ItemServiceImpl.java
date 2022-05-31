@@ -14,6 +14,7 @@ import com.shepard1992.gmail.twoya_formochka.view.model.ItemCategoryPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ItemFilterPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ItemPl;
 import com.shepard1992.gmail.twoya_formochka.view.model.ItemTypePl;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -33,6 +34,7 @@ public class ItemServiceImpl implements ItemService {
     private final ItemCategoryRepository categoryRepository;
     private final ItemFilterMapper filterMapper;
     private final ItemMapper itemMapper;
+    private static final Logger log = Logger.getLogger(ItemServiceImpl.class.getName());
 
     @Autowired
     public ItemServiceImpl(ItemRepository repository, ItemTypeRepository typeRepository, ItemCategoryRepository categoryRepository, ItemFilterMapper filterMapper, ItemMapper itemMapper) {
@@ -45,11 +47,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemPl getItemById(Integer id) {
+        log.debug("Get item by id= " + id);
         return itemMapper.mapperToItemPl(Objects.requireNonNull(repository.findById(id).orElse(null)));
     }
 
     @Override
     public List<ItemPl> searchByParams(ItemFilterPl filterPl) {
+        log.debug("Get items by params: " + filterPl);
         return repository.findAll(new ItemSpecification(filterMapper.mapperToFilter(filterPl)))
                 .stream()
                 .map(itemMapper::mapperToItemPl)
@@ -59,6 +63,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemPl> getItems() {
+        log.debug("Get all items");
         return repository.findAll().stream()
                 .map(itemMapper::mapperToItemPl)
                 .sorted(Comparator.comparing(ItemPl::getId))
@@ -67,6 +72,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemPl addItem(ItemPl itemPl) {
+        log.debug("Add item: " + itemPl);
         return getItemPlForSave(itemPl);
     }
 
@@ -108,11 +114,13 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public ItemPl editItem(ItemPl itemPl) {
+        log.debug("Edit item: " + itemPl);
         return getItemPlForSave(itemPl);
     }
 
     @Override
     public List<ItemTypePl> searchItemType(String type) {
+        log.debug("Get items by type= " + type);
         if (StringUtils.isEmpty(type)) {
             return typeRepository.findAll().stream()
                     .map(tp -> ItemTypePl.builder()
@@ -131,6 +139,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<ItemCategoryPl> searchItemCategory(String category) {
+        log.debug("Get items by category= " + category);
         if (StringUtils.isEmpty(category)) {
             return categoryRepository.findAll().stream()
                     .map(tp -> ItemCategoryPl.builder()
@@ -149,6 +158,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public void deleteItemById(Integer id) {
+        log.debug("Delete item by id= " + id);
         Item item = repository.findById(id).get();
         item.getOrders().forEach(order -> order.deleteItem(item));
         repository.deleteById(id);
